@@ -1,5 +1,5 @@
 /**
- * Chrysics ---- A simple physics engine
+ * Chrysics ----- A simple physics engine
  *      
  * @author zero / zhaoyunhaosss@gmail.com
  */
