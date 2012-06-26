@@ -45,6 +45,29 @@ CHRYSICS.Particle.prototype = {
     this.velocity.addScaledVector(this.acceleration, duration);
 
     // this.velocity.mulScalar(Math.pow(this.damping, duration));
+    
+    this.clearForces();
+  
+  },
+
+  addForce: function(force) {
+  
+    this.forceAccumulated.addVector(force);
+  
+  },
+
+  clearForces: function() {
+  
+    this.forceAccumulated.set(0, 0, 0);
+  
+  },
+
+  getMass: function() {
+  
+    if (this.inverseMass == 0)
+      return Infinity;
+    else
+      return 1 / this.inverseMass;
   
   },
 

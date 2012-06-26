@@ -14,6 +14,32 @@ CHRYSICS.Vector3 = function(x, y, z) {
 
 CHRYSICS.Vector3.prototype = {
 
+  set: function(x, y, z) {
+
+    this.x = x;  
+    this.y = y;  
+    this.z = z;  
+
+  },
+
+  setX: function(x) {
+
+    this.x = x;
+  
+  },
+
+  setY: function(y) {
+
+    this.y = y;
+  
+  },
+
+  setZ: function(z) {
+
+    this.z = z;
+  
+  },
+
   copy: function(v) {
 
     this.x = v.x;
