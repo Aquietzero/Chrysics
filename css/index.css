@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #99ccff;
+}
+
+#header {
+  height: 80px;
+  background-color: #0066ff;
+  border-bottom: solid 5px #333366;
+}
+
+#header h1 {
+  color: #99ccff;
+  text-shadow: 1px 0 1px black;
+  margin: 0;
+  padding: 20px;
+}
+
+#main-container {
+  background-color: #99ccff;
+}

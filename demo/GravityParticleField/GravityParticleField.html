@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gravity Particle Field</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+      }
+    </style>
+    <script type="text/javascript" src="../../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../../lib/Three.js"></script>
+    <script type="text/javascript" src="../Scene.js"></script>
+  </head>
+  <body>
+    <div id="GravityParticleField"></div>
+    <script type="text/javascript">
+      var scene = new Scene('GravityParticleField');
+
+      // Add a cube to the scene.
+      var cube = new THREE.Mesh(
+          new THREE.CubeGeometry(50, 50, 50),
+          new THREE.MeshLambertMaterial({color: 0xff0000})
+          );
+      cube.position.set(0, 0, 0);
+
+      scene.addObject(cube);
+      scene.threeStart();
+    </script>
+  </body>
+</html>
