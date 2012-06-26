@@ -14,44 +14,140 @@ CHRYSICS.Vector3 = function(x, y, z) {
 
 CHRYSICS.Vector3.prototype = {
 
+  copy: function(v) {
+
+    this.x = v.x;
+    this.y = v.y;
+    this.z = v.z;
+
+    return this;
+  
+  },
+
+  equalsTo: function(v) {
+
+    return CHRYSICS.Utils.isZero(this.x - v.x) && 
+           CHRYSICS.Utils.isZero(this.y - v.y) && 
+           CHRYSICS.Utils.isZero(this.z - v.z);
+  
+  },
+
+  inverse: function() {
+    
+    return new CHRYSICS.Vector3(
+      -this.x, -this.y, -this.z
+    );
+
+  },
+
+  inverseSelf: function() {
+
+    this.x *= -1;
+    this.y *= -1;
+    this.z *= -1;
+  
+  },
+
   add: function(v) {
+  
+    return new CHRYSICS.Vector3(
+      this.x + v.x,
+      this.y + v.y,
+      this.z + v.z,
+    );
+  
+  },
+
+  addVector: function(v) {
 
     this.x += v.x;
     this.y += v.y;
     this.z += v.z;
 
-    return this;
-
   },
 
+  addScaledVector: function(v, s) {
+
+    this.x += v.x * s;
+    this.y += v.y * s;
+    this.z += v.z * s;
+  
+  },
+ 
   sub: function(v) {
+  
+    return new CHRYSICS.Vector3(
+      this.x - v.x,
+      this.y - v.y,
+      this.z - v.z,
+    );
+  
+  },
+
+  subVector: function(v) {
 
     this.x -= v.x;
     this.y -= v.y;
     this.z -= v.z;
 
-    return this;
-
+  },
+  
+  mul: function(s) {
+  
+    return new CHRYSICS.Vector3(
+      this.x * s,
+      this.y * s,
+      this.z * s,
+    );
+  
   },
 
-  mul: function(s) {
+  mulScalar: function(s) {
 
     this.x *= s;
     this.y *= s;
     this.z *= s;
 
-    return this;
-
   },
 
   div: function(s) {
+  
+    if (!CHRYSICS.Utils.isZero(s)) {
+      return new CHRYSICS.Vector3(
+        this.x / s,
+        this.y / s,
+        this.z / s,
+      );
+    } else {
+      return new CHRYSICS.Vector3();
+    }
+  
+  },
 
-    this.x /= s;
-    this.y /= s;
-    this.z /= s;
+  divScalar: function(s) {
 
-    return this;
- 
+    if (!CHRYSICS.Utils.isZero(s)) {
+      this.x /= s;
+      this.y /= s;
+      this.z /= s;
+    }
+
+  },
+
+  dotProduct: function(v) {
+
+    return this.x * v.x + this.y * v.y + this.z * v.z;
+    
+  },
+
+  crossProduct: function(v) {
+
+    return new CHRYSICS.Vector3(
+      this.y * v.z - this.z * v.y,
+      this.z * v.x - this.x * v.z,
+      this.x * v.y - this.y * v.x
+    );
+  
   },
 
   magnitudeSquare: function() {
@@ -66,10 +162,12 @@ CHRYSICS.Vector3.prototype = {
   
   },
 
-  normalize: function() {
+  normalizeSelf: function() {
   
     var magnitude = this.magnitude();
-    return magnitude > 0 ? this.div(magnitude) : 0;
+
+    if (magnitude > CHRYSICS.Const.ZERO)
+      this.divScalar(magnitude);
 
   },
 
