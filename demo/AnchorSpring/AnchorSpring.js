@@ -4,11 +4,11 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Ball = function(radius) {
+var Box = function(length) {
 
   this.particle = new CHRYSICS.Particle();
-  this.sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 10, 10),
+  this.cube = new THREE.Mesh(
+    new THREE.CubeGeometry(length, length, length),
     new THREE.MeshLambertMaterial({color: 0xff0000})
   );
   
@@ -16,36 +16,28 @@ var Ball = function(radius) {
 
 }
 
-Ball.prototype = {
+Box.prototype = {
 
   init: function() {
 
-    this.particle.setVelocity(new CHRYSICS.Vector3(
-      CHRYSICS.Utils.random(0, 122),
-      CHRYSICS.Utils.random(0, 123),
-      CHRYSICS.Utils.random(0, 121)
-    ));
     this.particle.setMass(2.0);
+    this.cube.position.set(0, 150, 0);
 
-    // Bind gravity to the particle.
-    var gravity = new CHRYSICS.ParticleGravity(
-      new CHRYSICS.Vector3(0, -2, 0)
+    var gravity = new CHRYSICS.ParticleGravity(new CHRYSICS.Vector3(0, -15, 0));
+    var anchorSpring = new CHRYSICS.AnchoredSpring(
+      new CHRYSICS.Vector3(0, 150, 0),
+      0.5,
+      150
     );
+
     CHRYSICS.ParticleForceRegistry.add(
       this.particle,
       gravity
     );
-
-    /*
-    // Bind drag force to the particle.
-    var drag = new CHRYSICS.ParticleDrag(0.00001, 0.00002);
     CHRYSICS.ParticleForceRegistry.add(
-      this.particle,
-      drag
+      this.particle, 
+      anchorSpring
     );
-    */
-
-    this.sphere.position.set(0, 200, 0);
 
   },
 
@@ -54,7 +46,7 @@ Ball.prototype = {
     CHRYSICS.ParticleForceRegistry.updateForces(duration);
 
     this.particle.integrate(duration);
-    this.sphere.position.set(
+    this.cube.position.set(
       this.particle.position.x,
       this.particle.position.y,
       this.particle.position.z
@@ -64,7 +56,7 @@ Ball.prototype = {
 
 }
 
-var GravityParticleField = function(container) {
+var AnchorSpring = function(container) {
 
   this.container = container;
   this.width  = window.innerWidth;
@@ -74,11 +66,11 @@ var GravityParticleField = function(container) {
   this.initScene();
   this.initCamera();
   this.initLight();
-  this.initBalls();
+  this.initBox();
 
 }
 
-GravityParticleField.prototype = {
+AnchorSpring.prototype = {
 
   initThree: function() {
 
@@ -116,17 +108,10 @@ GravityParticleField.prototype = {
 
   },
 
-  initBalls: function() {
+  initBox: function() {
 
-    this.balls = [];
-    var ball;
-
-    for (var i = 0; i < 50; ++i) {
-      ball = new Ball(CHRYSICS.Utils.random(5, 10));
-
-      this.scene.add(ball.sphere);
-      this.balls.push(ball);
-    }
+    this.box = new Box(30);
+    this.scene.add(this.box.cube);
 
   },
 
@@ -135,9 +120,7 @@ GravityParticleField.prototype = {
     var self = this;
     var loop = function() {
 
-      for (var i = 0; i < 50; ++i)
-        self.balls[i].update(0.033);
-
+      self.box.update(0.033);
       self.renderer.clear();
       self.renderer.render(self.scene, self.camera);
       window.requestAnimationFrame(loop);

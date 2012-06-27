@@ -1,7 +1,7 @@
 /**
  * Particle.js defines the basic particle structure of CHRYSICS.
  *
- * @author zero /zhaoyunhaosss@gmail.com
+ * @author zero / zhaoyunhaosss@gmail.com
  */
 
 CHRYSICS.Particle = function() {
@@ -14,7 +14,7 @@ CHRYSICS.Particle = function() {
    * Damping is required to remove energy added
    * through numerical instability in the integrator.
    */
-  this.damping = 0.995;
+  this.damping = 0.97;
 
   /**
    * inverseMass the 1/mass. Since in the Newton's second law,
@@ -41,9 +41,10 @@ CHRYSICS.Particle.prototype = {
   integrate: function(duration) {
   
     this.position.addScaledVector(this.velocity, duration);
-    this.acceleration.addScaledVector(this.forceAccumulated, this.inverseMass);
+    this.acceleration = this.forceAccumulated.mul(this.inverseMass);
     this.velocity.addScaledVector(this.acceleration, duration);
 
+    // Apply the damping coeffcient.
     // this.velocity.mulScalar(Math.pow(this.damping, duration));
     
     this.clearForces();
@@ -79,6 +80,18 @@ CHRYSICS.Particle.prototype = {
       return Infinity;
     else
       return 1 / this.inverseMass;
+  
+  },
+
+  setVelocity: function(velocity) {
+
+    this.velocity = velocity;
+  
+  },
+
+  getVelocity: function() {
+  
+    return this.velocity;
   
   },
 

@@ -188,6 +188,17 @@ CHRYSICS.Vector3.prototype = {
   
   },
 
+  normalize: function() {
+
+    var magnitude = this.magnitude();
+
+    if (magnitude > CHRYSICS.Const.ZERO)
+      return this.div(magnitude);
+    else
+      return new CHRYSICS.Vector3(0, 0, 0);
+ 
+  },
+
   normalizeSelf: function() {
   
     var magnitude = this.magnitude();
