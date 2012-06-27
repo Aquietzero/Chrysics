@@ -4,7 +4,54 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Scene = function(container) {
+var Ball = function(radius) {
+
+  this.particle = new CHRYSICS.Particle();
+  this.sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, 10, 10),
+    new THREE.MeshLambertMaterial({color: 0xff0000})
+  );
+  
+  this.init();
+
+}
+
+Ball.prototype = {
+
+  init: function() {
+
+    this.particle.velocity.set(
+      CHRYSICS.Utils.random(0, 122),
+      CHRYSICS.Utils.random(0, 123),
+      CHRYSICS.Utils.random(0, 121)
+    );
+    this.particle.setMass(2.0);
+
+    CHRYSICS.ParticleForceRegistry.add(
+      this.particle,
+      CHRYSICS.ParticleGravity
+    );
+
+    this.sphere.position.set(0, 0, 20);
+
+  },
+
+  update: function(duration) {
+
+    CHRYSICS.ParticleForceRegistry.updateForces(duration);
+
+    this.particle.integrate(duration);
+    this.sphere.position.set(
+      this.particle.position.x,
+      this.particle.position.y,
+      this.particle.position.z
+    );
+
+  },
+
+}
+
+var GravityParticleField = function(container) {
 
   this.container = container;
   this.width  = window.innerWidth;
@@ -18,7 +65,7 @@ var Scene = function(container) {
 
 }
 
-Scene.prototype = {
+GravityParticleField.prototype = {
 
   initThree: function() {
 
@@ -40,7 +87,7 @@ Scene.prototype = {
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
 
-    this.camera.position.set(200, 120, 50);
+    this.camera.position.set(400, 240, 100);
     this.camera.up.set(0, 0, 1);
     this.camera.lookAt({x:0, y:0, z:0});
 
@@ -59,35 +106,13 @@ Scene.prototype = {
   initBalls: function() {
 
     this.balls = [];
-    this.objects = [];
-    var ball, sphere;
+    var ball;
 
-    for (var i = 0; i < 30; ++i) {
+    for (var i = 0; i < 50; ++i) {
+      ball = new Ball(CHRYSICS.Utils.random(5, 10));
 
-      ball = new CHRYSICS.Particle();
-      ball.velocity.set(
-        CHRYSICS.Utils.random(0, 92),
-        CHRYSICS.Utils.random(0, 93),
-        CHRYSICS.Utils.random(0, 91)
-      );
-      ball.setMass(2.0);
-
-      CHRYSICS.ParticleForceRegistry.add(
-        ball,
-        CHRYSICS.ParticleGravity
-      );
-
-
-      sphere = new THREE.Mesh(
-        new THREE.SphereGeometry(5, 10, 10),
-        new THREE.MeshLambertMaterial({color: 0xff0000})
-      );
-      sphere.position.set(0, 0, 5);
-      this.scene.add(sphere);
-
+      this.scene.add(ball.sphere);
       this.balls.push(ball);
-      this.objects.push(sphere);
-
     }
 
   },
@@ -97,15 +122,8 @@ Scene.prototype = {
     var self = this;
     var loop = function() {
 
-      for (var i = 0; i < 30; ++i) {
-        CHRYSICS.ParticleForceRegistry.updateForces(0.033);
-        self.balls[i].integrate(0.033);
-        self.objects[i].position.set(
-          self.balls[i].position.x,
-          self.balls[i].position.y,
-          self.balls[i].position.z
-        );
-      }
+      for (var i = 0; i < 50; ++i)
+        self.balls[i].update(0.033);
 
       self.renderer.clear();
       self.renderer.render(self.scene, self.camera);
