@@ -12,21 +12,21 @@
     </style>
     <script type="text/javascript" src="../../lib/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="../../lib/Three.js"></script>
-    <script type="text/javascript" src="../Scene.js"></script>
+
+    <script type="text/javascript" src="../../src/Chrysics.js"></script>
+    <script type="text/javascript" src="../../src/Const.js"></script>
+    <script type="text/javascript" src="../../src/Utils.js"></script>
+    <script type="text/javascript" src="../../src/Vector3.js"></script>
+    <script type="text/javascript" src="../../src/Particle.js"></script>
+    <script type="text/javascript" src="../../src/ParticleForceRegistry.js"></script>
+    <script type="text/javascript" src="../../src/ParticleForceGenerator.js"></script>
+
+    <script type="text/javascript" src="GravityParticleField.js"></script>
   </head>
   <body>
     <div id="GravityParticleField"></div>
     <script type="text/javascript">
       var scene = new Scene('GravityParticleField');
-
-      // Add a cube to the scene.
-      var cube = new THREE.Mesh(
-          new THREE.CubeGeometry(50, 50, 50),
-          new THREE.MeshLambertMaterial({color: 0xff0000})
-          );
-      cube.position.set(0, 0, 0);
-
-      scene.addObject(cube);
       scene.threeStart();
     </script>
   </body>

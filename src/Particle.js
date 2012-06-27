@@ -62,6 +62,17 @@ CHRYSICS.Particle.prototype = {
   
   },
 
+  setMass: function(mass) {
+  
+    if (mass == Infinity)
+      this.inverseMass = 0;
+    else if (mass == 0)
+      this.inverseMass = Infinity;
+    else
+      this.inverseMass = 1 / mass;
+
+  },
+
   getMass: function() {
   
     if (this.inverseMass == 0)

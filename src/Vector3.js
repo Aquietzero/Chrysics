@@ -79,7 +79,7 @@ CHRYSICS.Vector3.prototype = {
     return new CHRYSICS.Vector3(
       this.x + v.x,
       this.y + v.y,
-      this.z + v.z,
+      this.z + v.z
     );
   
   },
@@ -105,7 +105,7 @@ CHRYSICS.Vector3.prototype = {
     return new CHRYSICS.Vector3(
       this.x - v.x,
       this.y - v.y,
-      this.z - v.z,
+      this.z - v.z
     );
   
   },
@@ -123,7 +123,7 @@ CHRYSICS.Vector3.prototype = {
     return new CHRYSICS.Vector3(
       this.x * s,
       this.y * s,
-      this.z * s,
+      this.z * s
     );
   
   },
@@ -142,7 +142,7 @@ CHRYSICS.Vector3.prototype = {
       return new CHRYSICS.Vector3(
         this.x / s,
         this.y / s,
-        this.z / s,
+        this.z / s
       );
     } else {
       return new CHRYSICS.Vector3();

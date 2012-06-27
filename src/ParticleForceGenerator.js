@@ -4,13 +4,9 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.ParticleGravity = function(gravity) {
+CHRYSICS.ParticleGravity = {
 
-  this.gravity = gravity;
-
-}
-
-CHRYSICS.ParticleGravity.prototype = {
+  gravity: new CHRYSICS.Vector3(0, 0, -0.05),
 
   updateForce: function(particle, duration) {
   

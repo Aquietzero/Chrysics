@@ -13,4 +13,13 @@ CHRYSICS.Utils = {
 
   },
 
+  random: function(from, to) {
+    
+    if (to > from)
+      return from + Math.random() * (to - from);
+    else
+      return to + Math.random() * (from - to);
+
+  },
+
 }
