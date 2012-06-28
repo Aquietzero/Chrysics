@@ -45,7 +45,7 @@ CHRYSICS.Particle.prototype = {
     this.velocity.addScaledVector(this.acceleration, duration);
 
     // Apply the damping coeffcient.
-    // this.velocity.mulScalar(Math.pow(this.damping, duration));
+    this.velocity.mulScalar(Math.pow(this.damping, duration));
     
     this.clearForces();
   

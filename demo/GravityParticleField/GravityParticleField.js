@@ -21,9 +21,9 @@ Ball.prototype = {
   init: function() {
 
     this.particle.setVelocity(new CHRYSICS.Vector3(
-      CHRYSICS.Utils.random(0, 122),
-      CHRYSICS.Utils.random(0, 123),
-      CHRYSICS.Utils.random(0, 121)
+      CHRYSICS.Utils.random(-120, 120),
+      CHRYSICS.Utils.random(-120, 120),
+      CHRYSICS.Utils.random(-120, 120)
     ));
     this.particle.setMass(2.0);
 
@@ -38,7 +38,7 @@ Ball.prototype = {
 
     /*
     // Bind drag force to the particle.
-    var drag = new CHRYSICS.ParticleDrag(0.00001, 0.00002);
+    var drag = new CHRYSICS.ParticleDrag(0.0001, 0.0002);
     CHRYSICS.ParticleForceRegistry.add(
       this.particle,
       drag

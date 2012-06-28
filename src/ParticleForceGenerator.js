@@ -59,6 +59,40 @@ CHRYSICS.ParticleDrag.prototype = {
 }
 
 /**
+ * Particle Spring:
+ *
+ *  particle 1                    particle 2
+ *     @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@
+ *     |<-------- i0 -------->|
+ *     |<------------- i ------------>|
+ *
+ * f = -k(|i| - i0)î
+ */
+CHRYSICS.ParticleSpring = function(particle, k, restLength) {
+
+  this.particle = particle;
+  this.k = k;
+  this.restLength = restLength;
+
+}
+
+CHRYSICS.ParticleSpring.prototype = {
+
+  updateForce: function(particle, duration) {
+  
+    var spring, deltaL, force;
+
+    spring = particle.position.sub(this.particle.position);
+    deltaL = spring.magnitude() - this.restLength;
+    force  = spring.normalize().mul(-this.k * deltaL);
+
+    particle.addForce(force);
+  
+  }
+    
+}
+
+/**
  * Anchored Spring:
  *
  * f = -k(|i| - i0)î

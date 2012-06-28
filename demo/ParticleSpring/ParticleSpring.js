@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Box = function(length) {
+var Box = function(length, pos) {
 
   this.particle = new CHRYSICS.Particle();
   this.cube = new THREE.Mesh(
@@ -12,31 +12,18 @@ var Box = function(length) {
     new THREE.MeshLambertMaterial({color: 0xff0000})
   );
   
-  this.init();
+  this.init(pos);
 
 }
 
 Box.prototype = {
 
-  init: function() {
+  init: function(pos) {
 
     this.particle.setMass(2.0);
 
-    var gravity = new CHRYSICS.ParticleGravity(new CHRYSICS.Vector3(0, -15, 0));
-    var anchorSpring = new CHRYSICS.AnchoredSpring(
-      new CHRYSICS.Vector3(0, 150, 0),
-      0.5,
-      150
-    );
-
-    CHRYSICS.ParticleForceRegistry.add(
-      this.particle,
-      gravity
-    );
-    CHRYSICS.ParticleForceRegistry.add(
-      this.particle, 
-      anchorSpring
-    );
+    this.particle.position.set(pos.x, pos.y, pos.z);
+    this.cube.position.set(pos.x, pos.y, pos.z);
 
   },
 
@@ -55,7 +42,7 @@ Box.prototype = {
 
 }
 
-var AnchorSpring = function(container) {
+var ParticleSpring = function(container) {
 
   this.container = container;
   this.width  = window.innerWidth;
@@ -69,7 +56,7 @@ var AnchorSpring = function(container) {
 
 }
 
-AnchorSpring.prototype = {
+ParticleSpring.prototype = {
 
   initThree: function() {
 
@@ -92,6 +79,7 @@ AnchorSpring.prototype = {
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
 
     this.camera.position.set(400, 240, 100);
+    this.camera.up.set(0, 1, 0);
     this.camera.lookAt({x:0, y:0, z:0});
 
     this.scene.add(this.camera);
@@ -108,8 +96,30 @@ AnchorSpring.prototype = {
 
   initBox: function() {
 
-    this.box = new Box(30);
-    this.scene.add(this.box.cube);
+    this.box1 = new Box(30, {x:-100, y:0, z:0});
+    this.box2 = new Box(30, {x: 100, y:0, z:0});
+    this.scene.add(this.box1.cube);
+    this.scene.add(this.box2.cube);
+
+    var ParticleSpring1 = new CHRYSICS.ParticleSpring(
+      this.box1.particle,
+      0.5,
+      150
+    );
+    CHRYSICS.ParticleForceRegistry.add(
+      this.box2.particle, 
+      ParticleSpring1
+    );
+
+    var ParticleSpring2 = new CHRYSICS.ParticleSpring(
+      this.box2.particle,
+      0.5,
+      150
+    );
+    CHRYSICS.ParticleForceRegistry.add(
+      this.box1.particle, 
+      ParticleSpring2
+    );
 
   },
 
@@ -118,7 +128,8 @@ AnchorSpring.prototype = {
     var self = this;
     var loop = function() {
 
-      self.box.update(0.033);
+      self.box1.update(0.033);
+      self.box2.update(0.033);
       self.renderer.clear();
       self.renderer.render(self.scene, self.camera);
       window.requestAnimationFrame(loop);
