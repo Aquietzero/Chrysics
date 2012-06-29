@@ -14,7 +14,7 @@ CHRYSICS.Particle = function() {
    * Damping is required to remove energy added
    * through numerical instability in the integrator.
    */
-  this.damping = 0.97;
+  this.damping = 0.9;
 
   /**
    * inverseMass the 1/mass. Since in the Newton's second law,
@@ -63,6 +63,18 @@ CHRYSICS.Particle.prototype = {
   
   },
 
+  setAcceleration: function(acc) {
+
+    this.acceleration = acc;
+  
+  },
+
+  getAcceleration: function() {
+  
+    return this.acceleration; 
+  
+  },
+
   setMass: function(mass) {
   
     if (mass == Infinity)
@@ -83,10 +95,16 @@ CHRYSICS.Particle.prototype = {
   
   },
 
+  getInverseMass: function() {
+  
+    return this.inverseMass;
+  
+  },
+
   setVelocity: function(velocity) {
 
     this.velocity = velocity;
-  
+
   },
 
   getVelocity: function() {

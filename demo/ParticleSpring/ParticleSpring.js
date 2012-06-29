@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Box = function(length, pos) {
+var Box = function(length, mass, pos) {
 
   this.particle = new CHRYSICS.Particle();
   this.cube = new THREE.Mesh(
@@ -12,15 +12,15 @@ var Box = function(length, pos) {
     new THREE.MeshLambertMaterial({color: 0xff0000})
   );
   
-  this.init(pos);
+  this.init(mass, pos);
 
 }
 
 Box.prototype = {
 
-  init: function(pos) {
+  init: function(mass, pos) {
 
-    this.particle.setMass(2.0);
+    this.particle.setMass(mass);
 
     this.particle.position.set(pos.x, pos.y, pos.z);
     this.cube.position.set(pos.x, pos.y, pos.z);
@@ -96,11 +96,12 @@ ParticleSpring.prototype = {
 
   initBox: function() {
 
-    this.box1 = new Box(30, {x:-100, y:0, z:0});
-    this.box2 = new Box(30, {x: 100, y:0, z:0});
+    this.box1 = new Box(30, 3.0, {x:-100, y:0, z:0});
+    this.box2 = new Box(30, 1.0, {x: 100, y:0, z:0});
     this.scene.add(this.box1.cube);
     this.scene.add(this.box2.cube);
 
+    // Bind the second box to the first box.
     var ParticleSpring1 = new CHRYSICS.ParticleSpring(
       this.box1.particle,
       0.5,
@@ -111,6 +112,7 @@ ParticleSpring.prototype = {
       ParticleSpring1
     );
 
+    // Bind the first box to the second box.
     var ParticleSpring2 = new CHRYSICS.ParticleSpring(
       this.box2.particle,
       0.5,

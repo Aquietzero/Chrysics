@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Box = function(length) {
+var Box = function(length, mass, pos) {
 
   this.particle = new CHRYSICS.Particle();
   this.cube = new THREE.Mesh(
@@ -12,18 +12,20 @@ var Box = function(length) {
     new THREE.MeshLambertMaterial({color: 0xff0000})
   );
   
-  this.init();
+  this.init(mass, pos);
 
 }
 
 Box.prototype = {
 
-  init: function() {
+  init: function(mass, pos) {
 
-    this.particle.setMass(2.0);
+    this.particle.setMass(mass);
+    this.particle.position.set(pos.x, pos.y, pos.z);
+    this.cube.position.set(pos.x, pos.y, pos.z);
 
-    var gravity = new CHRYSICS.ParticleGravity(new CHRYSICS.Vector3(0, -35, 0));
-    var anchorSpring = new CHRYSICS.AnchorSpring(
+    var gravity = new CHRYSICS.ParticleGravity(new CHRYSICS.Vector3(0, -15, 0));
+    var bungeeSpring = new CHRYSICS.BungeeAnchorSpring(
       new CHRYSICS.Vector3(0, 150, 0),
       0.5,
       150
@@ -35,7 +37,7 @@ Box.prototype = {
     );
     CHRYSICS.ParticleForceRegistry.add(
       this.particle, 
-      anchorSpring
+      bungeeSpring
     );
 
   },
@@ -55,7 +57,7 @@ Box.prototype = {
 
 }
 
-var AnchorSpring = function(container) {
+var BungeeSpring = function(container) {
 
   this.container = container;
   this.width  = window.innerWidth;
@@ -69,7 +71,7 @@ var AnchorSpring = function(container) {
 
 }
 
-AnchorSpring.prototype = {
+BungeeSpring.prototype = {
 
   initThree: function() {
 
@@ -108,7 +110,7 @@ AnchorSpring.prototype = {
 
   initBox: function() {
 
-    this.box = new Box(30);
+    this.box = new Box(30, 2.0, {x:0, y:-150, z:0});
     this.scene.add(this.box.cube);
 
   },
