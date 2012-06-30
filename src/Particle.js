@@ -14,7 +14,7 @@ CHRYSICS.Particle = function() {
    * Damping is required to remove energy added
    * through numerical instability in the integrator.
    */
-  this.damping = 0.9;
+  this.damping = 0.95;
 
   /**
    * inverseMass the 1/mass. Since in the Newton's second law,

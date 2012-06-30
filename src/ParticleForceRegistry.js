@@ -5,9 +5,13 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.ParticleForceRegistry = {
+CHRYSICS.ParticleForceRegistry = function() {
 
-  registrations: [],
+  this.registrations = [];
+
+}
+
+CHRYSICS.ParticleForceRegistry.prototype = {
 
   add: function(particle, force) {
   

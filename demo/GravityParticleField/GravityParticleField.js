@@ -21,111 +21,54 @@ Ball.prototype = {
   init: function() {
 
     this.particle.setVelocity(new CHRYSICS.Vector3(
-      CHRYSICS.Utils.random(-120, 120),
-      CHRYSICS.Utils.random(-120, 120),
-      CHRYSICS.Utils.random(-120, 120)
+      CHRYSICS.Utils.random(-70, 70),
+      CHRYSICS.Utils.random(-70, 70),
+      CHRYSICS.Utils.random(-70, 70)
     ));
     this.particle.setMass(2.0);
 
-    // Bind gravity to the particle.
-    var gravity = new CHRYSICS.ParticleGravity(
-      new CHRYSICS.Vector3(0, -2, 0)
-    );
-    CHRYSICS.ParticleForceRegistry.add(
-      this.particle,
-      gravity
-    );
-
-    /*
-    // Bind drag force to the particle.
-    var drag = new CHRYSICS.ParticleDrag(0.0001, 0.0002);
-    CHRYSICS.ParticleForceRegistry.add(
-      this.particle,
-      drag
-    );
-    */
-
-    this.sphere.position.set(0, 200, 0);
-
   },
 
-  update: function(duration) {
-
-    CHRYSICS.ParticleForceRegistry.updateForces(duration);
-
-    this.particle.integrate(duration);
-    this.sphere.position.set(
-      this.particle.position.x,
-      this.particle.position.y,
-      this.particle.position.z
-    );
-
+  getGeometry: function() {
+  
+    return this.sphere;
+  
   },
+
+  getParticle: function() {
+  
+    return this.particle;
+  
+  }
 
 }
 
 var GravityParticleField = function(container) {
 
-  this.container = container;
-  this.width  = window.innerWidth;
-  this.height = window.innerHeight;
+  this.worldPhysics   = new CHRYSICS.ParticleWorld();
+  this.worldRendering = new RenderingWorld(container);
 
-  this.initThree();
-  this.initScene();
-  this.initCamera();
-  this.initLight();
-  this.initBalls();
+  this.initWorld();
 
 }
 
 GravityParticleField.prototype = {
 
-  initThree: function() {
+  initWorld: function() {
 
-    this.renderer = new THREE.WebGLRenderer({antialias: true});
-    this.renderer.setSize(this.width, this.height);
-
-    document.getElementById(this.container).appendChild(this.renderer.domElement);
-    this.renderer.setClearColorHex(0x000000, 1.0);
-
-  },
-
-  initScene: function() {
-
-    this.scene = new THREE.Scene();
-  
-  },
-
-  initCamera: function() {
-
-    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
-
-    this.camera.position.set(400, 240, 100);
-    this.camera.up.set(0, 1, 0);
-    this.camera.lookAt({x:0, y:0, z:0});
-
-    this.scene.add(this.camera);
-
-  },
-
-  initLight: function() {
-
-    this.light = new THREE.DirectionalLight(0xffffff, 1.0);
-    this.light.position.set(100, 100, 200);
-    this.scene.add(this.light);
-
-  },
-
-  initBalls: function() {
-
-    this.balls = [];
-    var ball;
+    var gravity = new CHRYSICS.ParticleGravity(
+      new CHRYSICS.Vector3(0, -10, 0)
+    );
 
     for (var i = 0; i < 50; ++i) {
+
       ball = new Ball(CHRYSICS.Utils.random(5, 10));
 
-      this.scene.add(ball.sphere);
-      this.balls.push(ball);
+      this.worldRendering.add(ball);
+      this.worldPhysics.add(ball.getParticle());
+
+      this.worldPhysics.addForceRegistry(ball.getParticle(), gravity);
+
     }
 
   },
@@ -133,13 +76,12 @@ GravityParticleField.prototype = {
   animate: function() {
 
     var self = this;
+    self.worldPhysics.startFrame();
+
     var loop = function() {
 
-      for (var i = 0; i < 50; ++i)
-        self.balls[i].update(0.033);
-
-      self.renderer.clear();
-      self.renderer.render(self.scene, self.camera);
+      self.worldPhysics.simulate(0.033);
+      self.worldRendering.render();
       window.requestAnimationFrame(loop);
 
     }

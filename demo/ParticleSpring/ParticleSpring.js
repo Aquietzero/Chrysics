@@ -27,102 +27,57 @@ Box.prototype = {
 
   },
 
-  update: function(duration) {
-
-    CHRYSICS.ParticleForceRegistry.updateForces(duration);
-
-    this.particle.integrate(duration);
-    this.cube.position.set(
-      this.particle.position.x,
-      this.particle.position.y,
-      this.particle.position.z
-    );
-
+  getGeometry: function() {
+  
+    return this.cube;
+  
   },
+
+  getParticle: function() {
+  
+    return this.particle;
+  
+  }
 
 }
 
 var ParticleSpring = function(container) {
 
-  this.container = container;
-  this.width  = window.innerWidth;
-  this.height = window.innerHeight;
+  this.worldPhysics   = new CHRYSICS.ParticleWorld();
+  this.worldRendering = new RenderingWorld(container);
 
-  this.initThree();
-  this.initScene();
-  this.initCamera();
-  this.initLight();
-  this.initBox();
+  this.initWorld();
 
 }
 
 ParticleSpring.prototype = {
 
-  initThree: function() {
+  initWorld: function() {
 
-    this.renderer = new THREE.WebGLRenderer({antialias: true});
-    this.renderer.setSize(this.width, this.height);
+    var box1 = new Box(30, 3.0, {x:-100, y:0, z:0});
+    var box2 = new Box(30, 1.0, {x: 100, y:0, z:0});
 
-    document.getElementById(this.container).appendChild(this.renderer.domElement);
-    this.renderer.setClearColorHex(0x000000, 1.0);
-
-  },
-
-  initScene: function() {
-
-    this.scene = new THREE.Scene();
-  
-  },
-
-  initCamera: function() {
-
-    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
-
-    this.camera.position.set(400, 240, 100);
-    this.camera.up.set(0, 1, 0);
-    this.camera.lookAt({x:0, y:0, z:0});
-
-    this.scene.add(this.camera);
-
-  },
-
-  initLight: function() {
-
-    this.light = new THREE.DirectionalLight(0xffffff, 1.0);
-    this.light.position.set(100, 100, 200);
-    this.scene.add(this.light);
-
-  },
-
-  initBox: function() {
-
-    this.box1 = new Box(30, 3.0, {x:-100, y:0, z:0});
-    this.box2 = new Box(30, 1.0, {x: 100, y:0, z:0});
-    this.scene.add(this.box1.cube);
-    this.scene.add(this.box2.cube);
+    this.worldPhysics.add(box1.getParticle());
+    this.worldPhysics.add(box2.getParticle());
+    this.worldRendering.add(box1);
+    this.worldRendering.add(box2);
 
     // Bind the second box to the first box.
-    var ParticleSpring1 = new CHRYSICS.ParticleSpring(
-      this.box1.particle,
+    var particleSpring1 = new CHRYSICS.ParticleSpring(
+      box1.getParticle(),
       0.5,
       150
     );
-    CHRYSICS.ParticleForceRegistry.add(
-      this.box2.particle, 
-      ParticleSpring1
-    );
+    this.worldPhysics.addForceRegistry(box2.getParticle(), particleSpring1);
 
     // Bind the first box to the second box.
-    var ParticleSpring2 = new CHRYSICS.ParticleSpring(
-      this.box2.particle,
+    var particleSpring2 = new CHRYSICS.ParticleSpring(
+      box2.getParticle(),
       0.5,
       150
     );
-    CHRYSICS.ParticleForceRegistry.add(
-      this.box1.particle, 
-      ParticleSpring2
-    );
-
+    this.worldPhysics.addForceRegistry(box1.getParticle(), particleSpring2);
+    
   },
 
   animate: function() {
@@ -130,10 +85,8 @@ ParticleSpring.prototype = {
     var self = this;
     var loop = function() {
 
-      self.box1.update(0.033);
-      self.box2.update(0.033);
-      self.renderer.clear();
-      self.renderer.render(self.scene, self.camera);
+      self.worldPhysics.simulate(0.033);
+      self.worldRendering.render();
       window.requestAnimationFrame(loop);
 
     }
