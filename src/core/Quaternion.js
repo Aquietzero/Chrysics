@@ -16,13 +16,19 @@ CHRYSICS.Quaternion = function(w, x, y, z) {
 
 CHRYSICS.Quaternion.prototype = {
 
-  magnitude: function() {
+  magnitudeSquare: function() {
   
     return this.w * this.w +
            this.x * this.x +
            this.y * this.y +
            this.z * this.z;
 
+  },
+
+  magnitude: function() {
+
+    return Math.sqrt(this.magnitudeSquare());
+  
   },
 
   normalize: function() {
