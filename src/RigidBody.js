@@ -21,21 +21,20 @@ CHRYSICS.RigidBody = function() {
    * way to represent infinity in most programming languages.
    */
   this.inverseMass = 0;
+  this.inverseIneriaMatrix = new CHRYSICS.Matrix3();
 
-  this.position = new CHRYSICS.Vector3();
-
-  /**
-   * Velocity is the linear velocity of the rigid body.
-   */
-  this.velocity = new CHRYSICS.Vector3();
-
-  /**
-   * Rotation is the angular velocity of the rigid body.
-   */
-  this.rotation = new CHRYSICS.Vector3();
-
+  this.position    = new CHRYSICS.Vector3();
   this.orientation = new CHRYSICS.Quaternion();
 
+  this.velocity = new CHRYSICS.Vector3();
+  this.rotation = new CHRYSICS.Vector3();
+
+  this.velocityDamping = 0.95;
+  this.angularDamping  = 0.95;
+
   this.transform = new CHRYSICS.Matrix4();
+
+  this.forceAccumulated  = new CHRYSICS.Vector3();
+  this.torqueAccumulated = new CHRYSICS.Vector3();
 
 }

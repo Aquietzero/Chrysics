@@ -209,3 +209,4 @@ CHRYSICS.Vector3.prototype = {
   },
 
 }
+

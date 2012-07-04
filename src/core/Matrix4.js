@@ -46,22 +46,12 @@ CHRYSICS.Matrix4.prototype = {
     a41, a42, a43, a44
   ) {
 
-    this.elements[ 0] = a11;
-    this.elements[ 1] = a12;
-    this.elements[ 2] = a13;
-    this.elements[ 3] = a14;
-    this.elements[ 4] = a21;
-    this.elements[ 5] = a22;
-    this.elements[ 6] = a23;
-    this.elements[ 7] = a24;
-    this.elements[ 8] = a31;
-    this.elements[ 9] = a32;
-    this.elements[10] = a33;
-    this.elements[11] = a34;
-    this.elements[12] = a41;
-    this.elements[13] = a42;
-    this.elements[14] = a43;
-    this.elements[15] = a44;
+    var m = this.elements;
+
+    m[ 0] = a11, m[ 1] = a12, m[ 2] = a13, m[ 3] = a14;
+    m[ 4] = a21, m[ 5] = a22, m[ 6] = a23, m[ 7] = a24;
+    m[ 8] = a31, m[ 9] = a32, m[10] = a33, m[11] = a34;
+    m[12] = a41, m[13] = a42, m[14] = a43, m[15] = a44;
   
   },
 
@@ -81,23 +71,13 @@ CHRYSICS.Matrix4.prototype = {
     var ma = this.elements;
     var mb = m.elements;
 
-    var ma11 = ma[ 0], ma12 = ma[ 1], ma13 = ma[ 2], ma14 = ma[ 3],
-        ma21 = ma[ 4], ma22 = ma[ 5], ma23 = ma[ 6], ma24 = ma[ 7],
-        ma31 = ma[ 8], ma32 = ma[ 9], ma33 = ma[10], ma34 = ma[11],
-        ma41 = ma[12], ma42 = ma[13], ma43 = ma[14], ma44 = ma[15];
-
-    var mb11 = mb[ 0], mb12 = mb[ 1], mb13 = mb[ 2], mb14 = mb[ 3],
-        mb21 = mb[ 4], mb22 = mb[ 5], mb23 = mb[ 6], mb24 = mb[ 7],
-        mb31 = mb[ 8], mb32 = mb[ 9], mb33 = mb[10], mb34 = mb[11],
-        mb41 = mb[12], mb42 = mb[13], mb43 = mb[14], mb44 = mb[15];
-
     return new CHRYSICS.Matrix4(
-      ma11 + mb11, ma12 + mb12, ma13 + mb13, ma14 + mb14,
-      ma21 + mb21, ma22 + mb22, ma23 + mb23, ma24 + mb24,
-      ma31 + mb31, ma32 + mb32, ma33 + mb33, ma34 + mb34,
-      ma41 + mb41, ma42 + mb42, ma43 + mb43, ma44 + mb44
+      ma[ 0] + mb[ 0], ma[ 1] + mb[ 1], ma[ 2] + mb[ 2], ma[ 3] + mb[ 3],
+      ma[ 4] + mb[ 4], ma[ 5] + mb[ 5], ma[ 6] + mb[ 6], ma[ 7] + mb[ 7],
+      ma[ 8] + mb[ 8], ma[ 9] + mb[ 9], ma[10] + mb[10], ma[11] + mb[11],
+      ma[12] + mb[12], ma[13] + mb[13], ma[14] + mb[14], ma[15] + mb[15]
     );
-  
+ 
   },
 
   addMatrix: function(m) {
@@ -105,21 +85,11 @@ CHRYSICS.Matrix4.prototype = {
     var ma = this.elements;
     var mb = m.elements;
 
-    var ma11 = ma[ 0], ma12 = ma[ 1], ma13 = ma[ 2], ma14 = ma[ 3],
-        ma21 = ma[ 4], ma22 = ma[ 5], ma23 = ma[ 6], ma24 = ma[ 7],
-        ma31 = ma[ 8], ma32 = ma[ 9], ma33 = ma[10], ma34 = ma[11],
-        ma41 = ma[12], ma42 = ma[13], ma43 = ma[14], ma44 = ma[15];
-
-    var mb11 = mb[ 0], mb12 = mb[ 1], mb13 = mb[ 2], mb14 = mb[ 3],
-        mb21 = mb[ 4], mb22 = mb[ 5], mb23 = mb[ 6], mb24 = mb[ 7],
-        mb31 = mb[ 8], mb32 = mb[ 9], mb33 = mb[10], mb34 = mb[11],
-        mb41 = mb[12], mb42 = mb[13], mb43 = mb[14], mb44 = mb[15];
-
     this.set(
-      ma11 + mb11, ma12 + mb12, ma13 + mb13, ma14 + mb14,
-      ma21 + mb21, ma22 + mb22, ma23 + mb23, ma24 + mb24,
-      ma31 + mb31, ma32 + mb32, ma33 + mb33, ma34 + mb34,
-      ma41 + mb41, ma42 + mb42, ma43 + mb43, ma44 + mb44
+      ma[ 0] + mb[ 0], ma[ 1] + mb[ 1], ma[ 2] + mb[ 2], ma[ 3] + mb[ 3],
+      ma[ 4] + mb[ 4], ma[ 5] + mb[ 5], ma[ 6] + mb[ 6], ma[ 7] + mb[ 7],
+      ma[ 8] + mb[ 8], ma[ 9] + mb[ 9], ma[10] + mb[10], ma[11] + mb[11],
+      ma[12] + mb[12], ma[13] + mb[13], ma[14] + mb[14], ma[15] + mb[15]
     );
   
   },

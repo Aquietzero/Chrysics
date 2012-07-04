@@ -18,10 +18,11 @@
  *  | element[6]   element[7]   element[9] |
  *  
  */
+
 CHRYSICS.Matrix3 = function(
   a11, a12, a13, a21, a22, a23, a31, a32, a33) {
 
-  this.elements = [];
+  this.elements = new Float32Array(9);
 
   this.set(
     a11, a12, a13,
@@ -39,15 +40,15 @@ CHRYSICS.Matrix3.prototype = {
     a31, a32, a33
   ) {
 
-    this.element[0] = a11;
-    this.element[1] = a12;
-    this.element[2] = a13;
-    this.element[3] = a21;
-    this.element[4] = a22;
-    this.element[5] = a23;
-    this.element[6] = a31;
-    this.element[7] = a32;
-    this.element[8] = a33;
+    this.elements[0] = a11;
+    this.elements[1] = a12;
+    this.elements[2] = a13;
+    this.elements[3] = a21;
+    this.elements[4] = a22;
+    this.elements[5] = a23;
+    this.elements[6] = a31;
+    this.elements[7] = a32;
+    this.elements[8] = a33;
   
   },
 
@@ -66,18 +67,10 @@ CHRYSICS.Matrix3.prototype = {
     var ma = this.elements;
     var mb = m.elements;
 
-    var ma11 = ma[0], ma12 = ma[1], ma13 = ma[2],
-        ma21 = ma[3], ma22 = ma[4], ma23 = ma[5],
-        ma31 = ma[6], ma32 = ma[7], ma33 = ma[8],
-
-    var mb11 = mb[0], mb12 = mb[1], mb13 = mb[2],
-        mb21 = mb[3], mb22 = mb[4], mb23 = mb[5],
-        mb31 = mb[6], mb32 = mb[7], mb33 = mb[8],
-
     return new CHRYSICS.Matrix3(
-      ma11 + mb11, ma12 + mb12, ma13 + mb13,
-      ma21 + mb21, ma22 + mb22, ma23 + mb23,
-      ma31 + mb31, ma32 + mb32, ma33 + mb33
+      ma[0] + mb[0], ma[1] + mb[1], ma[2] + mb[2],
+      ma[3] + mb[3], ma[4] + mb[4], ma[5] + mb[5],
+      ma[6] + mb[6], ma[7] + mb[7], ma[8] + mb[8]
     );
   
   },
@@ -87,22 +80,23 @@ CHRYSICS.Matrix3.prototype = {
     var ma = this.elements;
     var mb = m.elements;
 
-    var ma11 = ma[0], ma12 = ma[1], ma13 = ma[2],
-        ma21 = ma[3], ma22 = ma[4], ma23 = ma[5],
-        ma31 = ma[6], ma32 = ma[7], ma33 = ma[8],
-
-    var mb11 = mb[0], mb12 = mb[1], mb13 = mb[2],
-        mb21 = mb[3], mb22 = mb[4], mb23 = mb[5],
-        mb31 = mb[6], mb32 = mb[7], mb33 = mb[8],
-
-    this.set(
-      ma11 + mb11, ma12 + mb12, ma13 + mb13,
-      ma21 + mb21, ma22 + mb22, ma23 + mb23,
-      ma31 + mb31, ma32 + mb32, ma33 + mb33
-    );
+    ma[0] += mb[0], ma[1] += mb[1], ma[2] += mb[2];
+    ma[3] += mb[3], ma[4] += mb[4], ma[5] += mb[5];
+    ma[6] += mb[6], ma[7] += mb[7], ma[8] += mb[8];
   
   },
 
+  mulScalar: function(s) {
+
+    var m = this.elements;
+
+    return new CHRYSICS.Matrix3(
+      m[0] * s, m[1] * s, m[2] * s,
+      m[3] * s, m[4] * s, m[5] * s,
+      m[6] * s, m[7] * s, m[8] * s
+    );
+  
+  },
 
   mulMatrix: function(m) {
 
@@ -111,52 +105,84 @@ CHRYSICS.Matrix3.prototype = {
 
     var ma11 = ma[0], ma12 = ma[1], ma13 = ma[2],
         ma21 = ma[3], ma22 = ma[4], ma23 = ma[5],
-        ma31 = ma[6], ma32 = ma[7], ma33 = ma[8],
+        ma31 = ma[6], ma32 = ma[7], ma33 = ma[8];
 
     var mb11 = mb[0], mb12 = mb[1], mb13 = mb[2],
         mb21 = mb[3], mb22 = mb[4], mb23 = mb[5],
-        mb31 = mb[6], mb32 = mb[7], mb33 = mb[8],
+        mb31 = mb[6], mb32 = mb[7], mb33 = mb[8];
 
     return new CHRYSICS.Matrix3(
-      ma11*mb11 + ma12*mb21 + ma13*mb31 + ma14*mb41,
-      ma11*mb12 + ma12*mb22 + ma13*mb32 + ma14*mb42,
-      ma11*mb13 + ma12*mb23 + ma13*mb33 + ma14*mb43,
-      ma11*mb14 + ma12*mb24 + ma13*mb34 + ma14*mb44,
+      ma11*mb11 + ma12*mb21 + ma13*mb31,
+      ma11*mb12 + ma12*mb22 + ma13*mb32,
+      ma11*mb13 + ma12*mb23 + ma13*mb33,
 
-      ma21*mb11 + ma22*mb21 + ma23*mb31 + ma24*mb41,
-      ma21*mb12 + ma22*mb22 + ma23*mb32 + ma24*mb42,
-      ma21*mb13 + ma22*mb23 + ma23*mb33 + ma24*mb43,
-      ma21*mb14 + ma22*mb24 + ma23*mb34 + ma24*mb44,
+      ma21*mb11 + ma22*mb21 + ma23*mb31,
+      ma21*mb12 + ma22*mb22 + ma23*mb32,
+      ma21*mb13 + ma22*mb23 + ma23*mb33,
 
-      ma31*mb11 + ma32*mb21 + ma33*mb31 + ma34*mb41,
-      ma31*mb12 + ma32*mb22 + ma33*mb32 + ma34*mb42,
-      ma31*mb13 + ma32*mb23 + ma33*mb33 + ma34*mb43,
-      ma31*mb14 + ma32*mb24 + ma33*mb34 + ma34*mb44,
-
-      ma41*mb11 + ma42*mb21 + ma43*mb31 + ma44*mb41,
-      ma41*mb12 + ma42*mb22 + ma43*mb32 + ma44*mb42,
-      ma41*mb13 + ma42*mb23 + ma43*mb33 + ma44*mb43,
-      ma41*mb14 + ma42*mb24 + ma43*mb34 + ma44*mb44,
+      ma31*mb11 + ma32*mb21 + ma33*mb31,
+      ma31*mb12 + ma32*mb22 + ma33*mb32,
+      ma31*mb13 + ma32*mb23 + ma33*mb33
     );
 
   },
 
   mulVector3: function(v) {
 
-    var ma11 = ma[ 0], ma12 = ma[ 1], ma13 = ma[ 2], ma14 = ma[ 3],
-        ma21 = ma[ 4], ma22 = ma[ 5], ma23 = ma[ 6], ma24 = ma[ 7],
-        ma31 = ma[ 8], ma32 = ma[ 9], ma33 = ma[10], ma34 = ma[11];
+    var m = this.elements;
 
     return new CHRYSICS.Vector3(
-      v.x*ma11 + v.y*ma12 + v.z*ma13 + ma14,
-      v.x*ma21 + v.y*ma22 + v.z*ma23 + ma24,
-      v.x*ma31 + v.y*ma32 + v.z*ma33 + ma34
+      v.x*m[0] + v.y*m[1] + v.z*m[2],
+      v.x*m[3] + v.y*m[4] + v.z*m[5],
+      v.x*m[6] + v.y*m[7] + v.z*m[8]
     );
   
   },
 
-  inverse: function() {
+  determinant: function() {
+
+    var m = this.elements;
+    var m11 = m[0], m12 = m[1], m13 = m[2],
+        m21 = m[3], m22 = m[4], m23 = m[5],
+        m31 = m[6], m32 = m[7], m33 = m[8];
+
+    return m11*m22*m33 + m21*m32*m13 + m31*m12*m23 -
+           m11*m32*m23 - m31*m22*m13 - m21*m12*m33;
   
   },
 
+  inverse: function() {
+
+    var m = this.elements;
+    var m11 = m[0], m12 = m[1], m13 = m[2],
+        m21 = m[3], m22 = m[4], m23 = m[5],
+        m31 = m[6], m32 = m[7], m33 = m[8];
+
+    var det = this.determinant();
+
+    if (det == 0)
+      return;
+
+    return (new CHRYSICS.Matrix3(
+      m22*m33 - m23*m32, m13*m32 - m12*m33, m12*m23 - m13*m22,
+      m23*m31 - m21*m33, m11*m33 - m13*m31, m13*m21 - m11*m23,
+      m21*m32 - m22*m31, m12*m31 - m11*m32, m11*m22 - m12*m21
+    )).mulScalar(1 / det);
+ 
+  },
+
+  log: function() {
+  
+    var es = this.elements;
+
+    console.log(
+      es[0] + '\t' + es[1] + '\t' + es[2] + '\n' +
+      es[3] + '\t' + es[4] + '\t' + es[5] + '\n' +
+      es[6] + '\t' + es[7] + '\t' + es[8] + '\n'
+    );
+  
+  }
+
+
 }
+
