@@ -54,7 +54,7 @@ CHRYSICS.RigidBody.prototype = {
 
   _calTransform: function() {
   
-    this.transform(this.orientation, this.position);
+    this.transform.setOrientationAndPosition(this.orientation, this.position);
   
   },
 
@@ -63,6 +63,7 @@ CHRYSICS.RigidBody.prototype = {
     var t   = this.transform.elements;
     var itb = this.inverseInertiaTensor.elements;
     var itw = this.inverseInertiaTensorWorld.elements;
+
 
     var t4  = t[0]*itb[0] + t[1]*itb[3] + t[2]*itb[6],
         t9  = t[0]*itb[1] + t[1]*itb[4] + t[2]*itb[7],
@@ -108,11 +109,11 @@ CHRYSICS.RigidBody.prototype = {
 
     // a = t / I
     var angularAcceleration = 
-      this.inverseInertiaTensorWorld.mulVector(this.torqueAccumulator);
+      this.inverseInertiaTensorWorld.mulVector3(this.torqueAccumulator);
 
     // Update linear velocity and rotational velocity.
     this.velocity.addScaledVector(this.lastFrameAcceleration, duration);
-    this.rotation.addScaledVector(this.angularAcceleration, duration);
+    this.rotation.addScaledVector(angularAcceleration, duration);
 
     // Update linear position and orientation.
     this.position.addScaledVector(this.velocity, duration);
@@ -131,8 +132,10 @@ CHRYSICS.RigidBody.prototype = {
   },
 
   addForceAtPoint: function(force, point) {
+
+    var pt = typeof point === 'undefined' ? this.position : point;
   
-    var radius = point.sub(this.position);
+    var radius = pt.sub(this.position);
     var torque = radius.crossProduct(force);
 
     this.forceAccumulator.addVector(force);

@@ -21,7 +21,7 @@ CHRYSICS.Gravity.prototype = {
   
     var mass = body.getMass();
     if (mass != Infinity)
-      body.addForce(this.gravity.mul(mass));
+      body.addForceAtPoint(this.gravity.mul(mass));
 
   },
 

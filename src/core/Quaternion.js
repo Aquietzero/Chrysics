@@ -113,7 +113,7 @@ CHRYSICS.Quaternion.prototype = {
     return this.hamiltonProduct(
       new CHRYSICS.Quaternion(
         0, v.x, v.y, v.z
-      );
+      )
     );
   
   },
@@ -121,13 +121,13 @@ CHRYSICS.Quaternion.prototype = {
   hamiltonProduct: function(q) {
   
     var w1 = this.w, x1 = this.x, y1 = this.y, z1 = this.z,
-        w2 = q.w,    x2 = q.x,    y2 = q.y,    z2 = q.z,
+        w2 = q.w,    x2 = q.x,    y2 = q.y,    z2 = q.z;
 
     return new CHRYSICS.Quaternion(
-      w1*w2 - x1*x2 - y1*y2 - z1*z2,    
-      w1*x2 + x1*w2 + y1*z2 - z1*y2,    
-      w1*y2 - x1*z2 + y1*w2 + z1*x2,    
-      w1*z2 + x1*y2 - y1*x2 + z1*w2,    
+      w1*w2 - x1*x2 - y1*y2 - z1*z2,
+      w1*x2 + x1*w2 + y1*z2 - z1*y2,
+      w1*y2 - x1*z2 + y1*w2 + z1*x2,
+      w1*z2 + x1*y2 - y1*x2 + z1*w2
     );
   
   },
@@ -135,12 +135,12 @@ CHRYSICS.Quaternion.prototype = {
   hamiltonProductSelf: function(q) {
   
     var w1 = this.w, x1 = this.x, y1 = this.y, z1 = this.z,
-        w2 = q.w,    x2 = q.x,    y2 = q.y,    z2 = q.z,
+        w2 = q.w,    x2 = q.x,    y2 = q.y,    z2 = q.z;
 
-    this.w = w1*w2 - x1*x2 - y1*y2 - z1*z2,    
-    this.x = w1*x2 + x1*w2 + y1*z2 - z1*y2,    
-    this.y = w1*y2 - x1*z2 + y1*w2 + z1*x2,    
-    this.z = w1*z2 + x1*y2 - y1*x2 + z1*w2,    
+    this.w = w1*w2 - x1*x2 - y1*y2 - z1*z2;
+    this.x = w1*x2 + x1*w2 + y1*z2 - z1*y2;
+    this.y = w1*y2 - x1*z2 + y1*w2 + z1*x2;
+    this.z = w1*z2 + x1*y2 - y1*x2 + z1*w2;
   
   },
 
