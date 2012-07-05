@@ -147,6 +147,7 @@ CHRYSICS.Matrix4.prototype = {
         mb41 = mb[12], mb42 = mb[13], mb43 = mb[14], mb44 = mb[15];
 
     return new CHRYSICS.Matrix4(
+
       ma11*mb11 + ma12*mb21 + ma13*mb31 + ma14*mb41,
       ma11*mb12 + ma12*mb22 + ma13*mb32 + ma14*mb42,
       ma11*mb13 + ma12*mb23 + ma13*mb33 + ma14*mb43,
@@ -166,6 +167,7 @@ CHRYSICS.Matrix4.prototype = {
       ma41*mb12 + ma42*mb22 + ma43*mb32 + ma44*mb42,
       ma41*mb13 + ma42*mb23 + ma43*mb33 + ma44*mb43,
       ma41*mb14 + ma42*mb24 + ma43*mb34 + ma44*mb44
+
     );
 
   },
@@ -303,4 +305,3 @@ CHRYSICS.Matrix4.prototype = {
   }
 
 }
-

@@ -84,7 +84,7 @@ CHRYSICS.Quaternion.prototype = {
 
   },
 
-  addScaleVector: function(v, s) {
+  addScaledVector: function(v, s) {
 
     var q = new CHRYSICS.Quaternion(
       0, 
