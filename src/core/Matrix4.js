@@ -20,6 +20,7 @@
  *  | element[12]   element[13]   element[14]   element[15] |
  *  
  */
+
 CHRYSICS.Matrix4 = function(
   a11, a12, a13, a14,
   a21, a22, a23, a24,
@@ -53,6 +54,29 @@ CHRYSICS.Matrix4.prototype = {
     m[ 8] = a31, m[ 9] = a32, m[10] = a33, m[11] = a34;
     m[12] = a41, m[13] = a42, m[14] = a43, m[15] = a44;
   
+  },
+
+  setOrientationAndPosition: function(q, p) {
+
+    var m = this.elements;
+    var w = q.w, x = q.x, y = q.y, z = q.z;
+
+    var xw = x*w*2, xy = x*y*2, xz = x*z*2,
+        yw = y*w*2, yz = y*z*2, zw = z*w*2,
+        xx = x*x*2, yy = y*y*2, zz = z*z*2;
+
+    m[ 1] = xy + zw; 
+    m[ 2] = xz - yw;
+    m[ 4] = xy - zw;  
+    m[ 6] = yz + xw;
+    m[ 8] = xz + yw; 
+    m[ 9] = yz - xw; 
+    m[ 0] = 1 - yy - zz;
+    m[ 5] = 1 - xx - zz;
+    m[10] = 1 - xx - yy;
+
+    m[3] = p.x, m[7] = p.y, m[11] = p.z;
+
   },
 
   identity: function() {
@@ -90,6 +114,19 @@ CHRYSICS.Matrix4.prototype = {
       ma[ 4] + mb[ 4], ma[ 5] + mb[ 5], ma[ 6] + mb[ 6], ma[ 7] + mb[ 7],
       ma[ 8] + mb[ 8], ma[ 9] + mb[ 9], ma[10] + mb[10], ma[11] + mb[11],
       ma[12] + mb[12], ma[13] + mb[13], ma[14] + mb[14], ma[15] + mb[15]
+    );
+  
+  },
+
+  mulScalar: function(s) {
+  
+    var m = this.elements;
+
+    return new CHRYSICS.Matrix4(
+      m[ 0] * s, m[ 1] * s, m[ 2] * s, m[ 3] * s,
+      m[ 4] * s, m[ 5] * s, m[ 6] * s, m[ 7] * s,
+      m[ 8] * s, m[ 9] * s, m[10] * s, m[11] * s,
+      m[12] * s, m[13] * s, m[14] * s, m[15] * s
     );
   
   },
@@ -135,16 +172,43 @@ CHRYSICS.Matrix4.prototype = {
 
   mulVector3: function(v) {
 
-    var ma11 = ma[ 0], ma12 = ma[ 1], ma13 = ma[ 2], ma14 = ma[ 3],
-        ma21 = ma[ 4], ma22 = ma[ 5], ma23 = ma[ 6], ma24 = ma[ 7],
-        ma31 = ma[ 8], ma32 = ma[ 9], ma33 = ma[10], ma34 = ma[11];
+    var m = this.elements;
 
     return new CHRYSICS.Vector3(
-      v.x*ma11 + v.y*ma12 + v.z*ma13 + ma14,
-      v.x*ma21 + v.y*ma22 + v.z*ma23 + ma24,
-      v.x*ma31 + v.y*ma32 + v.z*ma33 + ma34
+      v.x*m[0] + v.y*m[1] + v.z*m[ 2] + m[ 3],
+      v.x*m[4] + v.y*m[5] + v.z*m[ 6] + m[ 7],
+      v.x*m[8] + v.y*m[9] + v.z*m[10] + m[11]
     );
   
+  },
+
+  /**
+   * When the matrix is used to transform a normal vector, or direction
+   * vector into the world coordinate from its local coordinate, then
+   * no translation should be added.
+   */
+  transformDirection: function(n) {
+
+    var m = this.elements;
+
+    return new CHRYSICS.Vector3(
+      v.x*m[0] + v.y*m[1] + v.z*m[ 2],
+      v.x*m[4] + v.y*m[5] + v.z*m[ 6],
+      v.x*m[8] + v.y*m[9] + v.z*m[10]
+    );
+  
+  },
+
+  transformInverseDirection: function(n) {
+ 
+    var m = this.elements;
+
+    return new CHRYSICS.Vector3(
+      v.x*m[0] + v.y*m[4] + v.z*m[ 8],
+      v.x*m[1] + v.y*m[5] + v.z*m[ 9],
+      v.x*m[2] + v.y*m[6] + v.z*m[10]
+    );
+ 
   },
 
   transpose: function() {
@@ -185,9 +249,48 @@ CHRYSICS.Matrix4.prototype = {
            m14 * (m21*det3 - m22*det5 + m23*det6);
  
   },
+  
+  inverse: function() {
+
+    var m = this.elements;
+    var m11 = m[ 0], m12 = m[ 1], m13 = m[ 2], m14 = m[ 3],
+        m21 = m[ 4], m22 = m[ 5], m23 = m[ 6], m24 = m[ 7],
+        m31 = m[ 8], m32 = m[ 9], m33 = m[10], m34 = m[11],
+        m41 = m[12], m42 = m[13], m43 = m[14], m44 = m[15];
+
+    var det = this.determinant();
+
+    if (det == 0)
+      return;
+
+    return (new CHRYSICS.Matrix4(
+
+      m23*m34*m42 - m24*m33*m42 + m24*m32*m43 - m22*m34*m43 - m23*m32*m44 + m22*m33*m44,
+      m14*m33*m42 - m13*m34*m42 - m14*m32*m43 + m12*m34*m43 + m13*m32*m44 - m12*m33*m44,
+      m13*m24*m42 - m14*m23*m42 + m14*m22*m43 - m12*m24*m43 - m13*m22*m44 + m12*m23*m44,
+      m14*m23*m32 - m13*m24*m32 - m14*m22*m33 + m12*m24*m33 + m13*m22*m34 - m12*m23*m34,
+
+      m24*m33*m41 - m23*m34*m41 - m24*m31*m43 + m21*m34*m43 + m23*m31*m44 - m21*m33*m44,
+      m13*m34*m41 - m14*m33*m41 + m14*m31*m43 - m11*m34*m43 - m13*m31*m44 + m11*m33*m44,
+      m14*m23*m41 - m13*m24*m41 - m14*m21*m43 + m11*m24*m43 + m13*m21*m44 - m11*m23*m44,
+      m13*m24*m31 - m14*m23*m31 + m14*m21*m33 - m11*m24*m33 - m13*m21*m34 + m11*m23*m34,
+
+      m22*m34*m41 - m24*m32*m41 + m24*m31*m42 - m21*m34*m42 - m22*m31*m44 + m21*m32*m44,
+      m14*m32*m41 - m12*m34*m41 - m14*m31*m42 + m11*m34*m42 + m12*m31*m44 - m11*m32*m44,
+      m12*m24*m41 - m14*m22*m41 + m14*m21*m42 - m11*m24*m42 - m12*m21*m44 + m11*m22*m44,
+      m14*m22*m31 - m12*m24*m31 - m14*m21*m32 + m11*m24*m32 + m12*m21*m34 - m11*m22*m34,
+
+      m23*m32*m41 - m22*m33*m41 - m23*m31*m42 + m21*m33*m42 + m22*m31*m43 - m21*m32*m43,
+      m12*m33*m41 - m13*m32*m41 + m13*m31*m42 - m11*m33*m42 - m12*m31*m43 + m11*m32*m43,
+      m13*m22*m41 - m12*m23*m41 - m13*m21*m42 + m11*m23*m42 + m12*m21*m43 - m11*m22*m43,
+      m12*m23*m31 - m13*m22*m31 + m13*m21*m32 - m11*m23*m32 - m12*m21*m33 + m11*m22*m33
+
+    )).mulScalar(1 / det);
+
+  },
 
   log: function() {
-  
+
     var es = this.elements;
 
     console.log(

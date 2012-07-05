@@ -1,6 +1,7 @@
 /**
  * Quaternion is the mathematical presentation of rotations in 
- * three dimensional world.
+ * three dimensional world. Quaternion only represents a rotation
+ * when its magnitude is 1.
  *
  * @author zero / zhaoyunhaosss@gmail.com
  */
@@ -83,7 +84,20 @@ CHRYSICS.Quaternion.prototype = {
 
   },
 
-  mul: function(s) {
+  addScaleVector: function(v, s) {
+
+    var q = new CHRYSICS.Quaternion(
+      0, 
+      v.x * s, 
+      v.y * s, 
+      v.z * s
+    );
+
+    this.hamiltonProductSelf(q);
+  
+  },
+
+  mulScalar: function(s) {
 
     return new CHRYSICS.Quaternion(
       this.w * s,
@@ -94,13 +108,14 @@ CHRYSICS.Quaternion.prototype = {
 
   },
 
-  mulScalar: function(s) {
- 
-    this.w *= s;
-    this.x *= s;
-    this.y *= s;
-    this.z *= s;
+  mulVector3: function(v) {
 
+    return this.hamiltonProduct(
+      new CHRYSICS.Quaternion(
+        0, v.x, v.y, v.z
+      );
+    );
+  
   },
 
   hamiltonProduct: function(q) {

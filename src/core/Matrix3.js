@@ -40,16 +40,33 @@ CHRYSICS.Matrix3.prototype = {
     a31, a32, a33
   ) {
 
-    this.elements[0] = a11;
-    this.elements[1] = a12;
-    this.elements[2] = a13;
-    this.elements[3] = a21;
-    this.elements[4] = a22;
-    this.elements[5] = a23;
-    this.elements[6] = a31;
-    this.elements[7] = a32;
-    this.elements[8] = a33;
+    var m = this.elements;
+
+    m[0] = a11, m[1] = a12, m[2] = a13;
+    m[3] = a21, m[4] = a22, m[5] = a23;
+    m[6] = a31, m[7] = a32, m[8] = a33;
   
+  },
+
+  setOrientation: function(q) {
+
+    var m = this.elements;
+    var w = q.w, x = q.x, y = q.y, z = q.z;
+
+    var xw = x*w*2, xy = x*y*2, xz = x*z*2,
+        yw = y*w*2, yz = y*z*2, zw = z*w*2,
+        xx = x*x*2, yy = y*y*2, zz = z*z*2;
+
+    m[1] = xy + zw; 
+    m[2] = xz - yw;
+    m[3] = xy - zw;  
+    m[5] = yz + xw;
+    m[6] = xz + yw; 
+    m[7] = yz - xw; 
+    m[0] = 1 - yy - zz;
+    m[4] = 1 - xx - zz;
+    m[8] = 1 - xx - yy;
+
   },
 
   identity: function() {
