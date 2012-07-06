@@ -5,6 +5,32 @@
  */
 
 /**
+ * Normal force
+ */
+CHRYSICS.Force = function(force, position, time) {
+
+  this.force = force;
+  this.position = position;
+  this.time = time || Infinity;
+  this.clock = 0;
+
+}
+
+CHRYSICS.Force.prototype = {
+
+  updateForce: function(body, duration) {
+
+    var mass = body.getMass();
+    if (mass != Infinity && this.clock < this.time) {
+      body.addForceAtPoint(this.force, this.position);
+      this.clock++;
+    }
+  
+  }
+
+}
+
+/**
  * Gravity:
  *
  * f = mg

@@ -80,14 +80,21 @@ RenderingWorld.prototype = {
 
   render: function() {
 
-    var particle;
+    var body;
     for (var i = 0; i < this.objects.length; ++i) {
 
-      particle = this.objects[i].getPhysique();
+      body = this.objects[i].getPhysique();
+
+      // Set orientation.
+      var m = new THREE.Matrix4();
+      m.setRotationFromQuaternion(body.orientation);
+      this.objects[i].getGeometry().applyMatrix(m);
+
+      // Set position.
       this.objects[i].getGeometry().position.set(
-        particle.position.x,
-        particle.position.y,
-        particle.position.z
+        body.position.x,
+        body.position.y,
+        body.position.z
       );
 
     }

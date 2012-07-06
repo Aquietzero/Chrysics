@@ -208,5 +208,11 @@ CHRYSICS.Vector3.prototype = {
 
   },
 
+  log: function() {
+  
+    console.log(this.x, this.y, this.z);
+  
+  },
+
 }
 

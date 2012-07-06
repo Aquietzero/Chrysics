@@ -8,7 +8,7 @@
 
 CHRYSICS.Quaternion = function(w, x, y, z) {
 
-  this.w = w || 0;
+  this.w = w || 1;
   this.x = x || 0;
   this.y = y || 0;
   this.z = z || 0;
@@ -93,7 +93,10 @@ CHRYSICS.Quaternion.prototype = {
       v.z * s
     );
 
+    var self = this.copy();
+
     this.hamiltonProductSelf(q);
+    this.hamiltonProductSelf(self.conjugate());
   
   },
 
@@ -158,6 +161,20 @@ CHRYSICS.Quaternion.prototype = {
     this.y *= -1;
     this.z *= -1;
 
+  },
+
+  copy: function() {
+  
+    return new CHRYSICS.Quaternion(
+      this.w, this.x, this.y, this.z
+    );
+  
+  },
+
+  log: function() {
+  
+    console.log(this.w, this.x, this.y, this.z);
+  
   },
 
 }

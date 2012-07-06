@@ -47,6 +47,7 @@ CHRYSICS.RigidBody.prototype = {
 
   calDerivedData: function() {
 
+    this.orientation.normalizeSelf();
     this._calTransform();
     this._transformInertiaTensor();
   
@@ -97,7 +98,7 @@ CHRYSICS.RigidBody.prototype = {
 
   getPointInWorld: function(point) {
   
-    return this.transform.mulVector(point);
+    return this.transform.mulVector3(point);
   
   },
 
@@ -121,7 +122,6 @@ CHRYSICS.RigidBody.prototype = {
     this.calDerivedData();
     this.clearAccumulators();
 
-
   },
 
   clearAccumulators: function() {
@@ -133,14 +133,20 @@ CHRYSICS.RigidBody.prototype = {
 
   addForceAtPoint: function(force, point) {
 
-    var pt = typeof point === 'undefined' ? this.position : point;
+    var pt = typeof point === 'undefined' ? 
+      this.position : this.getPointInWorld(point);
   
     var radius = pt.sub(this.position);
     var torque = radius.crossProduct(force);
 
+    /**
+     * The auxiliery coefficient is used to balance the translation
+     * and rotation velocity. It doesn't have any extra physical
+     * meanings.
+     */
     this.forceAccumulator.addVector(force);
-    this.torqueAccumulator.addVector(torque);
-  
+    this.torqueAccumulator.addScaledVector(torque, 0.0001);
+ 
   },
 
   setAcceleration: function(acc) {
