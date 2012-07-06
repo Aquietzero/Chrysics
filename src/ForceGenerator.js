@@ -73,3 +73,20 @@ CHRYSICS.Spring.prototype = {
     
 }
 
+/**
+ * Aero
+ *
+ *   f = Av
+ *
+ * where 
+ *   f is the final force. 
+ *   A is the aero tensor. 
+ *   v is the velocity of the wind.
+ */
+CHRYSICS.Aero = function(tensor, position, windSpeed) {
+
+  this.tensor    = tensor;
+  this.position  = position;
+  this.windSpeed = windSpeed;
+
+}

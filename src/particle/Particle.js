@@ -48,7 +48,7 @@ CHRYSICS.Particle.prototype = {
     this.velocity.mulScalar(Math.pow(this.damping, duration));
     
     this.clearForces();
-  
+
   },
 
   addForce: function(force) {

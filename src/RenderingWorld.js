@@ -83,7 +83,7 @@ RenderingWorld.prototype = {
     var particle;
     for (var i = 0; i < this.objects.length; ++i) {
 
-      particle = this.objects[i].getParticle();
+      particle = this.objects[i].getPhysique();
       this.objects[i].getGeometry().position.set(
         particle.position.x,
         particle.position.y,

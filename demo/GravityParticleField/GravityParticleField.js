@@ -35,7 +35,7 @@ Ball.prototype = {
   
   },
 
-  getParticle: function() {
+  getPhysique: function() {
   
     return this.particle;
   
@@ -65,9 +65,9 @@ GravityParticleField.prototype = {
       ball = new Ball(CHRYSICS.Utils.random(5, 10));
 
       this.worldRendering.add(ball);
-      this.worldPhysics.add(ball.getParticle());
+      this.worldPhysics.add(ball.getPhysique());
 
-      this.worldPhysics.addForceRegistry(ball.getParticle(), gravity);
+      this.worldPhysics.addForceRegistry(ball.getPhysique(), gravity);
 
     }
 

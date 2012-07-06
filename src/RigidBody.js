@@ -39,7 +39,7 @@ CHRYSICS.RigidBody = function() {
   this.torqueAccumulator = new CHRYSICS.Vector3();
 
   this.acceleration = new CHRYSICS.Vector3();
-  this.lastFrameAcceleration = new CHRYSICS.Vector3();
+  // this.lastFrameAcceleration = new CHRYSICS.Vector3();
 
 }
 
@@ -104,15 +104,14 @@ CHRYSICS.RigidBody.prototype = {
   integrate: function(duration) {
   
     // a = F / m
-    this.lastFrameAcceleration = this.acceleration;
-    this.lastFrameAcceleration.addScaledVector(this.forceAccumulator, this.inverseMass);
+    this.acceleration = this.forceAccumulator.mul(this.inverseMass);
 
     // a = t / I
     var angularAcceleration = 
       this.inverseInertiaTensorWorld.mulVector3(this.torqueAccumulator);
 
     // Update linear velocity and rotational velocity.
-    this.velocity.addScaledVector(this.lastFrameAcceleration, duration);
+    this.velocity.addScaledVector(this.acceleration, duration);
     this.rotation.addScaledVector(angularAcceleration, duration);
 
     // Update linear position and orientation.
@@ -121,7 +120,8 @@ CHRYSICS.RigidBody.prototype = {
 
     this.calDerivedData();
     this.clearAccumulators();
-  
+
+
   },
 
   clearAccumulators: function() {
