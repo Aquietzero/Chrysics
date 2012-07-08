@@ -13,6 +13,18 @@ CHRYSICS.Utils = {
 
   },
 
+  gtZero: function(n) {
+  
+    return Math.abs(n) > CHRYSICS.Const.ZERO;
+  
+  },
+
+  ltZero: function(n) {
+  
+    return Math.abs(n) < -CHRYSICS.Const.ZERO;
+  
+  }
+
   random: function(from, to) {
     
     if (to > from)
