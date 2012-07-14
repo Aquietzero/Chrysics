@@ -86,9 +86,12 @@ RenderingWorld.prototype = {
       body = this.objects[i].getPhysique();
 
       // Set orientation.
-      var m = new THREE.Matrix4();
-      m.setRotationFromQuaternion(body.orientation);
-      this.objects[i].getGeometry().applyMatrix(m);
+      console.log(body.getClassName());
+      if (body.getClassName() == 'RigidBody') {
+        var m = new THREE.Matrix4();
+        m.setRotationFromQuaternion(body.orientation);
+        this.objects[i].getGeometry().applyMatrix(m);
+      }
 
       // Set position.
       this.objects[i].getGeometry().position.set(
