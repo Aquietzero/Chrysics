@@ -188,6 +188,16 @@ CHRYSICS.Matrix3.prototype = {
  
   },
 
+  abs: function() {
+  
+    var es = this.elements;
+
+    for (var i = 0; i < es.length; ++i)
+      if (es[i] < 0)
+        es[i] = Math.abs(es[i]);
+  
+  },
+
   log: function() {
   
     var es = this.elements;

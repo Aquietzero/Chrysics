@@ -291,6 +291,38 @@ CHRYSICS.Matrix4.prototype = {
 
   },
 
+  getRotation: function() {
+  
+    var es = this.elements;
+
+    return new CHRYSICS.Matrix3(
+      es[0], es[1], es[2],
+      es[4], es[5], es[6],
+      es[8], es[9], es[10]
+    );
+  
+  },
+
+  getTranslation: function() {
+  
+    var es = this.elements;
+
+    return new CHRYSICS.Vector3(
+      es[3], es[7], es[11]
+    );
+  
+  },
+
+  abs: function() {
+  
+    var es = this.elements;
+
+    for (var i = 0; i < es.length; ++i)
+      if (es[i] < 0) 
+        es[i] = Math.abs(es[i]);
+
+  },
+
   log: function() {
 
     var es = this.elements;

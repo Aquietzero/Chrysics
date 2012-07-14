@@ -12,6 +12,14 @@ CHRYSICS.Vector3 = function(x, y, z) {
 
 }
 
+CHRYSICS.Vector3.X_DIRECTION_P = new Vector3(1, 0, 0);
+CHRYSICS.Vector3.Y_DIRECTION_P = new Vector3(0, 1, 0);
+CHRYSICS.Vector3.Z_DIRECTION_P = new Vector3(0, 0, 1);
+
+CHRYSICS.Vector3.X_DIRECTION_N = new Vector3(-1,  0,  0);
+CHRYSICS.Vector3.Y_DIRECTION_N = new Vector3( 0, -1,  0);
+CHRYSICS.Vector3.Z_DIRECTION_N = new Vector3( 0,  0, -1);
+
 CHRYSICS.Vector3.prototype = {
 
   set: function(x, y, z) {
@@ -196,6 +204,34 @@ CHRYSICS.Vector3.prototype = {
   
   },
   */
+
+  /**
+   * Projects the current vector onto the given vector with the
+   * following formula:
+   *
+   *              v * u
+   *   proj(v) = -------
+   *               |u|
+   */
+  projectOnVector: function(v) {
+  
+    return this.dotProduct(v) / v.magnitude();
+  
+  },
+
+  /**
+   * Projects the current vector onto the given direction with the
+   * following formula:
+   *
+   *               v * dir
+   *   proj(v) = --------- = v * dir
+   *                 |dir|
+   */
+  projectOnUnit: function(n) {
+
+    return this.dotProduct(n);
+  
+  },
 
   magnitudeSquare: function() {
 
