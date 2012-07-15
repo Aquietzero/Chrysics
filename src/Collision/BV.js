@@ -53,10 +53,10 @@ CHRYSICS.BV = {
 
       if (ps[i].x < ps[x_min].x) x_min = i;
       if (ps[i].x > ps[x_max].x) x_max = i;
-      if (ps[i].y < ps[x_min].y) y_min = i;
-      if (ps[i].y > ps[x_max].y) y_max = i;
-      if (ps[i].z < ps[x_min].z) z_min = i;
-      if (ps[i].z > ps[x_max].z) z_max = i;
+      if (ps[i].y < ps[y_min].y) y_min = i;
+      if (ps[i].y > ps[y_max].y) y_max = i;
+      if (ps[i].z < ps[z_min].z) z_min = i;
+      if (ps[i].z > ps[z_max].z) z_max = i;
 
     }
 

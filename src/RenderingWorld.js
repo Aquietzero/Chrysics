@@ -53,9 +53,13 @@ RenderingWorld.prototype = {
 
   initLight: function() {
 
-    this.light = new THREE.DirectionalLight(0xffffff, 1.0);
-    this.light.position.set(100, 100, 200);
-    this.scene.add(this.light);
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    this.directionalLight.position.set(100, 100, 200);
+
+    this.ambientLight = new THREE.AmbientLight(0x222222, 0.1);
+
+    this.scene.add(this.directionalLight);
+    this.scene.add(this.ambientLight);
 
   },
 

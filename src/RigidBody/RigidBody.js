@@ -48,8 +48,8 @@ CHRYSICS.RigidBody = function(geometricData) {
    * rigid body. An assumption is made that the given geometry data
    * is an array of the vertices of the rigid body.
    */
-  this.geometricData = geometricData;
-  if (this.geometricData)
+  this.geometricData = typeof geometricData === 'undefined' ? [] : geometricData;
+  if (this.geometricData.length > 0)
     this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
 
 }
@@ -215,5 +215,12 @@ CHRYSICS.RigidBody.prototype = {
     return this._CLASSNAME_;
   
   },
+
+  updateGeometry: function(geometricData) {
+
+    this.geometricData = geometricData;
+    this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
+  
+  }, 
 
 }
