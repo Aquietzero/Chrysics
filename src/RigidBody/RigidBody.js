@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.RigidBody = function() {
+CHRYSICS.RigidBody = function(geometricData) {
 
   this._CLASSNAME_ = 'RigidBody';
 
@@ -42,6 +42,15 @@ CHRYSICS.RigidBody = function() {
 
   this.acceleration = new CHRYSICS.Vector3();
   // this.lastFrameAcceleration = new CHRYSICS.Vector3();
+
+  /**
+   * Geometric data is used to calculate the bounding box of the 
+   * rigid body. An assumption is made that the given geometry data
+   * is an array of the vertices of the rigid body.
+   */
+  this.geometricData = geometricData;
+  if (this.geometricData)
+    this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
 
 }
 

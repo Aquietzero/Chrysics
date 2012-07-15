@@ -6,17 +6,17 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var CHRYSICS.BV = {
+CHRYSICS.BV = {
 
   /**
    * Returns min and max of the given points array of the least
    * and most, respectively, distant points along the direction dir.
    */
   extremePointsAlongDirection: function(dir, ps) {
-  
+
     var maxProj = -Infinity,
-        minProj =  Infinity,
-        max, min, proj;
+    minProj =  Infinity,
+    max, min, proj;
 
     for (var i = 0; i < ps.length; ++i) {
 
@@ -38,40 +38,40 @@ var CHRYSICS.BV = {
       min: ps[min],
     };
 
-    /**
-     * Compute two of the most separated points on the AABB.
-     */
-    mostSeparatedPointsOnAABB: function(ps) {
-    
-      var x_min = 0, x_max = 0,
-          y_min = 0, y_max = 0,
-          z_min = 0, z_max = 0;
+  },
 
-      for (var i = 0; i < ps.length; ++i) {
-      
-        if (ps[i].x < ps[x_min].x) x_min = i;
-        if (ps[i].x < ps[x_max].x) x_max = i;
-        if (ps[i].y < ps[x_min].y) x_min = i;
-        if (ps[i].y < ps[x_max].y) x_max = i;
-        if (ps[i].z < ps[x_min].z) x_min = i;
-        if (ps[i].z < ps[x_max].z) x_max = i;
-      
-      }
+  /**
+   * Compute two of the most separated points on the AABB.
+   */
+  mostSeparatedPointsOnAABB: function(ps) {
 
-      var dist2x = ps[x_max].sub(ps[x_min]).magnitudeSquare();
-      var dist2y = ps[y_max].sub(ps[y_min]).magnitudeSquare();
-      var dist2z = ps[z_max].sub(ps[z_min]).magnitudeSquare();
+    var x_min = 0, x_max = 0,
+        y_min = 0, y_max = 0,
+        z_min = 0, z_max = 0;
 
-      if (dist2y > dist2x && dist2y > dist2z)
-        return { min: ps[y_min], max: ps[y_max] }
+    for (var i = 0; i < ps.length; ++i) {
 
-      if (dist2z > dist2x && dist2z > dist2y)
-        return { min: ps[z_min], max: ps[z_max] }
-    
-      return { min: ps[x_min], max: ps[x_max] }
+      if (ps[i].x < ps[x_min].x) x_min = i;
+      if (ps[i].x > ps[x_max].x) x_max = i;
+      if (ps[i].y < ps[x_min].y) y_min = i;
+      if (ps[i].y > ps[x_max].y) y_max = i;
+      if (ps[i].z < ps[x_min].z) z_min = i;
+      if (ps[i].z > ps[x_max].z) z_max = i;
 
-    },
-  
+    }
+
+    var dist2x = ps[x_max].sub(ps[x_min]).magnitudeSquare();
+    var dist2y = ps[y_max].sub(ps[y_min]).magnitudeSquare();
+    var dist2z = ps[z_max].sub(ps[z_min]).magnitudeSquare();
+
+    if (dist2y > dist2x && dist2y > dist2z)
+      return { min: ps[y_min], max: ps[y_max] }
+
+    if (dist2z > dist2x && dist2z > dist2y)
+      return { min: ps[z_min], max: ps[z_max] }
+
+    return { min: ps[x_min], max: ps[x_max] }
+
   },
 
 }

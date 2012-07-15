@@ -22,6 +22,7 @@ CHRYSICS.BV.Sphere.prototype = {
   init: function(ps) {
   
     this.sphereFromDistantPoints(ps); 
+
     for (var i = 0; i < ps.length; ++i)
       this.expandSphere(ps[i]);
   

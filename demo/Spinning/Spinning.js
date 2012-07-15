@@ -6,7 +6,6 @@
 
 var Icosahedron = function(radius) {
 
-  this.body   = new CHRYSICS.RigidBody();
   this.icosahedron = new THREE.Mesh(
     new THREE.IcosahedronGeometry(radius, 1),
     new THREE.MeshLambertMaterial({
@@ -14,6 +13,7 @@ var Icosahedron = function(radius) {
       wireframe: true
     })
   );
+  this.body   = new CHRYSICS.RigidBody();
   
   this.init();
 
@@ -27,12 +27,12 @@ Icosahedron.prototype = {
       0, 0, 0
     ));
     this.body.setInverseInertiaTensor(new CHRYSICS.Matrix3(
-      -0.1, 0, 0,
-      1, -0.5, 0,
-      0, 0, -0.1
+      -0.1,    0,    0,
+         1, -0.5,    0,
+         0,    0, -0.1
     ));
     this.body.setMass(2.0);
-
+ 
   },
 
   getGeometry: function() {
@@ -78,6 +78,8 @@ Spinning.prototype = {
     );
 
     this.icosahedron = new Icosahedron(90);
+
+    console.log(this.icosahedron.getGeometry().vertices);
 
     this.worldRendering.add(this.icosahedron);
     this.worldPhysics.add(this.icosahedron.getPhysique());

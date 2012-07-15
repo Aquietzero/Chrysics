@@ -86,7 +86,6 @@ RenderingWorld.prototype = {
       body = this.objects[i].getPhysique();
 
       // Set orientation.
-      console.log(body.getClassName());
       if (body.getClassName() == 'RigidBody') {
         var m = new THREE.Matrix4();
         m.setRotationFromQuaternion(body.orientation);
