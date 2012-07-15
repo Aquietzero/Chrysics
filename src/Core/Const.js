@@ -14,4 +14,12 @@ CHRYSICS.Const = {
   // Seconds per frame, measured in millisecond.
   SPF  : 1000 / this.FPS,
 
+  BV_SPHERE : 'BV_SPHERE',
+
+  BV_AABB : 'BV_AABB',
+
+  RIGID_BODY : 'RIGID_BODY',
+
+  PARTICLE   : 'PARTICLE',
+
 }

@@ -21,3 +21,23 @@ body {
 #main-container {
   background-color: #99ccff;
 }
+
+a {
+  color: #333399;
+  text-decoration: none;
+  border-left: solid 5px #333399;
+  padding-left: 10px;
+}
+
+a:hover {
+  color: #333333;
+  border-left: solid 5px #333333;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin: 5px auto;
+}

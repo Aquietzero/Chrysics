@@ -4,9 +4,10 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.RigidBody = function(geometricData) {
+CHRYSICS.RigidBody = function(geometricData, bv_type) {
 
-  this._CLASSNAME_ = 'RigidBody';
+  this._CLASSNAME_ = CHRYSICS.Const.RIGID_BODY;
+  this._BV_TYPE_   = CHRYSICS.Const.BV_SPHERE;
 
   /**
    * inverseMass the 1/mass. Since in the Newton's second law,
@@ -49,12 +50,33 @@ CHRYSICS.RigidBody = function(geometricData) {
    * is an array of the vertices of the rigid body.
    */
   this.geometricData = typeof geometricData === 'undefined' ? [] : geometricData;
-  if (this.geometricData.length > 0)
-    this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
+  this.calBV(bv_type);
 
 }
 
 CHRYSICS.RigidBody.prototype = {
+
+  calBV: function(bv_type) {
+
+    this._BV_TYPE_ = bv_type;
+
+    switch(bv_type) {
+
+      case CHRYSICS.Const.BV_SPHERE:
+
+        if (this.geometricData.length > 0)
+          this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
+        break;
+
+      case CHRYSICS.Const.BV_AABB:
+
+        if (this.geometricData.length > 0)
+          this.BV = new CHRYSICS.BV.AABB(this.geometricData);
+        break;
+
+    }
+
+  },
 
   calDerivedData: function() {
 
@@ -219,7 +241,18 @@ CHRYSICS.RigidBody.prototype = {
   updateGeometry: function(geometricData) {
 
     this.geometricData = geometricData;
-    this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
+
+    switch(this._BV_TYPE_) {
+
+      case CHRYSICS.Const.BV_SPHERE:
+        this.BV = new CHRYSICS.BV.Sphere(this.geometricData);
+        break;
+
+      case CHRYSICS.Const.BV_AABB:
+        this.BV = new CHRYSICS.BV.AABB(this.geometricData);
+        break;
+
+    }
   
   }, 
 

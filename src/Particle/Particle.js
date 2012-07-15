@@ -6,7 +6,7 @@
 
 CHRYSICS.Particle = function() {
 
-  this._CLASSNAME_ = 'Particle';
+  this._CLASSNAME_ = CHRYSICS.Const.PARTICLE;
 
   this.position = new CHRYSICS.Vector3();
   this.velocity = new CHRYSICS.Vector3();

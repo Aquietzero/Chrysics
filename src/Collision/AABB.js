@@ -20,27 +20,32 @@ CHRYSICS.BV.AABB = function(vs) {
   // Radius in z axis.
   this.rz = 0;
 
-  this.init();
+  this.init(vs);
 
 }
 
 CHRYSICS.BV.AABB.prototype = {
 
   init: function(vs) {
-    
-    var extremePointsX = 
-      CHRYSICS.BV.extremePointsAlongDirection(vs, CHRYSICS.Vector3.X_DIRECTION_P);
-    var extremePointsY = 
-      CHRYSICS.BV.extremePointsAlongDirection(vs, CHRYSICS.Vector3.X_DIRECTION_P);
-    var extremePointsZ = 
-      CHRYSICS.BV.extremePointsAlongDirection(vs, CHRYSICS.Vector3.X_DIRECTION_P);
 
-    var x_min = extremePointsX.min,
-        x_max = extremePointsX.max,
-        y_min = extremePointsY.min,
-        y_max = extremePointsY.max,
-        z_min = extremePointsZ.min,
-        z_max = extremePointsZ.max;
+    var x_min = 0, x_max = 0,
+        y_min = 0, y_max = 0,
+        z_min = 0, z_max = 0;
+
+    for (var i = 0; i < vs.length; ++i) {
+
+      if (vs[i].x < vs[x_min].x) x_min = i;
+      if (vs[i].x > vs[x_max].x) x_max = i;
+      if (vs[i].y < vs[y_min].y) y_min = i;
+      if (vs[i].y > vs[y_max].y) y_max = i;
+      if (vs[i].z < vs[z_min].z) z_min = i;
+      if (vs[i].z > vs[z_max].z) z_max = i;
+
+    }
+
+    x_min = vs[x_min].x, x_max = vs[x_max].x;
+    y_min = vs[y_min].y, y_max = vs[y_max].y;
+    z_min = vs[z_min].z, z_max = vs[z_max].z;
 
     this.c = new CHRYSICS.Vector3(
       (x_min + x_max) / 2,

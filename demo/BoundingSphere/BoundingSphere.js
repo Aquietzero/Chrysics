@@ -13,7 +13,7 @@ var Icosahedron = function(radius) {
       wireframe: true
     })
   );
-  this.body = new CHRYSICS.RigidBody(this.getData());
+  this.body = new CHRYSICS.RigidBody(this.getData(), CHRYSICS.Const.BV_SPHERE);
   this.init();
 
 }

@@ -7,7 +7,7 @@
 var ObjectsGroup = function(length) {
 
   this.objects  = [];
-  this.body     = new CHRYSICS.RigidBody([], CHRYSICS.Const.BV_SPHERE);
+  this.body     = new CHRYSICS.RigidBody([], CHRYSICS.Const.BV_AABB);
   this.geometry = new THREE.Object3D();
 
 }
@@ -20,19 +20,25 @@ ObjectsGroup.prototype = {
     this.geometry.add(obj);
     this.body.updateGeometry(this.getData());
 
-    this.BVSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(this.body.BV.r, 50, 50),
+    this.BVAABB = new THREE.Mesh(
+      new THREE.CubeGeometry(
+        this.body.BV.rx * 2,
+        this.body.BV.ry * 2,
+        this.body.BV.rz * 2
+      ),
       new THREE.MeshLambertMaterial({
         color: 0x0000ff,
         wireframe: true
       })
     );
-    this.BVSphere.position.set(
+    this.BVAABB.position.set(
       this.body.BV.c.x,
       this.body.BV.c.y,
       this.body.BV.c.z
     );
-    this.geometry.add(this.BVSphere);
+    this.geometry.add(this.BVAABB);
+
+    console.log(this.body.BV);
  
   },
 
@@ -69,28 +75,18 @@ ObjectsGroup.prototype = {
 
 }
 
-var BoundingSphere2 = function(container) {
+var AABB = function(container) {
 
   this.worldRendering = new RenderingWorld(container);
   this.initWorld();
 
 }
 
-BoundingSphere2.prototype = {
+AABB.prototype = {
 
   initWorld: function() {
 
     this.objects = new ObjectsGroup();
-
-    var cube = new THREE.Mesh(
-      new THREE.CubeGeometry(250, 100, 150),
-      new THREE.MeshLambertMaterial({
-        color: 0xffff00,
-        wireframe: true
-      })
-    );
-    cube.position.set(0, 0, 0);
-    this.objects.add(cube);
 
     var icosahedron = new THREE.Mesh(
       new THREE.IcosahedronGeometry(100, 1),
@@ -101,7 +97,7 @@ BoundingSphere2.prototype = {
     );
 
     //icosahedron.position.set(150, 0, 0);
-    //this.objects.add(icosahedron);
+    this.objects.add(icosahedron);
 
     this.worldRendering.add(this.objects);
 
