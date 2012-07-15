@@ -24,19 +24,6 @@ CHRYSICS.BV.AABB = function(vs) {
 
 }
 
-/**
- * Test to see if two AABBs collide or not.
- */
-CHRYSICS.BV.AABB.isCollide = function(a, b) {
-
-  if (Math.abs(a.c.x - b.c.x) > (a.rx + b.rx)) return false;
-  if (Math.abs(a.c.y - b.c.y) > (a.ry + b.ry)) return false;
-  if (Math.abs(a.c.z - b.c.z) > (a.rz + b.rz)) return false;
-
-  return true;
-
-}
-
 CHRYSICS.BV.AABB.prototype = {
 
   init: function(vs) {
@@ -86,4 +73,16 @@ CHRYSICS.BV.AABB.prototype = {
 
 }
 
+/**
+ * Test to see if two AABBs collide or not.
+ */
+CHRYSICS.BV.AABB.isCollide = function(a, b) {
+
+  if (Math.abs(a.c.x - b.c.x) > (a.rx + b.rx)) return false;
+  if (Math.abs(a.c.y - b.c.y) > (a.ry + b.ry)) return false;
+  if (Math.abs(a.c.z - b.c.z) > (a.rz + b.rz)) return false;
+
+  return true;
+
+}
 
