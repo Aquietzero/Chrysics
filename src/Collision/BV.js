@@ -15,23 +15,21 @@ CHRYSICS.BV = {
   extremePointsAlongDirection: function(dir, ps) {
 
     var maxProj = -Infinity,
-    minProj =  Infinity,
-    max, min, proj;
+        minProj =  Infinity,
+        max, min, proj;
 
     for (var i = 0; i < ps.length; ++i) {
 
       proj = ps[i].projectOnUnit(dir);
 
-      if (proj < minProj) {
-        minProj = proj;
-        min = i;
-      }
-      if (proj > maxProj) {
-        maxProj = proj;
-        max = i;
-      }
+      if (proj < minProj)
+        minProj = proj, min = i;
+      if (proj > maxProj)
+        maxProj = proj, max = i;
 
     }
+
+    console.log(ps[max]);
 
     return {
       max: ps[max],
@@ -70,7 +68,10 @@ CHRYSICS.BV = {
     if (dist2z > dist2x && dist2z > dist2y)
       return { min: ps[z_min], max: ps[z_max] }
 
-    return { min: ps[x_min], max: ps[x_max] }
+    return { 
+      min: ps[x_min], 
+      max: ps[x_max] 
+    };
 
   },
 

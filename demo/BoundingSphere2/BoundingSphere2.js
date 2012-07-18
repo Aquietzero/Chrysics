@@ -83,7 +83,7 @@ BoundingSphere2.prototype = {
     this.objects = new ObjectsGroup();
 
     var cube = new THREE.Mesh(
-      new THREE.CubeGeometry(250, 100, 150),
+      new THREE.CubeGeometry(100, 100, 100),
       new THREE.MeshLambertMaterial({
         color: 0xffff00,
         wireframe: true
@@ -93,15 +93,15 @@ BoundingSphere2.prototype = {
     this.objects.add(cube);
 
     var icosahedron = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(100, 1),
+      new THREE.IcosahedronGeometry(200, 1),
       new THREE.MeshLambertMaterial({
         color: 0xffff00,
         wireframe: true
       })
     );
 
-    //icosahedron.position.set(150, 0, 0);
-    //this.objects.add(icosahedron);
+    // icosahedron.position.set(150, 0, 0);
+    // this.objects.add(icosahedron);
 
     this.worldRendering.add(this.objects);
 

@@ -15,13 +15,29 @@ CHRYSICS.Utils = {
 
   gtZero: function(n) {
   
-    return Math.abs(n) > CHRYSICS.Const.ZERO;
+    return n > CHRYSICS.Const.ZERO;
   
   },
 
   ltZero: function(n) {
   
-    return Math.abs(n) < -CHRYSICS.Const.ZERO;
+    return n < -CHRYSICS.Const.ZERO;
+  
+  },
+
+  gteZero: function(n) {
+  
+    if (Math.abs(n) < CHRYSICS.Const.ZERO || n > CHRYSICS.Const.ZERO)
+      return true;
+    return false;
+  
+  },
+
+  lteZero: function(n) {
+  
+    if (Math.abs(n) < CHRYSICS.Const.ZERO || n < -CHRYSICS.Const.ZERO)
+      return true;
+    return false;
   
   },
 
@@ -42,6 +58,18 @@ CHRYSICS.Utils = {
       sum += xs[i];
     
     return sum;
+  
+  },
+
+  maxIndex: function(xs) {
+
+    var maxIndex = 0;
+    for (var i = 1; i < xs.length; ++i) {
+      if (xs[i] > xs[maxIndex])
+        maxIndex = i;
+    }
+
+    return maxIndex;
   
   },
 

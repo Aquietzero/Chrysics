@@ -41,9 +41,11 @@ RenderingWorld.prototype = {
 
   initCamera: function() {
 
-    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
+    // this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000);
+    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.01, 1e10);
 
-    this.camera.position.set(100, 100, 500);
+    // this.camera.position.set(100, 100, 500);
+    this.camera.position.set(0, 0, 0.2);
     this.camera.up.set(0, 1, 0);
     this.camera.lookAt({x:0, y:0, z:0});
 
@@ -90,7 +92,7 @@ RenderingWorld.prototype = {
       body = this.objects[i].getPhysique();
 
       // Set orientation.
-      if (body.getClassName() == 'RigidBody') {
+      if (body.getClassName() == CHRYSICS.Const.RIGID_BODY) {
         var m = new THREE.Matrix4();
         m.setRotationFromQuaternion(body.orientation);
         this.objects[i].getGeometry().applyMatrix(m);

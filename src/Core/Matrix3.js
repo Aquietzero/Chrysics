@@ -34,6 +34,18 @@ CHRYSICS.Matrix3 = function(
 
 CHRYSICS.Matrix3.prototype = {
 
+  $: function(i, j) {
+
+    return this.elements[i * 3 + j];
+  
+  },
+
+  $$: function(i, j, e) {
+
+    this.elements[i * 3 + j] = e;
+  
+  },
+
   set: function(
     a11, a12, a13, 
     a21, a22, a23, 
@@ -168,6 +180,31 @@ CHRYSICS.Matrix3.prototype = {
   
   },
 
+  transpose: function() {
+  
+    var es = this.elements;
+
+    return new CHRYSICS.Matrix3(
+      es[0], es[3], es[6],
+      es[1], es[4], es[7],
+      es[2], es[5], es[8]
+    );
+
+  },
+
+  transposeSelf: function() {
+  
+    var tmp;
+    var es = this.elements;
+
+    tmp = es[1], es[1] = es[3], es[3] = tmp;
+    tmp = es[2], es[2] = es[6], es[6] = tmp;
+    tmp = es[5], es[5] = es[7], es[7] = tmp;
+
+    return this;
+
+  },
+
   inverse: function() {
 
     var m = this.elements;
@@ -213,3 +250,116 @@ CHRYSICS.Matrix3.prototype = {
 
 }
 
+/**
+ * 2-by-2 Symmetric Schur decomposition. Given and n-by-n symmetric matrix
+ * and indices p, q such that 1 <= p < q <= n, computes a sine-cosine pair
+ * (s, c) such that if B = Transpose(J(p, q, theta)) A J(p, q, theta), then
+ * b_pq = b_qp = 0.
+ *
+ * See Golub, Van Loan, Matrix Computations, 3rd ed, p428.
+ */
+CHRYSICS.Matrix3.SymmetricSchur2 = function(m3, p, q) {
+
+  var c, s, t;
+
+  if (Math.abs(m3.$(p, q)) > CHRYSICS.Const.ZERO) {
+
+    r = (m3.$(q, q) - m3.$(p, p)) / (2.0 * m3.$(p, q));
+
+    if (CHRYSICS.Utils.gteZero(r))
+      t = 1.0 / (r + Math.sqrt(1.0 + r*r));
+    else
+      t = -1.0 / (-r + Math.sqrt(1.0 + r*r));
+
+    c = 1.0 / Math.sqrt(1.0 + t*t);
+    s = t * c;
+  
+  } else {
+
+    c = 1.0;
+    s = 0.0;
+  
+  }
+
+  return { sin: s, cos: c };
+
+}
+
+/**
+ * Computes the eigenvectors and eigenvalues of the symmetric matrix A using
+ * the classic Jacobi method of iteratively updating A as A = J^T * A * J,
+ * where J = J(p, q, theta) is the Jacobi rotation matrix.
+ *
+ * On exit, v will contain the eigenvectors, and the diagonal elements of a
+ * are the corresponding eigenvalues.
+ *
+ * Specifically, the input matrix A here is 3x3.
+ *
+ * See Golub, Van Loan, Matrix Computations, 3rd ed, p428.
+ */
+CHRYSICS.Matrix3.Jacobi = function(A, max_iter) {
+
+  var p, q;
+  var preoff, rotation;
+
+  var J = new CHRYSICS.Matrix3();
+  var V = new CHRYSICS.Matrix3(
+    1, 0, 0,
+    0, 1, 0,
+    0, 0, 1
+  );
+
+  for (var n = 0; n < max_iter; ++n) {
+
+    // Find the largest off-diagonal absolute element A[p][q].
+    p = 0; q = 1;
+
+    for (var i = 0; i < 3; ++i) {
+      for (var j = 0; j < 3; ++j) {
+
+        if (i == j) continue;
+        if (Math.abs(A.$(i, j) > Math.abs(A.$(i, j)))) {
+          p = i;
+          q = j;
+        }
+      
+      }
+    }
+
+    // Compute the Jacobi rotation matrix J(p, q, theta)
+    rotation = CHRYSICS.Matrix3.SymmetricSchur2(A, p, q);
+    J.identity();
+    J.$$(p, p,  rotation.cos);
+    J.$$(p, q,  rotation.sin);
+    J.$$(q, p, -rotation.sin);
+    J.$$(q, q,  rotation.cos);
+
+    // Compute rotations into what will contain the eigenvectors.
+    V = V.mulMatrix(J);    
+
+    // Make A more diagonal, until just eigenvalues remain on diagonal.
+    A = J.transpose().mulMatrix(A).mulMatrix(J);
+
+    // Compute the norm of off-diagonal elements.
+    var off = 0.0;
+
+    for (var i = 0; i < 3; ++i) {
+      for (var j = 0; j < 3; ++j) {
+      
+        if (i == j) continue;
+        off += A.$(i, j) * A.$(i, j);
+      
+      }
+    }
+
+    // Stop when norm no longer decreasing.
+    if (n > 2 && off >= prevoff)
+      break;
+
+    prevoff == off;
+  
+  }
+
+  return { eigenValues: A, eigenVectors: V };
+
+}

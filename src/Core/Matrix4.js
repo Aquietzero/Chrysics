@@ -40,6 +40,18 @@ CHRYSICS.Matrix4 = function(
 
 CHRYSICS.Matrix4.prototype = {
 
+  $: function(i, j) {
+
+    return this.elements[i * 4 + j];
+  
+  },
+
+  $$: function(i, j, e) {
+  
+    this.elements[i * 4 + j] = e;
+  
+  },
+
   set: function(
     a11, a12, a13, a14,
     a21, a22, a23, a24,

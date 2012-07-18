@@ -81,7 +81,7 @@ CHRYSICS.BV.AABB.prototype = {
 /**
  * Test to see if two AABBs collide or not.
  */
-CHRYSICS.BV.AABB.isCollide = function(a, b) {
+CHRYSICS.BV.AABB.IsCollide = function(a, b) {
 
   if (Math.abs(a.c.x - b.c.x) > (a.rx + b.rx)) return false;
   if (Math.abs(a.c.y - b.c.y) > (a.ry + b.ry)) return false;

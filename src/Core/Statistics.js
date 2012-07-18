@@ -44,12 +44,12 @@ CHRYSICS.Statistics = {
       // as the origin of the mass of points.
       point = xs[i].sub(centroid);
       
-      cov00 = point.x * point.x;
-      cov11 = point.y * point.y;
-      cov22 = point.z * point.z;
-      cov01 = point.x * point.y;
-      cov02 = point.x * point.z;
-      cov12 = point.y * point.z;
+      cov00 += point.x * point.x;
+      cov11 += point.y * point.y;
+      cov22 += point.z * point.z;
+      cov01 += point.x * point.y;
+      cov02 += point.x * point.z;
+      cov12 += point.y * point.z;
     
     }
 
@@ -57,7 +57,7 @@ CHRYSICS.Statistics = {
       cov00, cov01, cov02,
       cov01, cov11, cov12,
       cov02, cov12, cov22
-    ).mul(dividor));
+    ).mulScalar(dividor));
   
   },
 

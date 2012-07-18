@@ -21,10 +21,36 @@ CHRYSICS.BV.Sphere.prototype = {
 
   init: function(ps) {
   
-    this.sphereFromDistantPoints(ps); 
+    // this.sphereFromDistantPoints(ps); 
+    this.eigenSphere(ps); 
 
     for (var i = 0; i < ps.length; ++i)
       this.expandSphere(ps[i]);
+  
+  },
+
+  eigenSphere: function(ps) {
+
+    var covMatrix = CHRYSICS.Statistics.covarianceMatrix(ps);
+    var eigens    = CHRYSICS.Matrix3.Jacobi(covMatrix);
+
+    var maxIndex = CHRYSICS.Utils.maxIndex(
+      eigens.eigenValues.$(0, 0), 
+      eigens.eigenValues.$(1, 1), 
+      eigens.eigenValues.$(2, 2)
+    );
+    var eigenDirection = new CHRYSICS.Vector3(
+      eigens.eigenVectors.$(0, maxIndex),
+      eigens.eigenVectors.$(1, maxIndex),
+      eigens.eigenVectors.$(2, maxIndex)
+    );
+
+    var extremePoints = CHRYSICS.BV.extremePointsAlongDirection(eigenDirection, ps);
+    var maxPoint = extremePoints.max,
+        minPoint = extremePoints.min;
+
+    this.c = maxPoint.add(minPoint).mul(0.5);
+    this.r = maxPoint.sub(minPoint).magnitude() * 0.5;
   
   },
 
@@ -77,7 +103,7 @@ CHRYSICS.BV.Sphere.prototype = {
 /**
  * Test to see if two bounding sphere collide or not.
  */
-CHRYSICS.BV.Sphere.isCollide = function(a, b) {
+CHRYSICS.BV.Sphere.IsCollide = function(a, b) {
 
   var c_dist = a.c.sub(b.c).magnitude();
   var r_sum  = a.r + b.r;
