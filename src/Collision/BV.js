@@ -29,8 +29,6 @@ CHRYSICS.BV = {
 
     }
 
-    console.log(ps[max]);
-
     return {
       max: ps[max],
       min: ps[min],

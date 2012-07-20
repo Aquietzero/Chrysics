@@ -13,20 +13,64 @@ CHRYSICS.BV.Sphere = function(ps) {
   // The radius of the bouding sphere.
   this.r = 0;
 
-  this.init(ps);
+  // There are some possibility that the sphere is set by default or given
+  // values rather than calculated from a set of points.
+  if (typeof ps !== 'undefined')
+    this.init(ps);
 
 }
 
 CHRYSICS.BV.Sphere.prototype = {
 
   init: function(ps) {
+
+    // this.initWithEigenSphere(ps);
+    this.initWithRitterSphere(ps, 10);
   
-    // this.sphereFromDistantPoints(ps); 
-    this.eigenSphere(ps); 
+  },
+
+  ritterSphere: function(ps) {
+
+    this.sphereFromDistantPoints(ps);
 
     for (var i = 0; i < ps.length; ++i)
       this.expandSphere(ps[i]);
   
+  },
+
+  initWithRitterSphere: function(ps, iter) {
+
+    this.ritterSphere(ps);
+    var s = new CHRYSICS.BV.Sphere();
+
+    s.c = this.c;
+    s.r = this.r;
+
+    for (var i = 0; i < iter; ++i) {
+
+      s.r *= 0.95;
+      for (var i = 0; i < ps.length; ++i) {
+        //doRandomSwap();
+        s.expandSphere(ps[i]);
+      }
+
+      if (s.r < this.r) {
+        this.c = s.c;
+        this.r = s.r;
+      } else
+        break;
+    
+    }
+  
+  },
+
+  initWithEigenSphere: function(ps) {
+  
+    this.eigenSphere(ps);
+
+    for (var i = 0; i < ps.length; ++i)
+      this.expandSphere(ps[i]);
+
   },
 
   eigenSphere: function(ps) {
@@ -96,6 +140,17 @@ CHRYSICS.BV.Sphere.prototype = {
     
     }
   
+  },
+
+  copy: function() {
+  
+    var s = new CHRYSICS.BV.Sphere();
+  
+    s.r = this.r;
+    s.c = this.c;
+
+    return s;
+
   },
 
 }

@@ -4,17 +4,18 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Bunny = function(geom, material) {
+var Bunny = function(geom, material, scalar) {
 
   this.bunny = new THREE.Mesh(geom, material);
+  this.bunny.scale.set(scalar, scalar, scalar);
   this.body = new CHRYSICS.RigidBody(this.getData(), CHRYSICS.Const.BV_SPHERE);
-  this.init();
+  this.init(scalar);
 
 }
 
 Bunny.prototype = {
 
-  init: function() {
+  init: function(scalar) {
   
     this.BVSphere = new THREE.Mesh(
       new THREE.SphereGeometry(this.body.BV.r, 50, 50),
@@ -24,12 +25,11 @@ Bunny.prototype = {
       })
     );
     this.BVSphere.position.set(
-      this.body.BV.c.x,
-      this.body.BV.c.y,
-      this.body.BV.c.z
+      this.body.BV.c.x * scalar,
+      this.body.BV.c.y * scalar,
+      this.body.BV.c.z * scalar
     );
-
-    console.log(this.body.BV);
+    this.BVSphere.scale.set(scalar, scalar, scalar);
 
     this.geometry = new THREE.Object3D();
     this.geometry.add(this.bunny);
@@ -41,7 +41,11 @@ Bunny.prototype = {
 
     var vertices = [];
     var data = this.bunny.geometry.vertices;
-    for (var i = 0; i < data.length; ++i)
+
+    // This is the bunny special case since there are some bugs
+    // in the VTKLoader.js. Most of the faces informationa are
+    // loaded as the vertices, which causes embarasse problems.
+    for (var i = 0; i < data.length - 70000; ++i)
       vertices.push(new CHRYSICS.Vector3(
         data[i].x, data[i].y, data[i].z
       ));
@@ -81,22 +85,11 @@ BoundingSphere3.prototype = {
     var loader = new THREE.VTKLoader();
     loader.load('Bunny.vtk', function(geom) {
 
-      self.bunny = new Bunny(geom, new THREE.MeshLambertMaterial({
+      var bunny = new Bunny(geom, new THREE.MeshLambertMaterial({
         color: 0xffffff,
         wireframe: false
-      }));
-      self.worldRendering.add(self.bunny);
-
-      var icosahedron = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(200, 1),
-        new THREE.MeshLambertMaterial({
-          color: 0xffff00,
-          wireframe: true
-        })
-      );
-
-      // self.worldRendering.scene.add(bunny);
-      self.worldRendering.scene.add(icosahedron);
+      }), 1000);
+      self.worldRendering.add(bunny);
 
     });
 
