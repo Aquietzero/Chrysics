@@ -265,6 +265,24 @@ CHRYSICS.Vector3.prototype = {
 
   },
 
+  getAngleX: function() {
+  
+    return Math.acos(this.x / this.magnitude());
+  
+  },
+
+  getAngleY: function() {
+  
+    return Math.acos(this.y / this.magnitude());
+  
+  },
+
+  getAngleZ: function() {
+  
+    return Math.acos(this.z / this.magnitude());
+  
+  },
+
   log: function() {
   
     console.log(this.x, this.y, this.z);
