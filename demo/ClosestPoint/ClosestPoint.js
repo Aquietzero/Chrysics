@@ -1,39 +1,12 @@
 /**
- * A simple demo shows how the torque makes the icosahedron spin.
+ * A simple demo shows the methods in ClosesPoint.js
  *
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Plane = function(plane) {
-
-  var d = plane.d;
-  var n = plane.n;
-  this.plane = new THREE.Mesh(
-    new THREE.CubeGeometry(200, 200, 5),
-    new THREE.MeshLambertMaterial({
-      color: 0x0000ff,
-    })
-  );
-
-}
-
-Plane.prototype = {
-
-  getPhysique: function() {
-
-  },
-
-  getGeometry: function() {
-
-    return this.plane;
-
-  },
-
-}
-
 var ClosestPoint = function(container) {
 
-  this.worldRendering = new RenderingWorld(container);
+  this.worldRendering = new GeometryWorld(container);
   this.initWorld();
 
 }
@@ -42,11 +15,11 @@ ClosestPoint.prototype = {
 
   initWorld: function() {
 
-    this.plane = new Plane(new CHRYSICS.BV.Plane(
-      new CHRYSICS.Vector3(0, 0, 1),
-      0
-    ));
-    this.worldRendering.add(this.plane);
+    this.point1 = new Point(new CHRYSICS.Point(0, 0, 0));
+    this.point2 = new Point(new CHRYSICS.Point(100, 100, 0));
+
+    this.worldRendering.add(this.point1);
+    this.worldRendering.add(this.point2);
 
   },
 
