@@ -22,6 +22,12 @@ body {
   background-color: #99ccff;
 }
 
+#main-container h2 {
+  margin-left: 20px;
+  color: #000033;
+  font-size: 18px;
+}
+
 a {
   color: #333399;
   text-decoration: none;

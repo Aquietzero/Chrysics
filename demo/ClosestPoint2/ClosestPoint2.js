@@ -30,12 +30,8 @@ ClosestPoint2.prototype = {
 
     this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
 
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(
-      testPoint, 7, 0xffff00
-    ));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(
-      closestPoint, 7, 0xffff00
-    ));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(testPoint, 7, 0xffff00));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(closestPoint, 7, 0xffff00));
     this.worldRendering.add(segment);
     this.worldRendering.add(line);
 

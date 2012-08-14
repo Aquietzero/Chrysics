@@ -44,16 +44,16 @@ CHRYSICS.GEOMETRY = {
  */
 CHRYSICS.GEOMETRY.Point = function(point, radius, color) {
 
+  this.point = point;
+
   this.geometry = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 20, 20),
-    new THREE.MeshLambertMaterial({
-      color: color,
-    })
+    new THREE.MeshLambertMaterial({ color: color })
   );
   this.geometry.position.set(
-    point.x,
-    point.y,
-    point.z
+    this.point.x,
+    this.point.y,
+    this.point.z
   );
 
 }
@@ -64,6 +64,25 @@ CHRYSICS.GEOMETRY.Point.prototype = {
   
     return this.geometry;
   
+  },
+
+  setPosition: function(pos) {
+
+    this.geometry.position.set(
+      pos.x, pos.y, pos.z
+    );
+  
+  },
+
+  move: function(iterate) {
+
+    iterate(this.point);
+    this.geometry.position.set(
+      this.point.x,
+      this.point.y,
+      this.point.z
+    );
+
   },
 
 }
