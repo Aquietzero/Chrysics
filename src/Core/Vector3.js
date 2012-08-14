@@ -283,6 +283,17 @@ CHRYSICS.Vector3.prototype = {
   
   },
 
+  getDirectionalCosine: function() {
+
+    var magnitude = this.magnitude();
+    return {
+      x: this.x / magnitude,
+      y: this.y / magnitude,
+      z: this.z / magnitude
+    };
+  
+  },
+
   log: function() {
   
     console.log(this.x, this.y, this.z);

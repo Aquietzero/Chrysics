@@ -235,6 +235,27 @@ CHRYSICS.Matrix3.prototype = {
   
   },
 
+  setFromAxisAngle: function(axis, angle) {
+
+    var x = axis.x,
+        y = axis.y,
+        z = axis.z,
+        c = Math.cos(angle),
+        s = Math.sin(angle),
+        t = 1 - c;
+
+    var xy = x*y,
+        xz = x*z,
+        yz = y*z;
+
+    this.set(
+      x*x*t + c,  xy*t - z*s, xz*t + y*s,
+      xy*t + z*s, y*y*t + c,  yz*t - x*s,
+      xz*t - y*s, yz*t + x*s, z*z*t + c
+    );
+  
+  },
+
   log: function() {
   
     var es = this.elements;

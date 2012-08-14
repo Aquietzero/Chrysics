@@ -15,14 +15,10 @@ ClosestPoint.prototype = {
 
   initWorld: function() {
 
-    this.point1 = new Point(new CHRYSICS.Point(0, 0, 0));
-    this.point2 = new Point(new CHRYSICS.Point(100, 100, 0));
-
-    this.worldRendering.add(this.point1);
-    this.worldRendering.add(this.point2);
+    this.coordinate = new CHRYSICS.GEOMETRY.Coordinate(400);
+    this.worldRendering.add(this.coordinate);
 
   },
-
 
   animate: function() {
 
