@@ -42,9 +42,9 @@ GeometryWorld.prototype = {
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.01, 1e10);
     
-    this.camera.position.set(500, 500, 500);
+    this.camera.position.set(500, 800, 500);
     this.camera.up.set(0, 1, 0);
-    this.camera.lookAt({ x:0, y:0, z:0 });
+    this.camera.lookAt({ x:0, y:150, z:0 });
 
     this.scene.add(this.camera);
 

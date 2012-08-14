@@ -18,7 +18,7 @@ CHRYSICS.GEOMETRY = {
     var origin = new CHRYSICS.Vector3(0, 1, 0);
     var target = dir.normalize();
 
-    var axis = origin.crossProduct(target);
+    var axis = origin.crossProduct(target).normalize();
     var angle = Math.acos(origin.dotProduct(target));
 
     var rotation = new CHRYSICS.Matrix3();
@@ -71,8 +71,6 @@ CHRYSICS.GEOMETRY.Point.prototype = {
 /**
  * A segment or ray or line in mathematics is represented as a 
  * slim cylinda in demo.
- *
- * 
  */
 CHRYSICS.GEOMETRY.Segment = function(begin, end) {
 
