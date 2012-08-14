@@ -177,14 +177,23 @@ CHRYSICS.GEOMETRY.Cone.prototype = {
  * A plane in mathematics is represented as a flat solid cube in
  * demo.
  */
-CHRYSICS.GEOMETRY.Plane = function(plane) {
+CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
+
+  this.pos = plane.point;
+  this.dir = plane.n;
 
   this.geometry = new THREE.Mesh(
-    new THREE.CubeGeometry(200, 200, 2),
-    new THREE.MeshLambertMaterial({
-      color: 0x0000ff,
+    new THREE.CubeGeometry(size, 1, size),
+    new THREE.MeshLambertMaterial({ 
+      color: color,
+      transparent: true,
+      opacity: 0.8
     })
   );
+
+  var m = CHRYSICS.GEOMETRY.getOrientation(this.dir);
+  this.geometry.applyMatrix(m);
+  this.geometry.position.set(this.pos.x, this.pos.y, this.pos.z);
 
 }
 
@@ -199,7 +208,7 @@ CHRYSICS.GEOMETRY.Plane.prototype = {
 }
 
 /**
- * Coordinate axis.
+ * Coordinate.
  */
 CHRYSICS.GEOMETRY.Coordinate = function(size) {
 

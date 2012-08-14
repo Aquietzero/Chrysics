@@ -15,8 +15,18 @@ ClosestPoint.prototype = {
 
   initWorld: function() {
 
-    this.coordinate = new CHRYSICS.GEOMETRY.Coordinate(400);
-    this.worldRendering.add(this.coordinate);
+    var coordinate = new CHRYSICS.GEOMETRY.Coordinate(400);
+    var plane = new CHRYSICS.GEOMETRY.Plane(
+      new CHRYSICS.Plane(
+        new CHRYSICS.Vector3(10, 10, 10),
+        new CHRYSICS.Point(0, 0, 0)
+      ),
+      500,
+      0x330033 
+    );
+    
+    this.worldRendering.add(coordinate);
+    this.worldRendering.add(plane);
 
   },
 
