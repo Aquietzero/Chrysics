@@ -4,24 +4,24 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var ClosestPoint = function(container) {
+var ClosestPoint4 = function(container) {
 
   this.worldRendering = new GeometryWorld(container);
   this.initWorld();
 
 }
 
-ClosestPoint.prototype = {
+ClosestPoint4.prototype = {
 
   initWorld: function() {
 
-    // Plane
-    this.testPlane = new CHRYSICS.Plane(
-      new CHRYSICS.Vector3(10, 10, 10),
-      new CHRYSICS.Point(0, 0, 0)
-    );
+    var a = new CHRYSICS.Point(100, -100, 100),
+        b = new CHRYSICS.Point(-100, -100, 100),
+        c = new CHRYSICS.Point(0, 100, -100);
 
-    // Test point out of the plane.
+    this.triangle = new CHRYSICS.GEOMETRY.Triangle(a, b, c, 0x880088);
+
+    // Test point out of the triangle.
     this.testPoint = new CHRYSICS.GEOMETRY.Point(
       new CHRYSICS.Point(
         CHRYSICS.Utils.random(-200, 200),
@@ -32,9 +32,8 @@ ClosestPoint.prototype = {
 
     // Closest point on the plane to the testing point.
     this.closestPoint = new CHRYSICS.GEOMETRY.Point(
-      CHRYSICS.BV.ClosestPoint.onPlaneToPoint(
-        this.testPlane, 
-        this.testPoint.point
+      CHRYSICS.BV.ClosestPoint.onTriangleToPoint(
+        a, b, c, this.testPoint.point
       ), 7, 0xffff00
     );
 
@@ -47,9 +46,7 @@ ClosestPoint.prototype = {
 
     // Rendering geometries.
     this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Plane(
-      this.testPlane, 500, 0x330033
-    ));
+    this.worldRendering.add(this.triangle);
     this.worldRendering.add(this.testPoint);
     this.worldRendering.add(this.closestPoint);
     this.worldRendering.add(this.line);

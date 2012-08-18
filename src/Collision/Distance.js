@@ -7,7 +7,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.BV.Distance = {
+CHRYSICS.Distance = {
 
   /**
    * Calculate the distance between a point C to a segment AB.
@@ -29,5 +29,34 @@ CHRYSICS.BV.Distance = {
     return ac.dotProduct(ac) - e * e / f;
   
   },
+
+  /**
+   * Calculate the distance between a point P to a AABB.
+   */
+  pointToAABB: function(aabb, point) {
+
+    var x_min = aabb.c.x - aabb.rx,
+        x_max = aabb.c.x + aabb.rx,
+        y_min = aabb.c.y - aabb.ry,
+        y_max = aabb.c.y + aabb.ry,
+        z_min = aabb.c.z - aabb.rz,
+        z_max = aabb.c.z + aabb.rz;
+
+    var x = point.x, y = point.y, z = point.z;
+    var dist = 0;
+
+    if (x < x_min) dist += (x_min - x) * (x_min - x);
+    if (x > x_max) dist += (x - x_max) * (x - x_max);
+
+    if (y < y_min) dist += (y_min - y) * (y_min - y);
+    if (y > y_max) dist += (y - y_max) * (y - y_max);
+
+    if (z < z_min) dist += (z_min - z) * (z_min - z);
+    if (z > z_max) dist += (z - z_max) * (z - z_max);
+
+    return dist;
+
+  },
+
 
 }

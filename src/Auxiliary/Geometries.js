@@ -251,6 +251,46 @@ CHRYSICS.GEOMETRY.AABB.prototype = {
 }
 
 /**
+ * Triangle
+*/
+CHRYSICS.GEOMETRY.Triangle = function(a, b, c, color) {
+
+  var geom = new THREE.Geometry();
+  var v1 = new THREE.Vector3(a.x, a.y, a.z);
+  var v2 = new THREE.Vector3(b.x, b.y, b.z);
+  var v3 = new THREE.Vector3(c.x, c.y, c.z);
+
+  geom.vertices.push(v1);
+  geom.vertices.push(v2);
+  geom.vertices.push(v3);
+
+  geom.faces.push(new THREE.Face3(0,2,1));
+  geom.computeFaceNormals();
+
+  this.geometry = new THREE.Mesh(
+    geom,
+    new THREE.MeshLambertMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.6,
+    })
+  );
+  this.geometry.doubleSided = true;
+  console.log(this.geometry);
+
+}
+
+CHRYSICS.GEOMETRY.Triangle.prototype = {
+
+  getGeometry: function() {
+
+    return this.geometry;
+  
+  },
+
+}
+
+/**
  * Coordinate.
  */
 CHRYSICS.GEOMETRY.Coordinate = function(size) {
