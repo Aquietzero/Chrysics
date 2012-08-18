@@ -38,8 +38,6 @@ ObjectsGroup.prototype = {
     );
     this.geometry.add(this.BVAABB);
 
-    console.log(this.body.BV);
- 
   },
 
   getData: function() {

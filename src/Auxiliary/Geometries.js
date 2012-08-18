@@ -157,7 +157,7 @@ CHRYSICS.GEOMETRY.Segment.prototype = {
 }
 
 /**
- * Tetrahedron.
+ * Cone.
  */
 CHRYSICS.GEOMETRY.Cone = function(radius, height, color, pos, dir) {
 
@@ -204,7 +204,7 @@ CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
     new THREE.MeshLambertMaterial({ 
       color: color,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.8,
     })
   );
 
@@ -215,6 +215,32 @@ CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
 }
 
 CHRYSICS.GEOMETRY.Plane.prototype = {
+
+  getGeometry: function() {
+
+    return this.geometry;
+  
+  },
+
+}
+
+/**
+ * AABB.
+ */
+CHRYSICS.GEOMETRY.AABB = function(aabb, color) {
+
+  this.geometry = new THREE.Mesh(
+    new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2),
+    new THREE.MeshLambertMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.6,
+    })
+  );
+
+}
+
+CHRYSICS.GEOMETRY.AABB.prototype = {
 
   getGeometry: function() {
 

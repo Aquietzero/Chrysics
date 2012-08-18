@@ -45,4 +45,32 @@ CHRYSICS.BV.ClosestPoint = {
   
   },
 
+  /**
+   * Given a point in space, return the point on the given AABB
+   * which is closest to the given point.
+   */
+  onAABBToPoint: function(aabb, point) {
+
+    var x_min = aabb.c.x - aabb.rx,
+        x_max = aabb.c.x + aabb.rx,
+        y_min = aabb.c.y - aabb.ry,
+        y_max = aabb.c.y + aabb.ry,
+        z_min = aabb.c.z - aabb.rz,
+        z_max = aabb.c.z + aabb.rz;
+
+    var x = point.x, y = point.y, z = point.z;
+
+    x = x < x_min ? x_min : x;
+    x = x > x_max ? x_max : x;
+
+    y = y < y_min ? y_min : y;
+    y = y > y_max ? y_max : y;
+
+    z = z < z_min ? z_min : z;
+    z = z > z_max ? z_max : z;
+
+    return new CHRYSICS.Vector3(x, y, z);
+
+  },
+
 }

@@ -19,4 +19,10 @@ CHRYSICS.Segment.prototype = {
   
   },
 
+  getMagnitudeSquare: function() {
+ 
+    return this.end.sub(this.begin).magnitudeSquare();
+  
+  },
+
 }
