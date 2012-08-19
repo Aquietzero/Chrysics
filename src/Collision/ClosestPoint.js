@@ -136,4 +136,82 @@ CHRYSICS.BV.ClosestPoint = {
 
   },
 
+  /**
+   * Computes closest points C1 and C2 of 
+   *  
+   *  S1(s) = P1 + s*(Q1 - P1) and
+   *  S2(t) = P2 + t*(Q2 - P2)
+   *
+   * returning s and t. 
+   */
+  betweenSegmentAndSegment: function(s1, s2) {
+
+    var s, t, c1, c2;
+
+    var d1 = s1.end.sub(s1.begin),
+        d2 = s2.end.sub(s2.begin),
+        r = s1.begin.sub(s2.begin);
+
+    var a = d1.dotProduct(d1),
+        e = d2.dotProduct(d2),
+        f = d2.dotProduct(r);
+    
+
+    // Both segments degenerate into points.
+    if (a <= CHRYSICS.Const.SEGMENT_EPSILON &&
+        e <= CHRYSICS.Const.SEGMENT_EPSILON) {
+
+      s = t = 0;
+      c1 = p1;
+      c2 = p2;
+    
+    }
+
+    if (a <= CHRYSICS.Const.SEGMENT_EPSILON) {
+
+      // First segment degenerates into a point.
+      s = 0;
+      t = CHRYSICS.Utils.clamp(f / e, 0.0, 1.0);
+    
+    } else {
+
+      var c = d1.dotProduct(r);
+      if (e <= CHRYSICS.Const.SEGMENT_EPSILON) {
+
+        // Second segment degenerates into a point.
+        t = 0;
+        s = CHRYSICS.Utils.clamp(-c / a, 0.0, 1.0);
+      
+      } else {
+
+        // The general nondegenerate case.
+        var b = d1.dotProduct(d2);
+        var denom = a*e - b*b;
+
+        if (denom != 0)
+          s = CHRYSICS.Utils.clamp((b*f - c*e) / denom, 0.0, 1.0);
+        else
+          s = 0;
+
+        t = (b*s + f) / e;
+
+        if (t < 0) {
+          t = 0;
+          s = CHRYSICS.Utils.clamp(-c / a, 0.0, 1.0);
+        } else if (t > 1) {
+          t = 1;
+          s = CHRYSICS.Utils.clamp((b - c) / a, 0.0, 1.0);
+        }
+      
+      }
+    
+    }
+
+    return {
+      c1 : s1.begin.add(d1.mul(s)),
+      c2 : s2.begin.add(d2.mul(t)),
+    }
+  
+  },
+
 }

@@ -61,6 +61,15 @@ CHRYSICS.Utils = {
   
   },
 
+  clamp: function(n, min, max) {
+
+    if (n < min) n = min;
+    if (n > max) n = max;
+
+    return n;
+  
+  },
+
   maxIndex: function(xs) {
 
     var maxIndex = 0;

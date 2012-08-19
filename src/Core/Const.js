@@ -22,4 +22,6 @@ CHRYSICS.Const = {
 
   PARTICLE   : 'PARTICLE',
 
+  SEGMENT_EPSILON : 0.001,
+
 }
