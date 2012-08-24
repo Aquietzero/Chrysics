@@ -1,5 +1,5 @@
 /**
- * Determinant.js involves some algorithms use for determining some
+ * SpatialTest.js involves some algorithms use for determining some
  * spatial relationships with convenience. Inputs of the methods are
  * all row vectors.
  *
