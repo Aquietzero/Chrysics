@@ -88,6 +88,48 @@ CHRYSICS.GEOMETRY.Point.prototype = {
 }
 
 /**
+ * A sphere
+ */
+CHRYSICS.GEOMETRY.Sphere = function(sphere, radius, color) {
+
+  this.sphere = sphere;
+
+  this.geometry = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, 20, 20),
+    new THREE.MeshLambertMaterial({ color: color })
+  );
+  this.geometry.position.set(
+    this.sphere.c.x,
+    this.sphere.c.y,
+    this.sphere.c.z
+  );
+
+}
+
+CHRYSICS.GEOMETRY.Sphere.prototype = {
+
+  getGeometry: function() {
+
+    return this.geometry;
+  
+  },
+
+  setPosition: function(x, y, z) {
+
+    this.sphere.c = new CHRYSICS.Vector3(x, y, z);
+    this.geometry.position.set(x, y, z);
+  
+  },
+
+  setColor: function(color) {
+
+    this.geometry.material.color.setHex(color);
+  
+  },
+
+}
+
+/**
  * A segment or ray or line in mathematics is represented as a 
  * slim cylinda in demo.
  */
@@ -196,6 +238,7 @@ CHRYSICS.GEOMETRY.Cone.prototype = {
  */
 CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
 
+  this.plane = plane;
   this.pos = plane.point;
   this.dir = plane.n;
 
@@ -204,7 +247,7 @@ CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
     new THREE.MeshLambertMaterial({ 
       color: color,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.5,
     })
   );
 

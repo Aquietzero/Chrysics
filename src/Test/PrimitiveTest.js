@@ -12,7 +12,7 @@ CHRYSICS.PrimitiveTest = {
   OUTSIDE   : 'OUTSIDE',
 
   // Determine whether plane p intersects sphere s.
-  testSpherePlane: function(s, p) {
+  spherePlane: function(s, p) {
 
     var c = s.c.sub(p.point);
     var dist = c.dotProduct(p.n);
