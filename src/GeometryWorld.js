@@ -76,8 +76,11 @@ GeometryWorld.prototype = {
 
   add: function(object) {
 
-    this.objects.push(object);
-    this.scene.add(object.getGeometry());
+    if (object['getGeometry']) {
+      this.objects.push(object);
+      this.scene.add(object.getGeometry());
+    } else
+      this.scene.add(object);
   
   },
 

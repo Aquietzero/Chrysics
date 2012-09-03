@@ -44,10 +44,11 @@ Icosahedron.prototype = {
 
     var vertices = [];
     var data = this.icosahedron.geometry.vertices;
-    for (var i = 0; i < data.length; ++i)
+    for (var i = 0; i < data.length; ++i) {
       vertices.push(new CHRYSICS.Vector3(
         data[i].x, data[i].y, data[i].z
       ));
+    }
 
     return vertices;
   
