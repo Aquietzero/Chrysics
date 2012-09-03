@@ -40,7 +40,7 @@ ClosestPoint3.prototype = {
 
     // Rendering geometries.
     this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.AABB(this.aabb, 0x000066));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.AABB(this.aabb, 0x000066, 0.6));
     this.worldRendering.add(this.testPoint);
     this.worldRendering.add(this.closestPoint);
     this.worldRendering.add(this.line);

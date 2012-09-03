@@ -25,4 +25,22 @@ CHRYSICS.PrimitiveTest = {
   
   },
 
+  // Determine whether plane p intersects an AABB.
+  AABBPlane: function(aabb, p) {
+
+    // Compute the center and positive extend of AABB.
+    var c = aabb.c;
+    var e = new CHRYSICS.Vector3(
+      aabb.rx,
+      aabb.ry,
+      aabb.rz
+    );
+
+    var r = e.dotProduct(p.n.abs());
+    var s = c.sub(p.point).dotProduct(p.n);
+
+    return Math.abs(s) <= r;
+  
+  },
+
 }

@@ -294,6 +294,16 @@ CHRYSICS.Vector3.prototype = {
   
   },
 
+  abs: function() {
+
+    return new CHRYSICS.Vector3(
+      Math.abs(this.x),
+      Math.abs(this.y),
+      Math.abs(this.z)
+    );
+
+  },
+
   log: function() {
   
     console.log(this.x, this.y, this.z);

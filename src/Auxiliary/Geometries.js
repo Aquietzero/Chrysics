@@ -270,14 +270,15 @@ CHRYSICS.GEOMETRY.Plane.prototype = {
 /**
  * AABB.
  */
-CHRYSICS.GEOMETRY.AABB = function(aabb, color) {
+CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity) {
 
+  this.aabb = aabb;
   this.geometry = new THREE.Mesh(
     new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2),
     new THREE.MeshLambertMaterial({
       color: color,
       transparent: true,
-      opacity: 0.6,
+      opacity: opacity,
     })
   );
 
@@ -288,6 +289,19 @@ CHRYSICS.GEOMETRY.AABB.prototype = {
   getGeometry: function() {
 
     return this.geometry;
+  
+  },
+
+  setPosition: function(x, y, z) {
+  
+    this.aabb.c = new CHRYSICS.Vector3(x, y, z);
+    this.geometry.position.set(x, y, z);
+  
+  },
+
+  setColor: function(color) {
+
+    this.geometry.material.color.setHex(color);
   
   },
 
