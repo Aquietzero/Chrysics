@@ -2,42 +2,56 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #99ccff;
+  background: url('../img/egg_shell.png');
 }
 
 #header {
-  height: 80px;
-  background-color: #0066ff;
-  border-bottom: solid 5px #333366;
+  height: 100px;
+  width: 50%;
+  padding-top: 60px;
+  padding-left: 60px;
+  margin: 20px;
 }
 
 #header h1 {
-  color: #99ccff;
-  text-shadow: 1px 0 1px black;
+  color: #eee;
+  text-shadow: 1px 1px 2px #555, 0 0 50px rgba(100, 100, 100, 0.6);
+  font-size: 50px;
+  font-weight: bold;
   margin: 0;
-  padding: 20px;
+}
+
+#header p {
+  color: #666;
+  margin: -10px 110px;
+  text-shadow: 1px 1px 1px white, 0 0 5px #bbb;
 }
 
 #main-container {
-  background-color: #99ccff;
+  padding: 0 80px;
+}
+
+#main-container .column {
+  float: left;
+  width: 400px;
 }
 
 #main-container h2 {
   margin-left: 20px;
-  color: #000033;
+  color: #222;
   font-size: 18px;
 }
 
-a {
-  color: #333399;
+#main-container .column a {
+  color: #666;
   text-decoration: none;
-  border-left: solid 5px #333399;
+  border-left: solid 5px #888;
   padding-left: 10px;
 }
 
-a:hover {
-  color: #333333;
-  border-left: solid 5px #333333;
+#main-container .column a:hover {
+  color: #333;
+  border-left: solid 5px #333;
 }
 
 ul {
