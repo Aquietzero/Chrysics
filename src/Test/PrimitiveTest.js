@@ -63,4 +63,18 @@ CHRYSICS.PrimitiveTest = {
   
   },
 
+  // Returns true if the segment intersects the plane.
+  segmentPlane: function(segment, p) {
+
+    var dir = segment.end.sub(segment.begin);
+    var dorminator = p.n.dotProduct(p.point.sub(segment.begin))
+    var numerator  = p.n.dotProduct(dir);
+
+    var t = dorminator / numerator;
+
+    if (t >= 0 && t <= 1)
+      return segment.begin.add(dir.mul(t));
+  
+  }
+
 }
