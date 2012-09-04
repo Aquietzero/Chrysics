@@ -7,8 +7,8 @@
 var GeometryWorld = function(container) {
 
   this.container = container;
-  this.width  = window.innerWidth;
-  this.height = window.innerHeight;
+  this.width  = 800;
+  this.height = 600;
 
   this.initThree();
   this.initScene();
@@ -28,7 +28,7 @@ GeometryWorld.prototype = {
     this.renderer.setSize(this.width, this.height);
 
     document.getElementById(this.container).appendChild(this.renderer.domElement);
-    this.renderer.setClearColorHex(0x000000, 1.0);
+    this.renderer.setClearColorHex(0x999999, 0.6);
   
   },
 

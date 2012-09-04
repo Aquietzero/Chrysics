@@ -28,7 +28,7 @@ CHRYSICS.PrimitiveTest = {
   // Determine whether plane p intersects an AABB.
   AABBPlane: function(aabb, p) {
 
-    // Compute the center and positive extend of AABB.
+
     var c = aabb.c;
     var e = new CHRYSICS.Vector3(
       aabb.rx,

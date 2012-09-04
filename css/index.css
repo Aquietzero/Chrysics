@@ -47,6 +47,7 @@ body {
   text-decoration: none;
   border-left: solid 5px #888;
   padding-left: 10px;
+  cursor: pointer;
 }
 
 #main-container .column a:hover {
@@ -60,4 +61,14 @@ ul {
 
 li {
   margin: 5px auto;
+}
+
+#demo-area {
+  display: none;
+  border: solid 8px #333;
+  box-shadow: 0 0 15px #333;
+}
+
+#demo-area-close {
+  background: url('../img/close.png');
 }

@@ -9,6 +9,8 @@ var SegmentPlane = function(container) {
   this.world = new GeometryWorld(container);
   this.initWorld();
 
+  this.state = 'RUNNING';
+
 }
 
 SegmentPlane.prototype = {
@@ -78,12 +80,19 @@ SegmentPlane.prototype = {
 
       self.world.render();
       // iter();
-      window.requestAnimationFrame(loop);
+      if (self.state == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
 
-    loop();
+    window.requestAnimationFrame(loop);
 
+  },
+
+  stop: function() {
+
+    this.state = 'STOP';
+  
   },
 
 }

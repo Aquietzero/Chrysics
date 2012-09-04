@@ -3,6 +3,49 @@
   <head>
     <title>Physics Engine Demo</title>
     <link rel="stylesheet" href="css/index.css" type="text/css" />
+
+    <!-- Basic Chrysics Library -->
+    <script type="text/javascript" src="lib/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="lib/RequestAnimationFrame.js"></script>
+    <script type="text/javascript" src="lib/Three.js"></script>
+
+    <script type="text/javascript" src="src/Chrysics.js"></script>
+
+    <script type="text/javascript" src="src/Core/Const.js"></script>
+    <script type="text/javascript" src="src/Core/Utils.js"></script>
+    <script type="text/javascript" src="src/Core/Vector3.js"></script>
+    <script type="text/javascript" src="src/Core/Matrix3.js"></script>
+    <script type="text/javascript" src="src/Core/Matrix4.js"></script>
+    <script type="text/javascript" src="src/Core/Quaternion.js"></script>
+    <script type="text/javascript" src="src/Core/Statistics.js"></script>
+
+    <script type="text/javascript" src="src/Collision/BV.js"></script>
+    <script type="text/javascript" src="src/Collision/AABB.js"></script>
+    <script type="text/javascript" src="src/Collision/Point.js"></script>
+    <script type="text/javascript" src="src/Collision/Plane.js"></script>
+    <script type="text/javascript" src="src/Collision/Sphere.js"></script>
+    <script type="text/javascript" src="src/Collision/Segment.js"></script>
+    <script type="text/javascript" src="src/Collision/ClosestPoint.js"></script>
+
+    <script type="text/javascript" src="src/Test/PrimitiveTest.js"></script>
+
+    <script type="text/javascript" src="src/Auxiliary/Geometries.js"></script>
+    <script type="text/javascript" src="src/GeometryWorld.js"></script>
+
+    <!-- Examples -->
+    <script type="text/javascript" src="demo/SpherePlane.js"></script>
+    <script type="text/javascript" src="demo/AABBPlane.js"></script>
+    <script type="text/javascript" src="demo/SphereAABB.js"></script>
+    <script type="text/javascript" src="demo/SphereTriangle.js"></script>
+    <script type="text/javascript" src="demo/SegmentPlane.js"></script>
+
+    <!-- Demo Driver -->
+    <script type="text/javascript" src="demo/DemoCollection.js"></script>
+    <script type="text/javascript" src="demo/DemoController.js"></script>
+
+    <!-- Demo Entrance -->
+    <script type="text/javascript" src="index.js"></script>
+ 
   </head>
   <body>
     <div id="header">
@@ -39,16 +82,20 @@
 
         <h2>Primitive Tests</h2>
         <ul>
-          <li><a href="demo/SpherePlane/SpherePlane.html">Test Sphere against Plane</a></li>
-          <li><a href="demo/AABBPlane/AABBPlane.html">Test AABB against Plane</a></li>
-          <li><a href="demo/SphereAABB/SphereAABB.html">Test Sphere against AABB</a></li>
-          <li><a href="demo/SphereTriangle/SphereTriangle.html">Test Sphere against Triangle</a></li>
-          <li><a href="demo/SegmentPlane/SegmentPlane.html">Test Segment against Plane</a></li>
+          <li><a id="SpherePlane">Test Sphere against Plane</a></li>
+          <li><a id="AABBPlane">Test AABB against Plane</a></li>
+          <li><a id="SphereAABB">Test Sphere against AABB</a></li>
+          <li><a id="SphereTriangle">Test Sphere against Triangle</a></li>
+          <li><a id="SegmentPlane">Test Segment against Plane</a></li>
         </ul>
       </div>
     </div>
-    <div id="footer">
+
+    <div id="demo-area">
+      <div id="demo-area-close">
+      </div>
     </div>
+    <div id="footer"></div>
 
     <a href="https://github.com/Aquietzero/Chrysics"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></img></a>
   </body>

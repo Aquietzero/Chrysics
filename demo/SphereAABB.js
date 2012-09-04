@@ -4,14 +4,16 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var SphereTriangle = function(container) {
+var SphereAABB = function(container) {
 
   this.world = new GeometryWorld(container);
   this.initWorld();
 
+  this.state = 'RUNNING';
+
 }
 
-SphereTriangle.prototype = {
+SphereAABB.prototype = {
 
   initWorld: function() {
 
@@ -20,16 +22,23 @@ SphereTriangle.prototype = {
       50
     );
 
-    var a = new CHRYSICS.Point(100, -100, 100),
-        b = new CHRYSICS.Point(-100, -100, 100),
-        c = new CHRYSICS.Point(0, 100, -100);
+    var aabb = new CHRYSICS.BV.AABB([
+      new CHRYSICS.Vector3(-100, -25, -100),
+      new CHRYSICS.Vector3( 100, -25, -100),
+      new CHRYSICS.Vector3( 100, -25,  100),
+      new CHRYSICS.Vector3(-100, -25,  100),
+      new CHRYSICS.Vector3(-100,  25, -100),
+      new CHRYSICS.Vector3( 100,  25, -100),
+      new CHRYSICS.Vector3( 100,  25,  100),
+      new CHRYSICS.Vector3(-100,  25,  100)
+    ]);
 
     this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
-    this.triangle = new CHRYSICS.GEOMETRY.Triangle(a, b, c, 0xffff00);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0xffff00, 1);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
     this.world.add(this.sphere);
-    this.world.add(this.triangle);
+    this.world.add(this.aabb);
     
   },
 
@@ -40,30 +49,22 @@ SphereTriangle.prototype = {
     var rst;
     var self = this;
     var s = self.sphere.sphere;
-    var triangle = self.triangle;
+    var aabb = self.aabb.aabb;
     return function() {
 
       if (pos.y < -150)
         offset = new CHRYSICS.Vector3(1, 1, 1);
-      else if (pos.y > 150) {
-        console.log(pos.y);
+      else if (pos.y > 150)
         offset = new CHRYSICS.Vector3(-1, -1, -1);
-      }
       pos.addVector(offset);
 
       self.sphere.setPosition(pos.x, pos.y, pos.z);
-      var intersect = CHRYSICS.PrimitiveTest.shpereTriangle(
-        s, 
-        new CHRYSICS.Point(triangle.v1.x, triangle.v1.y, triangle.v1.z),
-        new CHRYSICS.Point(triangle.v2.x, triangle.v2.y, triangle.v2.z),
-        new CHRYSICS.Point(triangle.v3.x, triangle.v3.y, triangle.v3.z)
-      );
-      if (intersect) {
+      if (CHRYSICS.PrimitiveTest.sphereAABB(s, aabb)) {
         self.sphere.setColor(0xff0000);
-        self.triangle.setColor(0xff0000);
+        self.aabb.setColor(0xff0000);
       } else {
         self.sphere.setColor(0xffff00);
-        self.triangle.setColor(0xffff00);
+        self.aabb.setColor(0xffff00);
       }
     
     };
@@ -78,12 +79,21 @@ SphereTriangle.prototype = {
 
       self.world.render();
       iter();
-      window.requestAnimationFrame(loop);
+
+      if (self.state == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
+
+  stop: function() {
+
+    this.state = 'STOP';
+  
+  },
+
+
 
 }

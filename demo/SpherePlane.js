@@ -4,14 +4,16 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var AABBPlane = function(container) {
+var SpherePlane = function(container) {
 
   this.world = new GeometryWorld(container);
   this.initWorld();
 
+  this.state = 'RUNNING';
+
 }
 
-AABBPlane.prototype = {
+SpherePlane.prototype = {
 
   initWorld: function() {
 
@@ -19,23 +21,17 @@ AABBPlane.prototype = {
       new CHRYSICS.Vector3(0.3, 1, 0.7),
       new CHRYSICS.Vector3(0, 0, 0)
     );
-    var aabb = new CHRYSICS.BV.AABB([
-      new CHRYSICS.Vector3(-100, -25, -100),
-      new CHRYSICS.Vector3( 100, -25, -100),
-      new CHRYSICS.Vector3( 100, -25,  100),
-      new CHRYSICS.Vector3(-100, -25,  100),
-      new CHRYSICS.Vector3(-100,  25, -100),
-      new CHRYSICS.Vector3( 100,  25, -100),
-      new CHRYSICS.Vector3( 100,  25,  100),
-      new CHRYSICS.Vector3(-100,  25,  100)
-    ]);
+    var sphere = new CHRYSICS.Sphere(
+      new CHRYSICS.Vector3(0, -300, 0),
+      50
+    );
 
     this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x000033);
-    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0xffff00, 1);
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
     this.world.add(this.plane);
-    this.world.add(this.aabb);
+    this.world.add(this.sphere);
     
   },
 
@@ -45,7 +41,7 @@ AABBPlane.prototype = {
     var y = -300;
     var rst;
     var self = this;
-    var aabb = self.aabb.aabb;
+    var s = self.sphere.sphere;
     var p = self.plane.plane;
     return function() {
 
@@ -55,11 +51,13 @@ AABBPlane.prototype = {
         offset = 1;
       y += offset;
 
-      self.aabb.setPosition(0, y, 0);
-      if (CHRYSICS.PrimitiveTest.AABBPlane(aabb, p))
-        self.aabb.setColor(0xff0000);
+      self.sphere.setPosition(0, y, 0);
+      rst = CHRYSICS.PrimitiveTest.spherePlane(s, p);
+
+      if (rst == CHRYSICS.PrimitiveTest.INTERSECT)
+        self.sphere.setColor(0xff0000);
       else
-        self.aabb.setColor(0xffff00);
+        self.sphere.setColor(0xffff00);
     
     };
   
@@ -73,12 +71,20 @@ AABBPlane.prototype = {
 
       self.world.render();
       iter();
-      window.requestAnimationFrame(loop);
+
+      if (self.state == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
+
+  stop: function() {
+
+    this.state = 'STOP';
+  
+  },
+
 
 }
