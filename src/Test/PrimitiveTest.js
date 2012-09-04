@@ -42,5 +42,25 @@ CHRYSICS.PrimitiveTest = {
     return Math.abs(s) <= r;
   
   },
+  
+  // Returns true if sphere s intersects AABB aabb.
+  sphereAABB: function(s, aabb) {
+
+    var p = CHRYSICS.BV.ClosestPoint.onAABBToPoint(aabb, s.c);
+    var dist = p.sub(s.c);
+
+    return dist.dotProduct(dist) <= s.r * s.r;
+  
+  },
+
+  // Returns true if shpere s intersects triangle ABC.
+  shpereTriangle: function(s, a, b, c) {
+
+    var p = CHRYSICS.BV.ClosestPoint.onTriangleToPoint(a, b, c, s.c);
+    var dist = p.sub(s.c);
+
+    return dist.dotProduct(dist) <= s.r * s.r;
+  
+  },
 
 }

@@ -313,13 +313,13 @@ CHRYSICS.GEOMETRY.AABB.prototype = {
 CHRYSICS.GEOMETRY.Triangle = function(a, b, c, color) {
 
   var geom = new THREE.Geometry();
-  var v1 = new THREE.Vector3(a.x, a.y, a.z);
-  var v2 = new THREE.Vector3(b.x, b.y, b.z);
-  var v3 = new THREE.Vector3(c.x, c.y, c.z);
+  this.v1 = new THREE.Vector3(a.x, a.y, a.z);
+  this.v2 = new THREE.Vector3(b.x, b.y, b.z);
+  this.v3 = new THREE.Vector3(c.x, c.y, c.z);
 
-  geom.vertices.push(v1);
-  geom.vertices.push(v2);
-  geom.vertices.push(v3);
+  geom.vertices.push(this.v1);
+  geom.vertices.push(this.v2);
+  geom.vertices.push(this.v3);
 
   geom.faces.push(new THREE.Face3(0,2,1));
   geom.computeFaceNormals();
@@ -333,7 +333,6 @@ CHRYSICS.GEOMETRY.Triangle = function(a, b, c, color) {
     })
   );
   this.geometry.doubleSided = true;
-  console.log(this.geometry);
 
 }
 
@@ -342,6 +341,12 @@ CHRYSICS.GEOMETRY.Triangle.prototype = {
   getGeometry: function() {
 
     return this.geometry;
+  
+  },
+
+  setColor: function(color) {
+
+    this.geometry.material.color.setHex(color);
   
   },
 
