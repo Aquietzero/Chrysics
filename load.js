@@ -30,6 +30,7 @@ var loader = new Loader();
 
 // Auxiliary Libraries
 loader.add('lib/jquery-1.8.1.min');
+loader.add('lib/underscore.min');
 loader.add('lib/RequestAnimationFrame');
 loader.add('lib/Three');
 
@@ -38,40 +39,55 @@ loader.add('src/Chrysics');
 
 loader.add('src/Core/Const');
 loader.add('src/Core/Utils');
-loader.add('src/Core/Vector3');
-loader.add('src/Core/Matrix3');
-loader.add('src/Core/Matrix4');
-loader.add('src/Core/Quaternion');
-loader.add('src/Core/Statistics');
+loader.add('src/Core/Math/Vector3');
+loader.add('src/Core/Math/Matrix3');
+loader.add('src/Core/Math/Matrix4');
+loader.add('src/Core/Math/Quaternion');
+loader.add('src/Core/Math/Statistics');
+loader.add('src/Core/Math/Distance');
+
+loader.add('src/Core/Primitives/Point');
+loader.add('src/Core/Primitives/Plane');
+loader.add('src/Core/Primitives/Sphere');
+loader.add('src/Core/Primitives/Segment');
 
 loader.add('src/Collision/BV');
-loader.add('src/Collision/Distance');
 loader.add('src/Collision/AABB');
-loader.add('src/Collision/Point');
-loader.add('src/Collision/Plane');
 loader.add('src/Collision/Sphere');
-loader.add('src/Collision/Segment');
 loader.add('src/Collision/ClosestPoint');
+loader.add('src/Collision/PrimitiveTest');
+loader.add('src/Collision/SpatialTest');
 
-loader.add('src/Test/PrimitiveTest');
-
-loader.add('src/Auxiliary/Geometries');
+loader.add('src/Render/Geometry');
+loader.add('src/Render/Point');
+loader.add('src/Render/Sphere');
+loader.add('src/Render/Segment');
+loader.add('src/Render/Plane');
+loader.add('src/Render/Cone');
+loader.add('src/Render/AABB');
+loader.add('src/Render/Triangle');
+loader.add('src/Render/Coordinate');
 
 loader.add('src/GeometryWorld');
 loader.add('src/RenderingWorld');
 loader.add('src/World');
 
 // Examples
+
+// Closest Point
 loader.add('demo/ClosestPoint/OnPlaneToPoint');
 loader.add('demo/ClosestPoint/OnSegmentToPoint');
 loader.add('demo/ClosestPoint/OnAABBToPoint');
 loader.add('demo/ClosestPoint/OnTriangleToPoint');
 loader.add('demo/ClosestPoint/BetweenTwoSegments');
 
+// Bounding Volume
+loader.add('demo/BoundingVolume/ObjectsGroup');
 loader.add('demo/BoundingVolume/AABBForGroup');
 loader.add('demo/BoundingVolume/BoundingSphere');
 loader.add('demo/BoundingVolume/BoundingSphereForGroup');
 
+// Primitive Tests
 loader.add('demo/PrimitiveTests/SpherePlane');
 loader.add('demo/PrimitiveTests/AABBPlane');
 loader.add('demo/PrimitiveTests/SphereAABB');

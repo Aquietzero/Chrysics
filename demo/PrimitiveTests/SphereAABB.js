@@ -21,6 +21,8 @@ SphereAABB.prototype = {
       new CHRYSICS.Vector3(-150, -150, -150),
       50
     );
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
+    console.log(this.sphere);
 
     var aabb = new CHRYSICS.BV.AABB([
       new CHRYSICS.Vector3(-100, -25, -100),
@@ -32,8 +34,6 @@ SphereAABB.prototype = {
       new CHRYSICS.Vector3( 100,  25,  100),
       new CHRYSICS.Vector3(-100,  25,  100)
     ]);
-
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
     this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0xffff00, 1);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
