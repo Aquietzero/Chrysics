@@ -30,8 +30,8 @@ AABBPlane.prototype = {
       new CHRYSICS.Vector3(-100,  25,  100)
     ]);
 
-    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x000033);
-    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0xffff00, 1);
+    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x333333);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 1);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
     this.world.add(this.plane);
@@ -51,17 +51,17 @@ AABBPlane.prototype = {
     var p = self.plane.plane;
     return function() {
 
-      if (y >= 150)
+      if (y >= 250)
         offset = -1;
-      if (y <= -150)
+      if (y <= -250)
         offset = 1;
       y += offset;
 
       self.aabb.setPosition(0, y, 0);
       if (CHRYSICS.PrimitiveTest.AABBPlane(aabb, p))
-        self.aabb.setColor(0xff0000);
+        self.aabb.setColor(0x990000);
       else
-        self.aabb.setColor(0xffff00);
+        self.aabb.setColor(0x333333);
     
     };
   

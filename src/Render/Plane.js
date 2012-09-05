@@ -5,18 +5,16 @@
 CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
 
   this.plane = plane;
-  this.pos = plane.point;
-  this.dir = plane.n;
+  this.geometry = new THREE.Mesh(
+    geom = new THREE.CubeGeometry(size, 1, size),
+    mesh = new THREE.MeshLambertMaterial({ 
+      color: color,
+      transparent: true,
+      opacity: 0.5,
+    })
+  );
 
-  var geom = new THREE.CubeGeometry(size, 1, size);
-  var mesh = new THREE.MeshLambertMaterial({ 
-    color: color,
-    transparent: true,
-    opacity: 0.5,
-  });
-
-  this.geometry = new THREE.Mesh(geom, mesh);
-  this.setOrientation(this.dir);
+  this.setOrientation(this.plane.n);
 
 }
 

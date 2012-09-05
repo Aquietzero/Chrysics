@@ -44,10 +44,6 @@ CHRYSICS.GEOMETRY.Primitive.prototype = {
  
   },
 
-  setColor: function(color) {
-    this.geometry.material.color.setHex(color);
-  },
-
   getGeometry: function() {
     return this.geometry;
   }

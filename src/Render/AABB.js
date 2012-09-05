@@ -4,14 +4,27 @@
 CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity) {
 
   this.aabb = aabb;
-  this.geometry = new THREE.Mesh(
-    new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2),
-    new THREE.MeshLambertMaterial({
-      color: color,
-      transparent: true,
-      opacity: opacity,
-    })
-  );
+
+  var geom = new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2);
+  var solidMesh = new THREE.MeshLambertMaterial({ 
+    transparent: true,
+    opacity: 0.8,
+    color: 0x333333,
+    wireframe: false 
+  });
+  var frameMesh = new THREE.MeshLambertMaterial({ 
+    color: 0x000000,
+    wireframe: true
+  });
+
+  var solid = new THREE.Mesh(geom, solidMesh);
+  var frame = new THREE.Mesh(geom, frameMesh);
+
+  this.geometry = new THREE.Object3D();
+  this.geometry.add(solid);
+  this.geometry.add(frame);
+
+  this.setPosition(this.aabb.c);
 
 }
 
@@ -45,4 +58,10 @@ CHRYSICS.GEOMETRY.AABB.prototype = _.extend({
 
   },
 
+  setColor: function(color) {
+
+    this.geometry.children[0].material.color.setHex(color);
+  
+  },
+ 
 }, CHRYSICS.GEOMETRY.Primitive.prototype);

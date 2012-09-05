@@ -7,11 +7,6 @@ CHRYSICS.GEOMETRY.Segment = function(segment) {
 
   this.segment = segment;
 
-  this.p   = segment.begin;
-  this.dir = segment.end.sub(segment.begin);
-  this.len = this.dir.magnitude();
-  this.pos = this.p.add(this.dir.mul(0.5));
-
 }
 
 CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
@@ -36,21 +31,26 @@ CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
 
   initWithDots: function(radius, offset, color) {
 
+    var p   = this.segment.begin;
+    var dir = this.segment.end.sub(this.segment.begin);
+    var len = dir.magnitude();
+    var pos = p.add(dir.mul(0.5));
+
     this.geometry = new THREE.Object3D();
 
-    var step = this.len / offset;
-    var p, pos;
+    var step = len / offset;
+    var dot, pos;
     for (var i = 0; i < step; ++i) {
 
-      pos = this.p.add(this.dir.mul(i * offset/ this.len));
+      pos = p.add(dir.mul(i * offset / len));
 
-      p = new THREE.Mesh(
+      dot = new THREE.Mesh(
         new THREE.SphereGeometry(radius, 30, 30),
         new THREE.MeshLambertMaterial({ color: color })
       );
-      p.position.set(pos.x, pos.y, pos.z);
+      dot.position.set(pos.x, pos.y, pos.z);
 
-      this.geometry.add(p);
+      this.geometry.add(dot);
 
     }
 
@@ -58,13 +58,17 @@ CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
 
   initWithCylinder: function(radius, color) {
 
+    var dir = this.segment.end.sub(this.segment.begin);
+    var len = dir.magnitude();
+    var pos = this.segment.begin.add(dir.mul(0.5));
+
     this.geometry = new THREE.Mesh(
-      new THREE.CylinderGeometry(radius, radius, this.len, 50, 50, true),
+      new THREE.CylinderGeometry(radius, radius, len, 50, 50, true),
       new THREE.MeshLambertMaterial({ color: color })
     );
 
-    this.setOrientation(this.dir);
-    this.setPosition(this.pos);
+    this.setOrientation(dir);
+    this.setPosition(pos);
 
   },
 

@@ -21,7 +21,7 @@ SphereAABB.prototype = {
       new CHRYSICS.Vector3(-150, -150, -150),
       50
     );
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0x333333);
     console.log(this.sphere);
 
     var aabb = new CHRYSICS.BV.AABB([
@@ -34,7 +34,7 @@ SphereAABB.prototype = {
       new CHRYSICS.Vector3( 100,  25,  100),
       new CHRYSICS.Vector3(-100,  25,  100)
     ]);
-    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0xffff00, 1);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 1);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
     this.world.add(this.sphere);
@@ -60,11 +60,11 @@ SphereAABB.prototype = {
 
       self.sphere.setPosition(pos.x, pos.y, pos.z);
       if (CHRYSICS.PrimitiveTest.sphereAABB(s, aabb)) {
-        self.sphere.setColor(0xff0000);
-        self.aabb.setColor(0xff0000);
+        self.sphere.setColor(0x990000);
+        self.aabb.setColor(0x990000);
       } else {
-        self.sphere.setColor(0xffff00);
-        self.aabb.setColor(0xffff00);
+        self.sphere.setColor(0x333333);
+        self.aabb.setColor(0x333333);
       }
     
     };

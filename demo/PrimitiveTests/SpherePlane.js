@@ -23,11 +23,11 @@ SpherePlane.prototype = {
     );
     var sphere = new CHRYSICS.Sphere(
       new CHRYSICS.Vector3(0, -300, 0),
-      50
+      100
     );
 
-    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x000033);
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
+    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x333333);
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 100, 0x000000, true);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
     this.world.add(this.plane);
@@ -45,9 +45,9 @@ SpherePlane.prototype = {
     var p = self.plane.plane;
     return function() {
 
-      if (y >= 150)
+      if (y >= 250)
         offset = -1;
-      if (y <= -150)
+      if (y <= -250)
         offset = 1;
       y += offset;
 
@@ -55,9 +55,9 @@ SpherePlane.prototype = {
       rst = CHRYSICS.PrimitiveTest.spherePlane(s, p);
 
       if (rst == CHRYSICS.PrimitiveTest.INTERSECT)
-        self.sphere.setColor(0xff0000);
+        self.sphere.setColor(0x990000);
       else
-        self.sphere.setColor(0xffff00);
+        self.sphere.setColor(0x333333);
     
     };
   
