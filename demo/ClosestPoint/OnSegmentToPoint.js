@@ -4,14 +4,16 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var ClosestPoint2 = function(container) {
+var OnSegmentToPoint = function(container) {
 
   this.worldRendering = new GeometryWorld(container);
   this.initWorld();
 
+  this.status = 'RUNNING';
+
 }
 
-ClosestPoint2.prototype = {
+OnSegmentToPoint.prototype = {
 
   initWorld: function() {
 
@@ -43,12 +45,20 @@ ClosestPoint2.prototype = {
     var loop = function() {
 
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
+
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
+
+  stop: function() {
+
+    this.status = 'STOP';
+  
+  },
+
 
 }

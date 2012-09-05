@@ -38,7 +38,6 @@ ObjectsGroup.prototype = {
 
     }
 
-
     return vertices;
   
   },
@@ -51,14 +50,16 @@ ObjectsGroup.prototype = {
 
 }
 
-var BoundingSphere2 = function(container) {
+var AABBForGroup = function(container) {
 
   this.world = new GeometryWorld(container);
   this.initWorld();
 
+  this.status = 'RUNNING';
+
 }
 
-BoundingSphere2.prototype = {
+AABBForGroup.prototype = {
 
   initWorld: function() {
 
@@ -80,7 +81,7 @@ BoundingSphere2.prototype = {
 
     // sphere 2
     var sphere2 = new THREE.Mesh(new THREE.SphereGeometry(50, 20, 20), material);
-    sphere2.position.set(-170, -50, 0);
+    sphere2.position.set(-170, -150, 0);
     this.objects.add(sphere2);
 
     // icosahedron
@@ -88,18 +89,18 @@ BoundingSphere2.prototype = {
     icosahedron.position.set(0, 0, 0);
     this.objects.add(icosahedron);
 
-    var boundingSphere = new CHRYSICS.BV.Sphere(this.objects.getData());
-    var bvSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(boundingSphere.r, 20, 20),
+    var aabb = new CHRYSICS.BV.AABB(this.objects.getData());
+    var bvAABB = new THREE.Mesh(
+      new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2),
       new THREE.MeshLambertMaterial({
         color: 0x0000ff,
         wireframe: true
       })
     );
-    bvSphere.position.set(boundingSphere.c.x, boundingSphere.c.y, boundingSphere.c.z);
-
+    bvAABB.position.set(aabb.c.x, aabb.c.y, aabb.c.z);
+ 
     this.world.add(this.objects);
-    this.world.add(bvSphere);
+    this.world.add(bvAABB);
 
   },
 
@@ -109,12 +110,20 @@ BoundingSphere2.prototype = {
     var loop = function() {
 
       self.world.render();
-      window.requestAnimationFrame(loop);
+      
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
 
+  stop: function() {
+
+    this.status = 'STOP';
+  
+  },
+
 }
+

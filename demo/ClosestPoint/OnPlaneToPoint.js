@@ -4,29 +4,38 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var ClosestPoint3 = function(container) {
+var OnPlaneToPoint = function(container) {
 
   this.worldRendering = new GeometryWorld(container);
   this.initWorld();
 
+  this.status = 'RUNNING';
+
 }
 
-ClosestPoint3.prototype = {
+OnPlaneToPoint.prototype = {
 
   initWorld: function() {
 
-    this.generatePoints(50);
-    this.aabb = new CHRYSICS.BV.AABB(this.points);
-
-    // Test point out of the AABB.
-    this.testPoint = new CHRYSICS.GEOMETRY.Point(
-      new CHRYSICS.Point(282, 116, 86), 7, 0xffff00
+    // Plane
+    this.testPlane = new CHRYSICS.Plane(
+      new CHRYSICS.Vector3(10, 10, 10),
+      new CHRYSICS.Point(0, 0, 0)
     );
 
-    // Closest point on the AABB to the testing point.
+    // Test point out of the plane.
+    this.testPoint = new CHRYSICS.GEOMETRY.Point(
+      new CHRYSICS.Point(
+        CHRYSICS.Utils.random(-200, 200),
+        CHRYSICS.Utils.random(-200, 200),
+        CHRYSICS.Utils.random(-200, 200)
+      ), 7, 0xffff00
+    );
+
+    // Closest point on the plane to the testing point.
     this.closestPoint = new CHRYSICS.GEOMETRY.Point(
-      CHRYSICS.BV.ClosestPoint.onAABBToPoint(
-        this.aabb, 
+      CHRYSICS.BV.ClosestPoint.onPlaneToPoint(
+        this.testPlane, 
         this.testPoint.point
       ), 7, 0xffff00
     );
@@ -40,30 +49,12 @@ ClosestPoint3.prototype = {
 
     // Rendering geometries.
     this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.AABB(this.aabb, 0x000066, 0.6));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Plane(
+      this.testPlane, 500, 0x330033
+    ));
     this.worldRendering.add(this.testPoint);
     this.worldRendering.add(this.closestPoint);
     this.worldRendering.add(this.line);
-
-  },
-
-  generatePoints: function(n) {
-
-    this.points = [];
-    var p;
-    for (var i = 0; i < n; ++i) {
-
-      p = new CHRYSICS.GEOMETRY.Point(
-        new CHRYSICS.Point(
-          CHRYSICS.Utils.random(-200, 200),
-          CHRYSICS.Utils.random(-200, 200),
-          CHRYSICS.Utils.random(-200, 200)
-        ), 7, 0xff0000
-      );
-      this.points.push(p.point);
-      this.worldRendering.add(p);
-
-    }
 
   },
 
@@ -98,12 +89,19 @@ ClosestPoint3.prototype = {
 
       // self.testing(iterate);
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
+
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
+    window.requestAnimationFrame(loop);
 
-    loop();
+  },
 
+  stop: function() {
+
+    this.status = 'STOP';
+  
   },
 
 }

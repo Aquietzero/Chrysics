@@ -73,6 +73,8 @@ var BoundingSphere = function(container) {
   this.worldRendering = new RenderingWorld(container);
   this.initWorld();
 
+  this.status = 'RUNNING';
+
 }
 
 BoundingSphere.prototype = {
@@ -90,12 +92,20 @@ BoundingSphere.prototype = {
     var loop = function() {
 
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
+
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
+
+  stop: function() {
+
+    this.status = 'STOP';
+  
+  },
+
 
 }

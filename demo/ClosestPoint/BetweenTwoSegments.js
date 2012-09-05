@@ -4,14 +4,16 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var ClosestPoint5 = function(container) {
+var BetweenTwoSegments = function(container) {
 
   this.worldRendering = new GeometryWorld(container);
   this.initWorld();
 
+  this.status = 'RUNNING';
+
 }
 
-ClosestPoint5.prototype = {
+BetweenTwoSegments.prototype = {
 
   initWorld: function() {
 
@@ -104,12 +106,19 @@ ClosestPoint5.prototype = {
 
       // self.testing(iterate);
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
+
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
+    window.requestAnimationFrame(loop);
 
-    loop();
+  },
 
+  stop: function() {
+  
+    this.status = 'STOP';
+  
   },
 
 }
