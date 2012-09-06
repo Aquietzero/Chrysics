@@ -7,9 +7,12 @@ CHRYSICS.GEOMETRY.Point = function(point, radius, color) {
 
   this.geometry = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 20, 20),
-    new THREE.MeshLambertMaterial({ color: color })
+    new THREE.MeshLambertMaterial({ 
+      color: color,
+      transparent: true,
+      opacity: 1 
+    })
   );
-
   this.setPosition(this.point);
 
 }
@@ -42,6 +45,12 @@ CHRYSICS.GEOMETRY.Point.prototype = _.extend({
       );
     }
 
+  },
+
+  setOpacity: function(opacity) {
+
+    this.geometry.material.opacity = opacity;
+  
   },
  
 }, CHRYSICS.GEOMETRY.Primitive.prototype);

@@ -50,6 +50,7 @@ loader.add('src/Core/Primitives/Point');
 loader.add('src/Core/Primitives/Plane');
 loader.add('src/Core/Primitives/Sphere');
 loader.add('src/Core/Primitives/Segment');
+loader.add('src/Core/Primitives/Triangle');
 
 loader.add('src/Collision/BV');
 loader.add('src/Collision/AABB');

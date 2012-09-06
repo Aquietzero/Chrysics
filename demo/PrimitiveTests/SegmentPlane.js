@@ -17,74 +17,84 @@ SegmentPlane.prototype = {
 
   initWorld: function() {
 
+    // Plane
     var plane = new CHRYSICS.Plane(
       new CHRYSICS.Vector3(0.3, 1, 0.7),
       new CHRYSICS.Vector3(0, 0, 0)
     );
+    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 600, 0x333333);
 
-    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x000033);
+    // Moving segment
     var segment = new CHRYSICS.Segment(
-      new CHRYSICS.Point(-100, 0, 0),
-      new CHRYSICS.Point( 100, 100, 0)
+      new CHRYSICS.Point(
+        CHRYSICS.Utils.random(-300, 300),
+        CHRYSICS.Utils.random(-300,   0),
+        CHRYSICS.Utils.random(-300, 300)
+      ),
+      new CHRYSICS.Point(
+        CHRYSICS.Utils.random(-300, 300),
+        CHRYSICS.Utils.random(   0, 300),
+        CHRYSICS.Utils.random(-300, 300)
+      )
     );
-    this.segment = new CHRYSICS.GEOMETRY.Segment(
-      new CHRYSICS.Point(-100, 0, 0),
-      new CHRYSICS.Point( 100, 100, 0)
+    this.segment = new CHRYSICS.GEOMETRY.Segment(segment);
+    this.segment.initWithCylinder(2, 0x000000);
+
+    // Intersection point between plane and segment.
+    this.intersect = new CHRYSICS.GEOMETRY.Point(
+      new CHRYSICS.Point(0, 0, 0),
+      10,
+      0xff0000
     );
-    this.segment.initWithCylinder(2, 0xffff00);
-
-    var intersect = CHRYSICS.PrimitiveTest.segmentPlane(segment, plane);
-    var point;
-    if (intersect) {
-      point = new CHRYSICS.GEOMETRY.Point(intersect, 5, 0xffff00);
-      this.world.add(point);
-    }
-
-    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    
+    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.plane);
     this.world.add(this.segment);
+    this.world.add(this.intersect);
     
   },
 
   iterate: function() {
 
     var offset = 1;
-    var y = -300;
-    var rst;
+    var y = -250;
     var self = this;
-    var aabb = self.aabb.aabb;
-    var p = self.plane.plane;
+    var pos = this.segment.segment.getPosition();
+    var segment = this.segment.segment;
+    var plane = self.plane.plane;
     return function() {
 
-      if (y >= 150)
+      if (y >= 250)
         offset = -1;
-      if (y <= -150)
+      if (y <= -250)
         offset = 1;
       y += offset;
+      self.segment.setPosition(pos.x, y, pos.z);
 
-      self.aabb.setPosition(0, y, 0);
-      if (CHRYSICS.PrimitiveTest.AABBPlane(aabb, p))
-        self.aabb.setColor(0xff0000);
-      else
-        self.aabb.setColor(0xffff00);
-    
+      var intersect = CHRYSICS.PrimitiveTest.segmentPlane(segment, plane);
+      if (intersect) {
+        self.intersect.setPosition(intersect);
+        self.intersect.setOpacity(1);
+      } else {
+        self.intersect.setOpacity(0);
+      }
+
     };
-  
+
   },
 
   animate: function() {
 
     var self = this;
-    // var iter = this.iterate();
+    var iter = this.iterate();
     var loop = function() {
 
       self.world.render();
-      // iter();
+      iter();
       if (self.state == 'RUNNING')
         window.requestAnimationFrame(loop);
 
     }
-
     window.requestAnimationFrame(loop);
 
   },

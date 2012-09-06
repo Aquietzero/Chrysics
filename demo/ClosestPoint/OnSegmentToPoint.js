@@ -6,7 +6,7 @@
 
 var OnSegmentToPoint = function(container) {
 
-  this.worldRendering = new GeometryWorld(container);
+  this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.status = 'RUNNING';
@@ -18,34 +18,69 @@ OnSegmentToPoint.prototype = {
   initWorld: function() {
 
     var testSegment = new CHRYSICS.Segment(
-      new CHRYSICS.Point(123, 21, 321),
-      new CHRYSICS.Point(28, 223, 83)
+      new CHRYSICS.Point(
+        CHRYSICS.Utils.random(-300, 0),
+        CHRYSICS.Utils.random(-300, 0),
+        CHRYSICS.Utils.random(-300, 0)
+      ),
+      new CHRYSICS.Point(
+        CHRYSICS.Utils.random(0, 300),
+        CHRYSICS.Utils.random(0, 300),
+        CHRYSICS.Utils.random(0, 300)
+      )
     );
-    var testPoint = new CHRYSICS.Point(182, 216, 186);
-    var closestPoint = CHRYSICS.BV.ClosestPoint.onSegmentToPoint(testSegment, testPoint);
+    this.testSegment = new CHRYSICS.GEOMETRY.Segment(testSegment);
+    this.testSegment.initWithCylinder(2, 0x550055);
 
-    // Rendering geometries.
-    var segment = new CHRYSICS.GEOMETRY.Segment(testSegment.begin, testSegment.end);
-    segment.initWithCylinder(2, 0xffff00);
-    var line = new CHRYSICS.GEOMETRY.Segment(testPoint, closestPoint);
-    line.initWithDots(2, 10, 0xffff00);
+    var testPoint = new CHRYSICS.Point(0, 0, 0);
+    this.testPoint = new CHRYSICS.GEOMETRY.Point(testPoint, 10, 0xffff00);
 
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    this.closestPoint = new CHRYSICS.GEOMETRY.Point(
+      new CHRYSICS.Point(0, 0, 0),
+      10,
+      0xff0000
+    );
 
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(testPoint, 7, 0xffff00));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Point(closestPoint, 7, 0xffff00));
-    this.worldRendering.add(segment);
-    this.worldRendering.add(line);
+    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
+    this.world.add(this.testPoint);
+    this.world.add(this.testSegment);
+    this.world.add(this.closestPoint);
+
+  },
+
+  iterate: function() {
+
+    var self = this;
+    var theta = 0;
+    var radius = 250;
+
+    return function() {
+
+      theta += 0.02;
+      self.testPoint.setPosition(
+        radius * Math.sin(theta),
+        150,
+        radius * Math.cos(theta)
+      );
+
+      var closestPoint = CHRYSICS.BV.ClosestPoint.onSegmentToPoint(
+        self.testSegment.segment, 
+        self.testPoint.point
+      );
+      self.closestPoint.setPosition(closestPoint);
+
+    };
 
   },
 
   animate: function() {
 
     var self = this;
+    var iter = this.iterate();
     var loop = function() {
 
-      self.worldRendering.render();
-
+      self.world.render();
+      iter();
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
 

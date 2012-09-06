@@ -7,11 +7,17 @@
 CHRYSICS.Segment = function(begin, end) {
 
   this.begin = begin;
-  this.end = end;
+  this.end   = end;
 
 }
 
 CHRYSICS.Segment.prototype = {
+
+  getPosition: function() {
+
+    return this.begin.add(this.end.sub(this.begin).mul(0.5));
+  
+  },
 
   getMagnitude: function() {
  

@@ -18,34 +18,25 @@ OnAABBToPoint.prototype = {
   initWorld: function() {
 
     this.generatePoints(50);
-    this.aabb = new CHRYSICS.BV.AABB(this.points);
+    var aabb = new CHRYSICS.BV.AABB(this.points);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 0.5);
 
     // Test point out of the AABB.
+    var testPoint = new CHRYSICS.Point(282, 116, 86);
     this.testPoint = new CHRYSICS.GEOMETRY.Point(
-      new CHRYSICS.Point(282, 116, 86), 7, 0xffff00
+      testPoint, 10, 0xffff00
     );
 
     // Closest point on the AABB to the testing point.
     this.closestPoint = new CHRYSICS.GEOMETRY.Point(
-      CHRYSICS.BV.ClosestPoint.onAABBToPoint(
-        this.aabb, 
-        this.testPoint.point
-      ), 7, 0xffff00
+      new CHRYSICS.Point(0, 0, 0), 10, 0xff0000
     );
-
-    // A dotted line between the closest point and the testing point.
-    this.line = new CHRYSICS.GEOMETRY.Segment(
-      this.testPoint.point, 
-      this.closestPoint.point
-    );
-    this.line.initWithDots(2, 10, 0xffff00);
 
     // Rendering geometries.
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.AABB(this.aabb, 0x000066, 0.6));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
+    this.worldRendering.add(this.aabb);
     this.worldRendering.add(this.testPoint);
     this.worldRendering.add(this.closestPoint);
-    this.worldRendering.add(this.line);
 
   },
 
@@ -57,10 +48,10 @@ OnAABBToPoint.prototype = {
 
       p = new CHRYSICS.GEOMETRY.Point(
         new CHRYSICS.Point(
-          CHRYSICS.Utils.random(-200, 200),
-          CHRYSICS.Utils.random(-200, 200),
-          CHRYSICS.Utils.random(-200, 200)
-        ), 7, 0xff0000
+          CHRYSICS.Utils.random(-150, 150),
+          CHRYSICS.Utils.random(-150, 150),
+          CHRYSICS.Utils.random(-150, 150)
+        ), 7, 0x0000ff
       );
       this.points.push(p.point);
       this.worldRendering.add(p);
@@ -71,36 +62,44 @@ OnAABBToPoint.prototype = {
 
   iterate: function() {
 
-    var angle = 0;
+    var self = this;
+    var theta = 0;
+    var radius = 250;
+    var y = -200;
+    var offset = 1;
 
-    return function(pos) {
-      angle += 0.01;
-      pos.x += 2 * Math.sin(angle),
-      pos.z += 2 * Math.cos(angle)
+    return function() {
+
+      if (y <= -200) offset = 1;
+      if (y >= 200) offset = -1;
+
+      theta += 0.02;
+      y += offset;
+
+      self.testPoint.setPosition(
+        radius * Math.sin(theta),
+        y,
+        radius * Math.cos(theta)
+      );
+
+      var closestPoint = CHRYSICS.BV.ClosestPoint.onAABBToPoint(
+        self.aabb.aabb, 
+        self.testPoint.point
+      );
+      self.closestPoint.setPosition(closestPoint);
+
     };
 
-  },
-
-  testing: function(iterate) {
-
-    this.testPoint.move(iterate);
-    var p = CHRYSICS.BV.ClosestPoint.onPlaneToPoint(
-      this.testPlane, 
-      this.testPoint.point
-    );
-    this.closestPoint.setPosition(p);
-   
   },
 
   animate: function() {
 
     var self = this;
-    var iterate = this.iterate();
+    var iter = this.iterate();
     var loop = function() {
 
-      // self.testing(iterate);
       self.worldRendering.render();
-
+      iter();
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
 

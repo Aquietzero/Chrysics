@@ -11,24 +11,6 @@ CHRYSICS.GEOMETRY.Segment = function(segment) {
 
 CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
 
-  setPosition: function() {
-
-    if (arguments.length == 1) {
-      this.geometry.position.set(
-        arguments[0].x,
-        arguments[0].y,
-        arguments[0].z
-      );
-    } else if (arguments.length == 3) {
-      this.geometry.position.set(
-        arguments[0],
-        arguments[1],
-        arguments[2]
-      );
-    }
-
-  },
-
   initWithDots: function(radius, offset, color) {
 
     var p   = this.segment.begin;
@@ -69,6 +51,27 @@ CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
 
     this.setOrientation(dir);
     this.setPosition(pos);
+
+  },
+
+  setSegment: function(segment) {
+
+    this.segment = segment;
+  
+  },
+
+  setPosition: function() {
+
+    var dir = this.segment.end.sub(this.segment.begin);
+
+    if (arguments.length == 1)
+      var pos = new CHRYSICS.Vector3(arguments[0].x, arguments[0].y, arguments[0].z);
+    else if (arguments.length == 3)
+      var pos = new CHRYSICS.Vector3(arguments[0], arguments[1], arguments[2]);
+
+    this.geometry.position.set(pos.x, pos.y, pos.z);
+    this.segment.begin = pos.sub(dir.mul(0.5));
+    this.segment.end   = pos.add(dir.mul(0.5));
 
   },
 

@@ -4,73 +4,9 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var Icosahedron = function(radius) {
-
-  this.icosahedron = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(radius, 1),
-    new THREE.MeshLambertMaterial({
-      color: 0xffff00,
-      wireframe: true
-    })
-  );
-  this.body = new CHRYSICS.RigidBody(this.getData(), CHRYSICS.Const.BV_SPHERE);
-  this.init();
-
-}
-
-Icosahedron.prototype = {
-
-  init: function() {
-  
-    this.BVSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(this.body.BV.r, 50, 50),
-      new THREE.MeshLambertMaterial({
-        color: 0x0000ff,
-        wireframe: true
-      })
-    );
-    this.BVSphere.position.set(
-      this.body.BV.c.x,
-      this.body.BV.c.y,
-      this.body.BV.c.z
-    );
-    this.geometry = new THREE.Object3D();
-    this.geometry.add(this.icosahedron);
-    this.geometry.add(this.BVSphere);
-
-  },
-
-  getData: function() {
-
-    var vertices = [];
-    var data = this.icosahedron.geometry.vertices;
-    for (var i = 0; i < data.length; ++i) {
-      vertices.push(new CHRYSICS.Vector3(
-        data[i].x, data[i].y, data[i].z
-      ));
-    }
-
-    return vertices;
-  
-  },
-
-  getPhysique: function() {
-
-    return this.body;
-
-  },
-
-  getGeometry: function() {
-
-    return this.geometry;
-
-  },
-
-}
-
 var BoundingSphere = function(container) {
 
-  this.worldRendering = new RenderingWorld(container);
+  this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.status = 'RUNNING';
@@ -81,8 +17,34 @@ BoundingSphere.prototype = {
 
   initWorld: function() {
 
-    this.icosahedron = new Icosahedron(90);
-    this.worldRendering.add(this.icosahedron);
+    this.objects = new ObjectsGroup();
+    var wireMaterial = new THREE.MeshLambertMaterial({
+      color: 0x000000,
+      wireframe: true 
+    });
+    var solidMaterial = new THREE.MeshLambertMaterial({
+      color: 0xff0000,
+    });
+
+    // cube
+    var wireCube  = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), wireMaterial);
+    var solidCube = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), solidMaterial);
+    wireCube.position.set(0, 170, 0);
+    solidCube.position.set(0, 170, 0);
+    this.objects.add(wireCube);
+    this.objects.add(solidCube);
+
+    // icosahedron
+    var wireIcosahedron  = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), wireMaterial);
+    var solidIcosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), solidMaterial);
+    this.objects.add(wireIcosahedron);
+    this.objects.add(solidIcosahedron);
+
+    var boundingSphere = new CHRYSICS.BV.Sphere(this.objects.getData());
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(boundingSphere, 0x333333, 0.5);
+
+    this.world.add(this.objects);
+    this.world.add(this.sphere);
 
   },
 
@@ -91,7 +53,7 @@ BoundingSphere.prototype = {
     var self = this;
     var loop = function() {
 
-      self.worldRendering.render();
+      self.world.render();
 
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);

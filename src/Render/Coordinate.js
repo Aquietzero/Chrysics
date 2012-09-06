@@ -1,7 +1,7 @@
 /**
  * Coordinate.
  */
-CHRYSICS.GEOMETRY.Coordinate = function(size) {
+CHRYSICS.GEOMETRY.Coordinate = function(sizeX, sizeY, sizeZ) {
 
   this.geometry = new THREE.Object3D();
 
@@ -13,24 +13,24 @@ CHRYSICS.GEOMETRY.Coordinate = function(size) {
 
   var axisX = new CHRYSICS.GEOMETRY.Segment(
     new CHRYSICS.Segment(
-      new CHRYSICS.Point(-size, 0, 0),
-      new CHRYSICS.Point(size, 0, 0)
+      new CHRYSICS.Point(-sizeX, 0, 0),
+      new CHRYSICS.Point(sizeX, 0, 0)
     )
   );
   axisX.initWithCylinder(3, 0xff0000);
 
   var axisY = new CHRYSICS.GEOMETRY.Segment(
     new CHRYSICS.Segment(
-      new CHRYSICS.Point(0, -size, 0),
-      new CHRYSICS.Point(0, size, 0)
+      new CHRYSICS.Point(0, -sizeY, 0),
+      new CHRYSICS.Point(0, sizeY, 0)
     )
   );
   axisY.initWithCylinder(3, 0x00ff00);
 
   var axisZ = new CHRYSICS.GEOMETRY.Segment(
     new CHRYSICS.Segment(
-      new CHRYSICS.Point(0, 0, -size),
-      new CHRYSICS.Point(0, 0, size)
+      new CHRYSICS.Point(0, 0, -sizeZ),
+      new CHRYSICS.Point(0, 0, sizeZ)
     )
   );
   axisZ.initWithCylinder(3, 0x0000ff);
@@ -39,7 +39,7 @@ CHRYSICS.GEOMETRY.Coordinate = function(size) {
     10,
     20,
     0xff0000,
-    new CHRYSICS.Point(size, 0, 0),
+    new CHRYSICS.Point(sizeX, 0, 0),
     new CHRYSICS.Vector3(1, 0, 0)
   );
 
@@ -47,7 +47,7 @@ CHRYSICS.GEOMETRY.Coordinate = function(size) {
     10,
     20,
     0x00ff00,
-    new CHRYSICS.Point(0, size, 0),
+    new CHRYSICS.Point(0, sizeY, 0),
     new CHRYSICS.Vector3(0, 1, 0)
   );
 
@@ -55,7 +55,7 @@ CHRYSICS.GEOMETRY.Coordinate = function(size) {
     10,
     20,
     0x0000ff,
-    new CHRYSICS.Point(0, 0, size),
+    new CHRYSICS.Point(0, 0, sizeZ),
     new CHRYSICS.Vector3(0, 0, 1)
   );
 

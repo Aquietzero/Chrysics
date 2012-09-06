@@ -144,7 +144,7 @@ CHRYSICS.BV.ClosestPoint = {
    *
    * returning s and t. 
    */
-  betweenSegmentAndSegment: function(s1, s2) {
+  betweenTwoSegments: function(s1, s2) {
 
     var s, t, c1, c2;
 

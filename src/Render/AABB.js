@@ -8,8 +8,8 @@ CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity) {
   var geom = new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2);
   var solidMesh = new THREE.MeshLambertMaterial({ 
     transparent: true,
-    opacity: 0.8,
-    color: 0x333333,
+    opacity: opacity,
+    color: color,
     wireframe: false 
   });
   var frameMesh = new THREE.MeshLambertMaterial({ 

@@ -30,10 +30,10 @@ AABBPlane.prototype = {
       new CHRYSICS.Vector3(-100,  25,  100)
     ]);
 
-    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x333333);
-    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 1);
+    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 600, 0x333333);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 0.5);
 
-    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.plane);
     this.world.add(this.aabb);
 
@@ -45,7 +45,6 @@ AABBPlane.prototype = {
 
     var offset = 1;
     var y = -300;
-    var rst;
     var self = this;
     var aabb = self.aabb.aabb;
     var p = self.plane.plane;

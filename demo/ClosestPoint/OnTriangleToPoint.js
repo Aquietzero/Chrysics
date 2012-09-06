@@ -17,76 +17,91 @@ OnTriangleToPoint.prototype = {
 
   initWorld: function() {
 
-    var a = new CHRYSICS.Point(100, -100, 100),
-        b = new CHRYSICS.Point(-100, -100, 100),
-        c = new CHRYSICS.Point(0, 100, -100);
+    var a = new CHRYSICS.Point(
+      CHRYSICS.Utils.random(-200, -100),  
+      CHRYSICS.Utils.random(-200, -100),  
+      CHRYSICS.Utils.random( 100,  200)  
+    );
+    var b = new CHRYSICS.Point(
+      CHRYSICS.Utils.random( 100,  200),  
+      CHRYSICS.Utils.random(-200, -100),  
+      CHRYSICS.Utils.random( 100,  200)  
+    );
+    var c = new CHRYSICS.Point(
+      CHRYSICS.Utils.random(-200, -100),  
+      CHRYSICS.Utils.random( 100,  200),  
+      CHRYSICS.Utils.random(-100, -200)  
+    );
 
-    this.triangle = new CHRYSICS.GEOMETRY.Triangle(a, b, c, 0x880088);
+    var testTriangle = new CHRYSICS.Triangle(a, b, c);
+    this.testTriangle = new CHRYSICS.GEOMETRY.Triangle(testTriangle, 0x333333);
 
     // Test point out of the triangle.
-    this.testPoint = new CHRYSICS.GEOMETRY.Point(
-      new CHRYSICS.Point(
+    var testPoint = new CHRYSICS.Point(
         CHRYSICS.Utils.random(-200, 200),
         CHRYSICS.Utils.random(-200, 200),
         CHRYSICS.Utils.random(-200, 200)
-      ), 7, 0xffff00
+    );
+    this.testPoint = new CHRYSICS.GEOMETRY.Point(
+      testPoint, 10, 0xffff00
     );
 
     // Closest point on the plane to the testing point.
     this.closestPoint = new CHRYSICS.GEOMETRY.Point(
-      CHRYSICS.BV.ClosestPoint.onTriangleToPoint(
-        a, b, c, this.testPoint.point
-      ), 7, 0xffff00
+      new CHRYSICS.Point(0, 0, 0), 10, 0xff0000
     );
-
-    // A dotted line between the closest point and the testing point.
-    this.line = new CHRYSICS.GEOMETRY.Segment(
-      this.testPoint.point, 
-      this.closestPoint.point
-    );
-    this.line.initWithDots(2, 10, 0xffff00);
 
     // Rendering geometries.
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
-    this.worldRendering.add(this.triangle);
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
+    this.worldRendering.add(this.testTriangle);
     this.worldRendering.add(this.testPoint);
     this.worldRendering.add(this.closestPoint);
-    this.worldRendering.add(this.line);
 
   },
 
   iterate: function() {
 
-    var angle = 0;
+    var self = this;
+    var theta = 0;
+    var radius = 250;
+    var y = -200;
+    var offset = 1;
 
-    return function(pos) {
-      angle += 0.01;
-      pos.x += 2 * Math.sin(angle),
-      pos.z += 2 * Math.cos(angle)
+    return function() {
+
+      if (y <= -200) offset = 1;
+      if (y >= 200) offset = -1;
+
+      theta += 0.02;
+      y += offset;
+
+      self.testPoint.setPosition(
+        radius * Math.sin(theta),
+        y,
+        radius * Math.cos(theta)
+      );
+
+      var closestPoint = CHRYSICS.BV.ClosestPoint.onTriangleToPoint(
+        self.testTriangle.triangle.v1,
+        self.testTriangle.triangle.v2,
+        self.testTriangle.triangle.v3,
+        self.testPoint.point
+      );
+      self.closestPoint.setPosition(closestPoint);
+
     };
 
-  },
-
-  testing: function(iterate) {
-
-    this.testPoint.move(iterate);
-    var p = CHRYSICS.BV.ClosestPoint.onPlaneToPoint(
-      this.testPlane, 
-      this.testPoint.point
-    );
-    this.closestPoint.setPosition(p);
-   
   },
 
   animate: function() {
 
     var self = this;
-    var iterate = this.iterate();
+    var iter = this.iterate();
     var loop = function() {
 
       // self.testing(iterate);
       self.worldRendering.render();
-
+      iter();
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
 

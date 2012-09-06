@@ -48,6 +48,7 @@ body {
   border-left: solid 5px #888;
   padding-left: 10px;
   cursor: pointer;
+  text-shadow: 1px 1px 1px white;
 }
 
 #main-container .column a:hover {

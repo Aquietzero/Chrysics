@@ -25,11 +25,12 @@ SphereTriangle.prototype = {
     var a = new CHRYSICS.Point(100, -100, 100),
         b = new CHRYSICS.Point(-100, -100, 100),
         c = new CHRYSICS.Point(0, 100, -100);
+    var triangle = new CHRYSICS.Triangle(a, b, c);
 
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 50, 0xffff00);
-    this.triangle = new CHRYSICS.GEOMETRY.Triangle(a, b, c, 0xffff00);
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 0x333333, 0.5);
+    this.triangle = new CHRYSICS.GEOMETRY.Triangle(triangle, 0x000000);
 
-    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.sphere);
     this.world.add(this.triangle);
     
@@ -39,10 +40,9 @@ SphereTriangle.prototype = {
 
     var offset = new CHRYSICS.Vector3(1, 1, 1);
     var pos = new CHRYSICS.Vector3(-150, -150, -150);
-    var rst;
     var self = this;
     var s = self.sphere.sphere;
-    var triangle = self.triangle;
+    var triangle = self.triangle.triangle;
     return function() {
 
       if (pos.y < -150)
@@ -55,17 +55,14 @@ SphereTriangle.prototype = {
 
       self.sphere.setPosition(pos.x, pos.y, pos.z);
       var intersect = CHRYSICS.PrimitiveTest.shpereTriangle(
-        s, 
-        new CHRYSICS.Point(triangle.v1.x, triangle.v1.y, triangle.v1.z),
-        new CHRYSICS.Point(triangle.v2.x, triangle.v2.y, triangle.v2.z),
-        new CHRYSICS.Point(triangle.v3.x, triangle.v3.y, triangle.v3.z)
+        s, triangle.v1, triangle.v2, triangle.v3
       );
       if (intersect) {
-        self.sphere.setColor(0xff0000);
-        self.triangle.setColor(0xff0000);
+        self.sphere.setColor(0x990000);
+        self.triangle.setColor(0x990000);
       } else {
-        self.sphere.setColor(0xffff00);
-        self.triangle.setColor(0xffff00);
+        self.sphere.setColor(0x333333);
+        self.triangle.setColor(0x000000);
       }
     
     };

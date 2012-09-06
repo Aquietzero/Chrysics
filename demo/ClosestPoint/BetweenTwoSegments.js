@@ -30,8 +30,8 @@ BetweenTwoSegments.prototype = {
         CHRYSICS.Utils.random(-200, 200)
       )
     );
-    this.segment1 = new CHRYSICS.GEOMETRY.Segment(s1.begin, s1.end);
-    this.segment1.initWithDots(2, 10, 0xffff00);
+    this.segment1 = new CHRYSICS.GEOMETRY.Segment(s1);
+    this.segment1.initWithCylinder(2, 0x550055);
 
     var s2 = new CHRYSICS.Segment(
       new CHRYSICS.Point(
@@ -45,12 +45,11 @@ BetweenTwoSegments.prototype = {
         CHRYSICS.Utils.random(-200, 200)
       )
     );
-    this.segment2 = new CHRYSICS.GEOMETRY.Segment(s2.begin, s2.end);
-    this.segment2.initWithDots(2, 10, 0xffff00);
+    this.segment2 = new CHRYSICS.GEOMETRY.Segment(s2);
+    this.segment2.initWithCylinder(2, 0x550055);
 
     // Closest points.
-    var closestPoints = CHRYSICS.BV.ClosestPoint.betweenSegmentAndSegment(s1, s2);
-    console.log(closestPoints);
+    var closestPoints = CHRYSICS.BV.ClosestPoint.betweenTwoSegments(s1, s2);
     this.closestPoint1 = new CHRYSICS.GEOMETRY.Point(
       closestPoints.c1, 7, 0xff0000
     );
@@ -59,14 +58,14 @@ BetweenTwoSegments.prototype = {
     );
 
     // A dotted line between the closest point and the testing point.
-    this.line = new CHRYSICS.GEOMETRY.Segment(
+    this.line = new CHRYSICS.GEOMETRY.Segment(new CHRYSICS.Segment(
       closestPoints.c1,
       closestPoints.c2
-    );
+    ));
     this.line.initWithDots(2, 10, 0xff0000);
 
     // Rendering geometries.
-    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    this.worldRendering.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.worldRendering.add(this.segment1);
     this.worldRendering.add(this.segment2);
     this.worldRendering.add(this.closestPoint1);
@@ -75,38 +74,13 @@ BetweenTwoSegments.prototype = {
 
   },
 
-  iterate: function() {
-
-    var angle = 0;
-
-    return function(pos) {
-      angle += 0.01;
-      pos.x += 2 * Math.sin(angle),
-      pos.z += 2 * Math.cos(angle)
-    };
-
-  },
-
-  testing: function(iterate) {
-
-    this.testPoint.move(iterate);
-    var p = CHRYSICS.BV.ClosestPoint.onPlaneToPoint(
-      this.testPlane, 
-      this.testPoint.point
-    );
-    this.closestPoint.setPosition(p);
-   
-  },
-
   animate: function() {
 
     var self = this;
-    var iterate = this.iterate();
     var loop = function() {
 
       // self.testing(iterate);
       self.worldRendering.render();
-
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
 

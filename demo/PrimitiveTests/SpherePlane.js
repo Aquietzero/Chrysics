@@ -26,10 +26,10 @@ SpherePlane.prototype = {
       100
     );
 
-    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 500, 0x333333);
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 100, 0x000000, true);
+    this.plane  = new CHRYSICS.GEOMETRY.Plane(plane, 650, 0x333333);
+    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 0x333333, 0.5);
 
-    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400));
+    this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.plane);
     this.world.add(this.sphere);
     

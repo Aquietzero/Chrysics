@@ -1,16 +1,16 @@
 /**
  * A sphere
  */
-CHRYSICS.GEOMETRY.Sphere = function(sphere, radius, color, wireframe) {
+CHRYSICS.GEOMETRY.Sphere = function(sphere, color, opacity) {
 
   this.sphere = sphere;
 
-  var geom = new THREE.SphereGeometry(radius, 15, 15);
+  var geom = new THREE.SphereGeometry(sphere.r, 15, 15);
   
   var solidMesh = new THREE.MeshLambertMaterial({ 
     transparent: true,
-    opacity: 0.8,
-    color: 0x333333,
+    opacity: opacity,
+    color: color,
     wireframe: false 
   });
   var frameMesh = new THREE.MeshLambertMaterial({ 

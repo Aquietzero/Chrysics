@@ -18,43 +18,49 @@ AABBForGroup.prototype = {
   initWorld: function() {
 
     this.objects = new ObjectsGroup();
-    var material = new THREE.MeshLambertMaterial({
-      color: 0xffff00,
-      wireframe: true
+    var wireMaterial = new THREE.MeshLambertMaterial({
+      color: 0x000000,
+      wireframe: true 
+    });
+    var solidMaterial = new THREE.MeshLambertMaterial({
+      color: 0xff0000,
     });
 
     // cube
-    var cube = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), material);
-    cube.position.set(0, 170, 0);
-    this.objects.add(cube);
+    var wireCube  = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), wireMaterial);
+    var solidCube = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), solidMaterial);
+    wireCube.position.set(0, 170, 0);
+    solidCube.position.set(0, 170, 0);
+    this.objects.add(wireCube);
+    this.objects.add(solidCube);
 
-    // sphere 1
-    var sphere1 = new THREE.Mesh(new THREE.SphereGeometry(50, 20, 20), material);
-    sphere1.position.set(170, 150, 0);
-    this.objects.add(sphere1);
+    // sphere1 
+    var wireSphere1  = new THREE.Mesh(new THREE.SphereGeometry(50, 20, 20), wireMaterial);
+    var solidSphere1 = new THREE.Mesh(new THREE.SphereGeometry(50, 20, 20), solidMaterial);
+    wireSphere1.position.set(170, 150, 0);
+    solidSphere1.position.set(170, 150, 0);
+    this.objects.add(wireSphere1);
+    this.objects.add(solidSphere1);
 
-    // sphere 2
-    var sphere2 = new THREE.Mesh(new THREE.SphereGeometry(50, 20, 20), material);
-    sphere2.position.set(-170, -150, 0);
-    this.objects.add(sphere2);
+    // sphere2
+    var wireSphere2  = new THREE.Mesh(new THREE.SphereGeometry(80, 20, 20), wireMaterial);
+    var solidSphere2 = new THREE.Mesh(new THREE.SphereGeometry(80, 20, 20), solidMaterial);
+    wireSphere2.position.set(-170, -150, 0);
+    solidSphere2.position.set(-170, -150, 0);
+    this.objects.add(wireSphere2);
+    this.objects.add(solidSphere2);
 
     // icosahedron
-    var icosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), material);
-    icosahedron.position.set(0, 0, 0);
-    this.objects.add(icosahedron);
+    var wireIcosahedron  = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), wireMaterial);
+    var solidIcosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), solidMaterial);
+    this.objects.add(wireIcosahedron);
+    this.objects.add(solidIcosahedron);
 
     var aabb = new CHRYSICS.BV.AABB(this.objects.getData());
-    var bvAABB = new THREE.Mesh(
-      new THREE.CubeGeometry(aabb.rx * 2, aabb.ry * 2, aabb.rz * 2),
-      new THREE.MeshLambertMaterial({
-        color: 0x0000ff,
-        wireframe: true
-      })
-    );
-    bvAABB.position.set(aabb.c.x, aabb.c.y, aabb.c.z);
- 
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x666666, 0.5);
+
     this.world.add(this.objects);
-    this.world.add(bvAABB);
+    this.world.add(this.aabb);
 
   },
 
