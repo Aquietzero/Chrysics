@@ -8,8 +8,8 @@
 var RenderingWorld = function(container) {
 
   this.container = container;
-  this.width  = window.innerWidth;
-  this.height = window.innerHeight;
+  this.width  = 800;
+  this.height = 600;
 
   this.initThree();
   this.initScene();

@@ -69,11 +69,31 @@ loader.add('src/Render/AABB');
 loader.add('src/Render/Triangle');
 loader.add('src/Render/Coordinate');
 
+loader.add('src/Particle/Particle');
+loader.add('src/Particle/ParticleForceGenerator');
+loader.add('src/Particle/ParticleForceRegistry');
+loader.add('src/Particle/ParticleWorld');
+
+loader.add('src/RigidBody/ForceGenerator');
+loader.add('src/RigidBody/ForceRegistry');
+loader.add('src/RigidBody/RigidBody');
+
 loader.add('src/GeometryWorld');
 loader.add('src/RenderingWorld');
 loader.add('src/World');
 
 // Examples
+
+// Physics Demos
+loader.add('demo/Physics/GravityField');
+loader.add('demo/Physics/ParticleSpring');
+loader.add('demo/Physics/Spinning');
+
+// Bounding Volume
+loader.add('demo/BoundingVolume/ObjectsGroup');
+loader.add('demo/BoundingVolume/AABBForGroup');
+loader.add('demo/BoundingVolume/BoundingSphere');
+loader.add('demo/BoundingVolume/BoundingSphereForGroup');
 
 // Closest Point
 loader.add('demo/ClosestPoint/OnPlaneToPoint');
@@ -81,12 +101,6 @@ loader.add('demo/ClosestPoint/OnSegmentToPoint');
 loader.add('demo/ClosestPoint/OnAABBToPoint');
 loader.add('demo/ClosestPoint/OnTriangleToPoint');
 loader.add('demo/ClosestPoint/BetweenTwoSegments');
-
-// Bounding Volume
-loader.add('demo/BoundingVolume/ObjectsGroup');
-loader.add('demo/BoundingVolume/AABBForGroup');
-loader.add('demo/BoundingVolume/BoundingSphere');
-loader.add('demo/BoundingVolume/BoundingSphereForGroup');
 
 // Primitive Tests
 loader.add('demo/PrimitiveTests/SpherePlane');

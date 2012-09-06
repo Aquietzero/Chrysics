@@ -54,6 +54,7 @@ var Spinning = function(container) {
   this.worldPhysics   = new CHRYSICS.World();
   this.worldRendering = new RenderingWorld(container);
 
+  this.status = 'RUNNING';
   this.initWorld();
 
 }
@@ -99,35 +100,18 @@ Spinning.prototype = {
 
       self.worldPhysics.simulate(0.033);
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
-
-    }
-
-    loop();
-
-  },
-
-  /*
-  animate: function() {
-
-    var self = this;
-    var time = 0;
-    self.worldPhysics.startFrame();
-
-    var loop = function() {
-
-      time++;
-      if (time < 200) {
-        self.worldPhysics.simulate(0.033);
-        self.worldRendering.render();
+      if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
-      }
 
     }
-
-    loop();
+    window.requestAnimationFrame(loop);
 
   },
-  */
+
+  stop: function() {
+
+    this.status = 'STOP';
+  
+  },
 
 }

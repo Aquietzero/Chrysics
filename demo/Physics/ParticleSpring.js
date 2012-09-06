@@ -46,6 +46,7 @@ var ParticleSpring = function(container) {
   this.worldPhysics   = new CHRYSICS.ParticleWorld();
   this.worldRendering = new RenderingWorld(container);
 
+  this.status = 'RUNNING';
   this.initWorld();
 
 }
@@ -87,12 +88,18 @@ ParticleSpring.prototype = {
 
       self.worldPhysics.simulate(0.033);
       self.worldRendering.render();
-      window.requestAnimationFrame(loop);
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
 
     }
+    window.requestAnimationFrame(loop);
 
-    loop();
+  },
 
+  stop: function() {
+
+    this.status = 'STOP';
+  
   },
 
 }

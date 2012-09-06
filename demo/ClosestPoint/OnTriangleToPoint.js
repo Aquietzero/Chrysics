@@ -34,7 +34,7 @@ OnTriangleToPoint.prototype = {
     );
 
     var testTriangle = new CHRYSICS.Triangle(a, b, c);
-    this.testTriangle = new CHRYSICS.GEOMETRY.Triangle(testTriangle, 0x333333);
+    this.testTriangle = new CHRYSICS.GEOMETRY.Triangle(testTriangle, 0x333333, 0.5);
 
     // Test point out of the triangle.
     var testPoint = new CHRYSICS.Point(

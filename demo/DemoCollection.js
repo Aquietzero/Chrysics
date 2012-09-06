@@ -29,6 +29,11 @@ DemoCollection.prototype = {
 
 var DEMOS = new DemoCollection();
 
+// Physics Demos
+DEMOS.add('GravityField'           , GravityField);
+DEMOS.add('ParticleSpring'         , ParticleSpring);
+DEMOS.add('Spinning'               , Spinning);
+
 // Bounding Volume
 DEMOS.add('AABBForGroup'           , AABBForGroup);
 DEMOS.add('BoundingSphere'         , BoundingSphere);

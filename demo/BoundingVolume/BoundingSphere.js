@@ -29,16 +29,8 @@ BoundingSphere.prototype = {
     // cube
     var wireCube  = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), wireMaterial);
     var solidCube = new THREE.Mesh(new THREE.CubeGeometry(150, 50, 100), solidMaterial);
-    wireCube.position.set(0, 170, 0);
-    solidCube.position.set(0, 170, 0);
     this.objects.add(wireCube);
     this.objects.add(solidCube);
-
-    // icosahedron
-    var wireIcosahedron  = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), wireMaterial);
-    var solidIcosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(150, 1), solidMaterial);
-    this.objects.add(wireIcosahedron);
-    this.objects.add(solidIcosahedron);
 
     var boundingSphere = new CHRYSICS.BV.Sphere(this.objects.getData());
     this.sphere = new CHRYSICS.GEOMETRY.Sphere(boundingSphere, 0x333333, 0.5);
