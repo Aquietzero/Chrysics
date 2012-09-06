@@ -1,7 +1,7 @@
 /**
  * Triangle
 */
-CHRYSICS.GEOMETRY.Triangle = function(triangle, color) {
+CHRYSICS.GEOMETRY.Triangle = function(triangle, color, opacity) {
 
   this.triangle = triangle;
 
@@ -22,7 +22,7 @@ CHRYSICS.GEOMETRY.Triangle = function(triangle, color) {
     new THREE.MeshLambertMaterial({
       color: color,
       transparent: true,
-      opacity: 0.5,
+      opacity: opacity,
     })
   );
   solidMesh.doubleSided = true;

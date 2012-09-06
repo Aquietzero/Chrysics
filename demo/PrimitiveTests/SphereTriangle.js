@@ -28,7 +28,7 @@ SphereTriangle.prototype = {
     var triangle = new CHRYSICS.Triangle(a, b, c);
 
     this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 0x333333, 0.5);
-    this.triangle = new CHRYSICS.GEOMETRY.Triangle(triangle, 0x000000);
+    this.triangle = new CHRYSICS.GEOMETRY.Triangle(triangle, 0x333333, 0.5);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.sphere);
@@ -48,7 +48,6 @@ SphereTriangle.prototype = {
       if (pos.y < -150)
         offset = new CHRYSICS.Vector3(1, 1, 1);
       else if (pos.y > 150) {
-        console.log(pos.y);
         offset = new CHRYSICS.Vector3(-1, -1, -1);
       }
       pos.addVector(offset);

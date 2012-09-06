@@ -46,5 +46,6 @@ DEMOS.add('SpherePlane'    , SpherePlane);
 DEMOS.add('AABBPlane'      , AABBPlane);
 DEMOS.add('SphereAABB'     , SphereAABB);
 DEMOS.add('SphereTriangle' , SphereTriangle);
+DEMOS.add('AABBTriangle'   , AABBTriangle);
 DEMOS.add('SegmentPlane'   , SegmentPlane);
 

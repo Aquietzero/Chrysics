@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var SphereAABB = function(container) {
+var AABBTriangle = function(container) {
 
   this.world = new GeometryWorld(container);
   this.initWorld();
@@ -13,14 +13,9 @@ var SphereAABB = function(container) {
 
 }
 
-SphereAABB.prototype = {
+AABBTriangle.prototype = {
 
   initWorld: function() {
-
-    var sphere = new CHRYSICS.Sphere(
-      new CHRYSICS.Vector3(-150, -150, -150),
-      50
-    );
 
     var aabb = new CHRYSICS.BV.AABB([
       new CHRYSICS.Vector3(-100, -25, -100),
@@ -32,13 +27,18 @@ SphereAABB.prototype = {
       new CHRYSICS.Vector3( 100,  25,  100),
       new CHRYSICS.Vector3(-100,  25,  100)
     ]);
+    
+    var a = new CHRYSICS.Point(100, -100, 100),
+        b = new CHRYSICS.Point(-100, -100, 100),
+        c = new CHRYSICS.Point(0, 100, -100);
+    var triangle = new CHRYSICS.Triangle(a, b, c);
 
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 0x333333, 0.5);
-    this.aabb   = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 0.5);
+    this.aabb     = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 0.5);
+    this.triangle = new CHRYSICS.GEOMETRY.Triangle(triangle, 0x333333, 0.5);
 
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
-    this.world.add(this.sphere);
     this.world.add(this.aabb);
+    this.world.add(this.triangle);
     
   },
 
@@ -47,28 +47,26 @@ SphereAABB.prototype = {
     var offset = new CHRYSICS.Vector3(1, 1, 1);
     var pos = new CHRYSICS.Vector3(-150, -150, -150);
     var self = this;
-    var sphere = self.sphere.sphere;
-    var aabb   = self.aabb.aabb;
+    var aabb = self.aabb.aabb;
+    var triangle = self.triangle.triangle;
     return function() {
 
       if (pos.y < -150)
         offset = new CHRYSICS.Vector3(1, 1, 1);
-      else if (pos.y > 150) {
-        console.log(pos.y);
+      else if (pos.y > 150)
         offset = new CHRYSICS.Vector3(-1, -1, -1);
-      }
       pos.addVector(offset);
 
-      self.sphere.setPosition(pos.x, pos.y, pos.z);
-      var intersect = CHRYSICS.PrimitiveTest.sphereAABB(
-        sphere, aabb
+      self.aabb.setPosition(pos);
+      var intersect = CHRYSICS.PrimitiveTest.AABBTriangle(
+        aabb, triangle.v1, triangle.v2, triangle.v3
       );
       if (intersect) {
-        self.sphere.setColor(0x990000);
         self.aabb.setColor(0x990000);
+        self.triangle.setColor(0x990000);
       } else {
-        self.sphere.setColor(0x333333);
-        self.aabb.setColor(0x000000);
+        self.aabb.setColor(0x333333);
+        self.triangle.setColor(0x333333);
       }
     
     };

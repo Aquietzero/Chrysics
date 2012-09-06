@@ -93,6 +93,7 @@ loader.add('demo/PrimitiveTests/SpherePlane');
 loader.add('demo/PrimitiveTests/AABBPlane');
 loader.add('demo/PrimitiveTests/SphereAABB');
 loader.add('demo/PrimitiveTests/SphereTriangle');
+loader.add('demo/PrimitiveTests/AABBTriangle');
 loader.add('demo/PrimitiveTests/SegmentPlane');
 
 // Demo Driver
