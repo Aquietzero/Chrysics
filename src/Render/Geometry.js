@@ -22,8 +22,14 @@ CHRYSICS.GEOMETRY.Primitive.prototype = {
 
   setOrientation: function(dir) {
 
-    var origin = new CHRYSICS.Vector3(0, 1, 0);
+    // The orientation is based on the world coordinate.
+    var origin = this.prevOrigin || new CHRYSICS.Vector3(0, 1, 0);
     var target = dir.normalize();
+
+    // If the previous orientation is the same as the current one, then
+    // there is no need to re-orient.
+    if (origin.equalsTo(target))
+      return;
 
     var axis = origin.crossProduct(target).normalize();
     var angle = Math.acos(origin.dotProduct(target));
@@ -39,8 +45,8 @@ CHRYSICS.GEOMETRY.Primitive.prototype = {
       es[6], es[7], es[8], 0,
           0,     0,     0, 1
     );
-
     this.geometry.applyMatrix(m);
+    this.prevOrigin = dir;
  
   },
 

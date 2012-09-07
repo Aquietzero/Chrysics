@@ -5,7 +5,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-CHRYSICS.PrimitiveTest = {
+CHRYSICS.BV.PrimitiveTest = {
 
   INTERSECT : 'INTERSECT',
   INSIDE    : 'INSIDE',
@@ -54,7 +54,7 @@ CHRYSICS.PrimitiveTest = {
   },
 
   // Returns true if shpere s intersects triangle ABC.
-  shpereTriangle: function(s, a, b, c) {
+  sphereTriangle: function(s, a, b, c) {
 
     var p = CHRYSICS.BV.ClosestPoint.onTriangleToPoint(a, b, c, s.c);
     var dist = p.sub(s.c);
@@ -72,8 +72,7 @@ CHRYSICS.PrimitiveTest = {
 
     var t = dorminator / numerator;
 
-    if (t >= 0 && t <= 1)
-      return segment.begin.add(dir.mul(t));
+    if (t >= 0 && t <= 1) return true;
   
   },
 
@@ -179,6 +178,29 @@ CHRYSICS.PrimitiveTest = {
     var plane = new CHRYSICS.Plane(f0.crossProduct(f2), a);
     return this.AABBPlane(aabb, plane);
 
+  },
+
+  // Test if ray r = p + td intersects sphere s
+  raySphere: function(ray, s) {
+
+    var m = ray.point.sub(s.c);
+    var c = m.dotProduct(m) - s.r*s.r;
+
+    // There is at least on root if the origin of the ray is
+    // inside the sphere.
+    if (c <= 0) return true;
+
+    // The origin of the ray is outside the sphere and the ray
+    // is pointing outwards.
+    var b = m.dotProduct(ray.dir);
+    if (b > 0) return false;
+
+    // No solution in the intersection equation.
+    var delta = b*b - c;
+    if (delta < 0) return false;
+
+    return true;
+  
   },
 
 }

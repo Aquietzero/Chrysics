@@ -53,7 +53,7 @@ SphereTriangle.prototype = {
       pos.addVector(offset);
 
       self.sphere.setPosition(pos.x, pos.y, pos.z);
-      var intersect = CHRYSICS.PrimitiveTest.shpereTriangle(
+      var intersect = CHRYSICS.BV.PrimitiveTest.sphereTriangle(
         s, triangle.v1, triangle.v2, triangle.v3
       );
       if (intersect) {

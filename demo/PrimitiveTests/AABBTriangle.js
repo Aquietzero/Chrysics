@@ -58,7 +58,7 @@ AABBTriangle.prototype = {
       pos.addVector(offset);
 
       self.aabb.setPosition(pos);
-      var intersect = CHRYSICS.PrimitiveTest.AABBTriangle(
+      var intersect = CHRYSICS.BV.PrimitiveTest.AABBTriangle(
         aabb, triangle.v1, triangle.v2, triangle.v3
       );
       if (intersect) {

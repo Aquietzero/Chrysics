@@ -1,4 +1,3 @@
-
 /**
  * A segment or ray or line in mathematics is represented as a 
  * slim cylinda in demo.
@@ -27,7 +26,7 @@ CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
       pos = p.add(dir.mul(i * offset / len));
 
       dot = new THREE.Mesh(
-        new THREE.SphereGeometry(radius, 30, 30),
+        new THREE.SphereGeometry(radius, 20, 20),
         new THREE.MeshLambertMaterial({ color: color })
       );
       dot.position.set(pos.x, pos.y, pos.z);
@@ -45,7 +44,7 @@ CHRYSICS.GEOMETRY.Segment.prototype = _.extend({
     var pos = this.segment.begin.add(dir.mul(0.5));
 
     this.geometry = new THREE.Mesh(
-      new THREE.CylinderGeometry(radius, radius, len, 50, 50, true),
+      new THREE.CylinderGeometry(radius, radius, len, 20, 20, true),
       new THREE.MeshLambertMaterial({ color: color })
     );
 

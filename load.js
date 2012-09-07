@@ -50,11 +50,13 @@ loader.add('src/Core/Primitives/Point');
 loader.add('src/Core/Primitives/Plane');
 loader.add('src/Core/Primitives/Sphere');
 loader.add('src/Core/Primitives/Segment');
+loader.add('src/Core/Primitives/Ray');
 loader.add('src/Core/Primitives/Triangle');
 
 loader.add('src/Collision/BV');
 loader.add('src/Collision/AABB');
 loader.add('src/Collision/Sphere');
+loader.add('src/Collision/Intersection');
 loader.add('src/Collision/ClosestPoint');
 loader.add('src/Collision/PrimitiveTest');
 loader.add('src/Collision/SpatialTest');
@@ -63,6 +65,7 @@ loader.add('src/Render/Geometry');
 loader.add('src/Render/Point');
 loader.add('src/Render/Sphere');
 loader.add('src/Render/Segment');
+loader.add('src/Render/Ray');
 loader.add('src/Render/Plane');
 loader.add('src/Render/Cone');
 loader.add('src/Render/AABB');
@@ -109,6 +112,7 @@ loader.add('demo/PrimitiveTests/SphereAABB');
 loader.add('demo/PrimitiveTests/SphereTriangle');
 loader.add('demo/PrimitiveTests/AABBTriangle');
 loader.add('demo/PrimitiveTests/SegmentPlane');
+loader.add('demo/PrimitiveTests/RaySphere');
 
 // Demo Driver
 loader.add('demo/DemoCollection');

@@ -38,7 +38,7 @@ SegmentPlane.prototype = {
       )
     );
     this.segment = new CHRYSICS.GEOMETRY.Segment(segment);
-    this.segment.initWithCylinder(2, 0x000000);
+    this.segment.initWithCylinder(2, 0x550055);
 
     // Intersection point between plane and segment.
     this.intersect = new CHRYSICS.GEOMETRY.Point(
@@ -71,7 +71,7 @@ SegmentPlane.prototype = {
       y += offset;
       self.segment.setPosition(pos.x, y, pos.z);
 
-      var intersect = CHRYSICS.PrimitiveTest.segmentPlane(segment, plane);
+      var intersect = CHRYSICS.BV.Intersection.segmentPlane(segment, plane);
       if (intersect) {
         self.intersect.setPosition(intersect);
         self.intersect.setOpacity(1);

@@ -52,9 +52,9 @@ SpherePlane.prototype = {
       y += offset;
 
       self.sphere.setPosition(0, y, 0);
-      rst = CHRYSICS.PrimitiveTest.spherePlane(s, p);
+      rst = CHRYSICS.BV.PrimitiveTest.spherePlane(s, p);
 
-      if (rst == CHRYSICS.PrimitiveTest.INTERSECT)
+      if (rst == CHRYSICS.BV.PrimitiveTest.INTERSECT)
         self.sphere.setColor(0x990000);
       else
         self.sphere.setColor(0x333333);

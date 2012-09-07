@@ -57,7 +57,7 @@ AABBPlane.prototype = {
       y += offset;
 
       self.aabb.setPosition(0, y, 0);
-      if (CHRYSICS.PrimitiveTest.AABBPlane(aabb, p))
+      if (CHRYSICS.BV.PrimitiveTest.AABBPlane(aabb, p))
         self.aabb.setColor(0x990000);
       else
         self.aabb.setColor(0x333333);

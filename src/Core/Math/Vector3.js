@@ -28,6 +28,8 @@ CHRYSICS.Vector3.prototype = {
     this.y = y;  
     this.z = z;  
 
+    return this;
+
   },
 
   setX: function(x) {

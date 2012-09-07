@@ -60,7 +60,7 @@ SphereAABB.prototype = {
       pos.addVector(offset);
 
       self.sphere.setPosition(pos.x, pos.y, pos.z);
-      var intersect = CHRYSICS.PrimitiveTest.sphereAABB(
+      var intersect = CHRYSICS.BV.PrimitiveTest.sphereAABB(
         sphere, aabb
       );
       if (intersect) {
