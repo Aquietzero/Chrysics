@@ -21,7 +21,7 @@ CHRYSICS.Utils = {
 
   ltZero: function(n) {
   
-    return n < -CHRYSICS.Const.ZERO;
+    return n < CHRYSICS.Const.ZERO;
   
   },
 

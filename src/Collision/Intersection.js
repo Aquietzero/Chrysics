@@ -45,5 +45,50 @@ CHRYSICS.BV.Intersection = {
 
   },
 
+  // TODO beautify this ugly implementation.
+  // Intersect ray R(t) = p + t*d against AABB a. When intersecting, 
+  // return point q of intersection.
+  rayAABB: function(ray, aabb) {
+
+    var tmin = 0;
+    var tmax = -Infinity;
+
+    var d = [ray.dir.x,   ray.dir.y,   ray.dir.z];
+    var p = [ray.point.x, ray.point.y, ray.point.z];
+    var a = {
+      min: [aabb.c.x - aabb.rx, aabb.c.y - aabb.ry, aabb.c.z - aabb.rz],
+      max: [aabb.c.x + aabb.rx, aabb.c.y + aabb.ry, aabb.c.z + aabb.rz],
+    };
+
+    // For all three slabs.
+    for (var i = 0; i < 3; ++i) {
+
+      if (CHRYSICS.Utils.ltZero(Math.abs(d[i]))) {
+        // Ray is parallel to slab. No hit if origin not within slab.
+        if (p[i] < a.min[i] || p[i] > a.max[i]) return;
+      } else {
+        // Compute intersection t value of ray with near and far plane
+        // of slab.
+        var ood = 1 / d[i];
+        var t1  = (a.min[i] - p[i]) * ood;
+        var t2  = (a.max[i] - p[i]) * ood;
+        
+        if (t1 > t2)
+          var temp = t1; t1 = t2; t2 = temp;
+
+        // Compute the intersection of slab intersection intervals.
+        if (t1 > tmin) tmin = t1;
+        if (t2 > tmax) tmax = t2;
+        // Exit with no collision as soon as slab intersection becomes empty.
+        if (tmin > tmax) return;
+
+      }
+    
+    }
+
+    return ray.point.add(ray.dir.mul(tmin));
+  
+  },
+
 
 }

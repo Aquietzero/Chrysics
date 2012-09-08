@@ -4,7 +4,7 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var RaySphere = function(container) {
+var RayAABB = function(container) {
 
   this.world = new GeometryWorld(container);
   this.initWorld();
@@ -13,13 +13,22 @@ var RaySphere = function(container) {
 
 }
 
-RaySphere.prototype = {
+RayAABB.prototype = {
 
   initWorld: function() {
 
-    // Testing sphere.
-    var sphere = new CHRYSICS.Sphere(new CHRYSICS.Point(0, 0, 0), 200);
-    this.sphere = new CHRYSICS.GEOMETRY.Sphere(sphere, 0x333333, 0.5);
+    // Testing AABB.
+    var aabb = new CHRYSICS.BV.AABB([
+      new CHRYSICS.Vector3(-200, -125, -200),
+      new CHRYSICS.Vector3( 200, -125, -200),
+      new CHRYSICS.Vector3( 200, -125,  200),
+      new CHRYSICS.Vector3(-200, -125,  200),
+      new CHRYSICS.Vector3(-200,  125, -200),
+      new CHRYSICS.Vector3( 200,  125, -200),
+      new CHRYSICS.Vector3( 200,  125,  200),
+      new CHRYSICS.Vector3(-200,  125,  200)
+    ]);
+    this.aabb = new CHRYSICS.GEOMETRY.AABB(aabb, 0x333333, 0.5);
 
     // Testing ray.
     var ray = new CHRYSICS.Ray(
@@ -40,7 +49,7 @@ RaySphere.prototype = {
     this.point = new CHRYSICS.GEOMETRY.Point(point, 10, 0x550055);
    
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
-    this.world.add(this.sphere);
+    this.world.add(this.aabb);
     this.world.add(this.ray);
     this.world.add(this.intersect);
     this.world.add(this.point);
@@ -51,28 +60,24 @@ RaySphere.prototype = {
 
     var self = this;
     var ray = this.ray.ray;
-    var sphere = this.sphere.sphere;
-    var theta = 0, radius = 0, offset = 0.01;
+    var aabb = this.aabb.aabb;
+    var theta = 0;
 
     return function() {
 
-      if (radius > 1) offset = -0.001;
-      if (radius < 0) offset =  0.001;
-
       theta  += 0.02;
-      radius += offset;
-
       var dir = new CHRYSICS.Vector3(
-        -1,
-        radius * Math.sin(theta),
-        radius * Math.cos(theta)
+        -1, 
+        0.5 * Math.sin(theta),
+        0.5 * Math.cos(theta)
       );
       dir.normalizeSelf();
 
       ray.dir = dir;
       self.ray.update();
 
-      var intersect = CHRYSICS.BV.Intersection.raySphere(ray, sphere);
+      var intersect = CHRYSICS.BV.Intersection.rayAABB(ray, aabb);
+      console.log(intersect);
       if (intersect) {
         self.intersect.setPosition(intersect);
         self.intersect.setOpacity(1);
