@@ -2,7 +2,7 @@
 
 A simple 3D physics engine in JavaScript. The name `Chrysics` comes from the combination of `Christine` and `Physics`. 
 
-<img src="http://github.com/Aquietzero/Chrysics/raw/master/img/screenshot.png" width="80%" alt="screenshot">
+!["http://github.com/Aquietzero/Chrysics/raw/master/img/screenshot.png"](screenshot)
 
 ## License 
 
