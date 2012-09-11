@@ -11,6 +11,8 @@ CHRYSICS.BV.PrimitiveTest = {
   INSIDE    : 'INSIDE',
   OUTSIDE   : 'OUTSIDE',
 
+  EPSILON   : 0.00001,
+
   // Determine whether plane p intersects sphere s.
   spherePlane: function(s, p) {
 
@@ -198,6 +200,39 @@ CHRYSICS.BV.PrimitiveTest = {
     // No solution in the intersection equation.
     var delta = b*b - c;
     if (delta < 0) return false;
+
+    return true;
+  
+  },
+
+  segmentAABB: function(segment, aabb) {
+
+    var Abs = Math.abs;
+
+    var c = aabb.c;
+    var dir = segment.end.sub(segment.begin);
+    var d = dir.mul(0.5);
+    var m = segment.begin.add(d);
+
+    // Translate box and segment to origin.
+    m.subVector(c);
+
+    var adx = Abs(d.x);
+    if (Abs(m.x) > aabb.rx + adx) return false;
+    var ady = Abs(d.y);
+    if (Abs(m.y) > aabb.ry + ady) return false;
+    var adz = Abs(d.z);
+    if (Abs(m.z) > aabb.rz + adz) return false;
+
+    // Add in an epsilon term to counteract arithmetic errors when segment
+    // is (near) parallel to a coordinate axis.
+    adx += this.EPSILON;
+    ady += this.EPSILON;
+    adz += this.EPSILON;
+
+    if (Abs(m.y*d.z - m.z*d.y) > aabb.ry*adz + aabb.rz*ady) return false;
+    if (Abs(m.z*d.x - m.x*d.z) > aabb.rx*adz + aabb.rz*adx) return false;
+    if (Abs(m.x*d.y - m.y*d.x) > aabb.rx*ady + aabb.ry*adx) return false;
 
     return true;
   

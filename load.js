@@ -112,6 +112,7 @@ loader.add('demo/PrimitiveTests/SphereAABB');
 loader.add('demo/PrimitiveTests/SphereTriangle');
 loader.add('demo/PrimitiveTests/AABBTriangle');
 loader.add('demo/PrimitiveTests/SegmentPlane');
+loader.add('demo/PrimitiveTests/SegmentAABB');
 loader.add('demo/PrimitiveTests/RaySphere');
 loader.add('demo/PrimitiveTests/RayAABB');
 
