@@ -115,6 +115,7 @@ loader.add('demo/PrimitiveTests/SegmentPlane');
 loader.add('demo/PrimitiveTests/SegmentAABB');
 loader.add('demo/PrimitiveTests/RaySphere');
 loader.add('demo/PrimitiveTests/RayAABB');
+loader.add('demo/PrimitiveTests/LineTriangle');
 
 // Demo Driver
 loader.add('demo/DemoCollection');

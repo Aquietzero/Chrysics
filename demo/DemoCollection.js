@@ -56,3 +56,4 @@ DEMOS.add('SegmentPlane'   , SegmentPlane);
 DEMOS.add('SegmentAABB'    , SegmentAABB);
 DEMOS.add('RaySphere'      , RaySphere);
 DEMOS.add('RayAABB'        , RayAABB);
+DEMOS.add('LineTriangle'   , LineTriangle);

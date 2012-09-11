@@ -20,6 +20,10 @@ CHRYSICS.Vector3.X_DIRECTION_N = new CHRYSICS.Vector3(-1,  0,  0);
 CHRYSICS.Vector3.Y_DIRECTION_N = new CHRYSICS.Vector3( 0, -1,  0);
 CHRYSICS.Vector3.Z_DIRECTION_N = new CHRYSICS.Vector3( 0,  0, -1);
 
+CHRYSICS.Vector3.ScalarTriple = function(a, b, c) {
+  return a.dotProduct(b.crossProduct(c));
+}
+
 CHRYSICS.Vector3.prototype = {
 
   set: function(x, y, z) {

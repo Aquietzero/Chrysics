@@ -90,4 +90,36 @@ CHRYSICS.BV.Intersection = {
   
   },
 
+  // Given line pq and ccw triangle abc, return whether line pierces triangle.
+  // If so, also return the barycentric coordinates (u, v, w) of the intersection
+  // point.
+  lineTriangle: function(p, q, a, b, c) {
+
+    var pq = q.sub(p);
+    var pa = a.sub(p);
+    var pb = b.sub(p);
+    var pc = c.sub(p);
+
+    // Test if pq is inside the edges bc, ca and ab. Done by testing that the
+    // signed tetrahedral volumes, computed using scalar triple products, are
+    // all positive.
+    var u = CHRYSICS.Vector3.ScalarTriple(pq, pc, pb);
+    if (u < 0) return;
+    var v = CHRYSICS.Vector3.ScalarTriple(pq, pa, pc);
+    if (v < 0) return;
+    var w = CHRYSICS.Vector3.ScalarTriple(pq, pb, pa);
+    if (w < 0) return;
+
+    // Compute the barycentric coordinates (u, v, w) determining the intersection
+    // point r, r = u*a + v*b +w*c
+    var denom = 1 / (u + v + w);
+
+    u *= denom;
+    v *= denom;
+    w *= denom;
+
+    return a.mul(u).add(b.mul(v)).add(c.mul(w));
+  
+  },
+
 }
