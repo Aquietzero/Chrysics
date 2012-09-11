@@ -103,12 +103,30 @@ CHRYSICS.BV.Intersection = {
     // Test if pq is inside the edges bc, ca and ab. Done by testing that the
     // signed tetrahedral volumes, computed using scalar triple products, are
     // all positive.
+ 
+    /*
+    // An optimized version. Save one cross product only.
+    var m = pq.crossProduct(pc);
+    var u = pb.dotProduct(m);
+    if (u < 0) return;
+    var v = -pa.dotProduct(m);
+    if (v < 0) return;
+    var w = CHRYSICS.Vector3.ScalarTriple(pq, pb, pa);
+    if (w < 0) return;
+    */
+   
     var u = CHRYSICS.Vector3.ScalarTriple(pq, pc, pb);
     if (u < 0) return;
     var v = CHRYSICS.Vector3.ScalarTriple(pq, pa, pc);
     if (v < 0) return;
     var w = CHRYSICS.Vector3.ScalarTriple(pq, pb, pa);
     if (w < 0) return;
+
+    // The line is on the plane of the triangle.
+    if (CHRYSICS.Utils.isZero(u) &&
+        CHRYSICS.Utils.isZero(v) &&
+        CHRYSICS.Utils.isZero(v))
+      return;
 
     // Compute the barycentric coordinates (u, v, w) determining the intersection
     // point r, r = u*a + v*b +w*c
