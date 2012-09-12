@@ -129,7 +129,7 @@ CHRYSICS.BV.Intersection = {
       return;
 
     // Compute the barycentric coordinates (u, v, w) determining the intersection
-    // point r, r = u*a + v*b +w*c
+    // point r, r = u*a + v*b +w*c.
     var denom = 1 / (u + v + w);
 
     u *= denom;
@@ -139,5 +139,50 @@ CHRYSICS.BV.Intersection = {
     return a.mul(u).add(b.mul(v)).add(c.mul(w));
   
   },
+
+  // Given segment pq and triangle abc, returns whether segment intersects triangle
+  // and if so, also returns the intersection point on the triangle and on the 
+  // segment.
+  segmentTriangle: function(segment, a, b, c) {
+
+    var ab = b.sub(a);
+    var ac = c.sub(a);
+    var qp = segment.begin.sub(segment.end);
+
+    // Compute triangle normal. Can be precalculted or cached if interesting
+    // multiple segments against the same triangle.
+    var n = ab.crossProduct(ac);
+
+    // Compute denominator d. If d <= 0, segment is parallel to or points
+    // away from triangle, so exit early.
+    var d = qp.dotProduct(n);
+    if (d <= 0) return false;
+
+    // Compute intersection t value of pq with plane of triangle. A ray intersects
+    // iff 0 <= t. Segment interests iff 0 <= t <= 1. Delay dividing by d until
+    // intersection has been found to pierce triangle.
+    var ap = segment.begin.sub(a);
+    var t = ap.dotProduct(n);
+    if (t < 0) return false;
+    if (t > d) return false; // Only for segment.
+
+    // Compute barycentric coordinate components and test if within bounds.
+    var e = qp.crossProduct(ap);
+    var v = ac.dotProduct(e);
+    if (v < 0 || v > d) return false;
+    var w = -ab.dotProduct(e);
+    if (w < 0 || v + w > d) return false;
+
+    // Segment intersects triangle. Perform delayed division and compute the last
+    // barycentric coordinate component.
+    var ood = 1 / d;
+    t *= ood;
+    v *= ood;
+    w *= ood;
+    u = 1 - v - w;
+
+    return a.mul(u).add(b.mul(v)).add(c.mul(w));
+
+  }
 
 }

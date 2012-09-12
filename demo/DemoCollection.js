@@ -47,13 +47,14 @@ DEMOS.add('OnTriangleToPoint'  , OnTriangleToPoint);
 DEMOS.add('BetweenTwoSegments' , BetweenTwoSegments);
 
 // Primitive Tests
-DEMOS.add('SpherePlane'    , SpherePlane);
-DEMOS.add('AABBPlane'      , AABBPlane);
-DEMOS.add('SphereAABB'     , SphereAABB);
-DEMOS.add('SphereTriangle' , SphereTriangle);
-DEMOS.add('AABBTriangle'   , AABBTriangle);
-DEMOS.add('SegmentPlane'   , SegmentPlane);
-DEMOS.add('SegmentAABB'    , SegmentAABB);
-DEMOS.add('RaySphere'      , RaySphere);
-DEMOS.add('RayAABB'        , RayAABB);
-DEMOS.add('LineTriangle'   , LineTriangle);
+DEMOS.add('SpherePlane'     , SpherePlane);
+DEMOS.add('AABBPlane'       , AABBPlane);
+DEMOS.add('SphereAABB'      , SphereAABB);
+DEMOS.add('SphereTriangle'  , SphereTriangle);
+DEMOS.add('AABBTriangle'    , AABBTriangle);
+DEMOS.add('SegmentPlane'    , SegmentPlane);
+DEMOS.add('SegmentAABB'     , SegmentAABB);
+DEMOS.add('RaySphere'       , RaySphere);
+DEMOS.add('RayAABB'         , RayAABB);
+DEMOS.add('LineTriangle'    , LineTriangle);
+DEMOS.add('SegmentTriangle' , SegmentTriangle);
