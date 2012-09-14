@@ -116,6 +116,7 @@ loader.add('demo/PrimitiveTests/SegmentAABB');
 // Intersections
 loader.add('demo/Intersections/SegmentPlane');
 loader.add('demo/Intersections/SegmentTriangle');
+loader.add('demo/Intersections/SegmentPolyhedron');
 loader.add('demo/Intersections/RaySphere');
 loader.add('demo/Intersections/RayAABB');
 loader.add('demo/Intersections/LineTriangle');

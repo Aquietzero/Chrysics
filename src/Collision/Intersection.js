@@ -11,10 +11,10 @@ CHRYSICS.BV.Intersection = {
   segmentPlane: function(segment, p) {
 
     var dir = segment.end.sub(segment.begin);
-    var dorminator = p.n.dotProduct(p.point.sub(segment.begin))
-    var numerator  = p.n.dotProduct(dir);
+    var numerator = p.n.dotProduct(p.point.sub(segment.begin))
+    var denominator  = p.n.dotProduct(dir);
 
-    var t = dorminator / numerator;
+    var t = numerator / denominator;
 
     if (t >= 0 && t <= 1)
       return segment.begin.add(dir.mul(t));
@@ -183,6 +183,55 @@ CHRYSICS.BV.Intersection = {
 
     return a.mul(u).add(b.mul(v)).add(c.mul(w));
 
+  },
+
+  // Intersect segment S(t) = A + t(B - A), 0 <= t <= 1 against convex polyhedron
+  // specified by the n halfspaces defined by the polyhedron[]. On exit, return 
+  // the t_first and t_last define the intersection, if there are any.
+  segmentPolyhedron: function(segment, polyhedron) {
+
+    var dir = segment.getDirection();
+
+    var t_first = 0;
+    var t_last  = 1;
+
+    var denom, p, dist;
+    for (var i = 0; i < polyhedron.length; ++i) {
+
+      p     = polyhedron[i];
+      denom = p.n.dotProduct(dir);
+      dist  = p.n.dotProduct(p.point.sub(segment.begin));
+
+      if (CHRYSICS.Utils.isZero(denom)) {
+        // Segment lies outside the plane and parallel to it.
+        if (dist > 0) return;
+      } else {
+
+        t = dist / denom;
+        if (denom < 0) {
+          // When existing halfspace, update t_last if t is smaller.
+          if (t < t_last) t_last = t;
+        } else {
+          // When entering the halfspace, update t_first if t is larger.
+          if (t > t_first) t_first = t;
+        }
+        // Intersection becomes empty.
+        if (t_first > t_last) {
+          console.log(t_first, t_last);
+          return;
+        } 
+
+      }
+
+    }
+
+    // console.log(segment.begin.add(d.mul(t_first)));
+
+    return {
+      first : segment.begin.add(dir.mul(t_first)),
+      last  : segment.begin.add(dir.mul(t_last))
+    }
+  
   }
 
 }

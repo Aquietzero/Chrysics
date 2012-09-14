@@ -55,8 +55,9 @@ DEMOS.add('AABBTriangle'    , AABBTriangle);
 DEMOS.add('SegmentAABB'     , SegmentAABB);
 
 // Intersections
-DEMOS.add('SegmentPlane'    , SegmentPlane);
-DEMOS.add('SegmentTriangle' , SegmentTriangle);
-DEMOS.add('RaySphere'       , RaySphere);
-DEMOS.add('RayAABB'         , RayAABB);
-DEMOS.add('LineTriangle'    , LineTriangle);
+DEMOS.add('SegmentPlane'      , SegmentPlane);
+DEMOS.add('SegmentTriangle'   , SegmentTriangle);
+DEMOS.add('SegmentPolyhedron' , SegmentPolyhedron);
+DEMOS.add('RaySphere'         , RaySphere);
+DEMOS.add('RayAABB'           , RayAABB);
+DEMOS.add('LineTriangle'      , LineTriangle);

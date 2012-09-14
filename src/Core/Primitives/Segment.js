@@ -13,6 +13,12 @@ CHRYSICS.Segment = function(begin, end) {
 
 CHRYSICS.Segment.prototype = {
 
+  getDirection: function() {
+
+    return this.end.sub(this.begin);
+  
+  },
+
   getPosition: function() {
 
     return this.begin.add(this.end.sub(this.begin).mul(0.5));

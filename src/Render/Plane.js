@@ -14,11 +14,29 @@ CHRYSICS.GEOMETRY.Plane = function(plane, size, color) {
     })
   );
 
+  this.setPosition(this.plane.point);
   this.setOrientation(this.plane.n);
 
 }
 
-CHRYSICS.GEOMETRY.Plane.prototype = _.extend(
-  CHRYSICS.GEOMETRY.Primitive.prototype, {
+CHRYSICS.GEOMETRY.Plane.prototype = _.extend({
 
-});
+  setPosition: function() {
+
+    if (arguments.length == 1) {
+      this.geometry.position.set(
+        arguments[0].x,
+        arguments[0].y,
+        arguments[0].z
+      );
+    } else if (arguments.length == 3) {
+      this.geometry.position.set(
+        arguments[0],
+        arguments[1],
+        arguments[2]
+      );
+    }
+
+  },
+
+}, CHRYSICS.GEOMETRY.Primitive.prototype);

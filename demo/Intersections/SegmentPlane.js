@@ -61,7 +61,7 @@ SegmentPlane.prototype = {
     var self = this;
     var pos = this.segment.segment.getPosition();
     var segment = this.segment.segment;
-    var plane = self.plane.plane;
+    var plane = this.plane.plane;
     return function() {
 
       if (y >= 250)

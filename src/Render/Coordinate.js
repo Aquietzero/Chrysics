@@ -69,7 +69,6 @@ CHRYSICS.GEOMETRY.Coordinate = function(sizeX, sizeY, sizeZ) {
 
 }
 
-CHRYSICS.GEOMETRY.Coordinate.prototype = _.extend(
-  CHRYSICS.GEOMETRY.Primitive.prototype, {
+CHRYSICS.GEOMETRY.Coordinate.prototype = _.extend({
 
-});
+}, CHRYSICS.GEOMETRY.Primitive.prototype);

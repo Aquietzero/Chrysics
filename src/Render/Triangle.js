@@ -49,5 +49,3 @@ CHRYSICS.GEOMETRY.Triangle.prototype = _.extend({
   }
 
 }, CHRYSICS.GEOMETRY.Primitive.prototype);
-
-

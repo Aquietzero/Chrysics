@@ -37,12 +37,14 @@ CHRYSICS.GEOMETRY.Primitive.prototype = {
     var rotation = new CHRYSICS.Matrix3();
     rotation.setFromAxisAngle(axis, angle);
 
+    // While applying the new rotation, keep the current position.
     var m = new THREE.Matrix4();
+    var pos = this.geometry.position;
     var es = rotation.elements;
     m.set(
-      es[0], es[1], es[2], 0,
-      es[3], es[4], es[5], 0,
-      es[6], es[7], es[8], 0,
+      es[0], es[1], es[2], pos.x,
+      es[3], es[4], es[5], pos.y,
+      es[6], es[7], es[8], pos.z,
           0,     0,     0, 1
     );
     this.geometry.applyMatrix(m);
