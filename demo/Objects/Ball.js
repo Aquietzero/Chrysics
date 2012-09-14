@@ -19,7 +19,6 @@ var Ball = function(radius) {
 Ball.prototype = {
 
   init: function() {
-
     this.body.setVelocity(new CHRYSICS.Vector3(
       CHRYSICS.Utils.random(-70, 70),
       CHRYSICS.Utils.random(-70, 70),
@@ -31,19 +30,31 @@ Ball.prototype = {
       0, 0, -0.1
     ));
     this.body.setMass(2.0);
+  },
 
+  setPosition: function(pos) {
+    this.body.position = pos;
+    this.sphere.position.set(pos.x, pos.y, pos.z);
+  },
+
+  setColor: function(color) {
+    this.sphere.material.color.setHex(color);
   },
 
   getGeometry: function() {
-  
     return this.sphere;
-  
+  },
+
+  getCentroid: function() {
+    return new CHRYSICS.Vector3(
+      this.sphere.position.x,
+      this.sphere.position.y,
+      this.sphere.position.z
+    );
   },
 
   getPhysique: function() {
-  
     return this.body;
-  
   }
 
 }

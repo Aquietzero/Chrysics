@@ -4,7 +4,6 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-
 var GravityField = function(container) {
 
   this.worldPhysics   = new CHRYSICS.World();

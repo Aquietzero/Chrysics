@@ -54,6 +54,7 @@ loader.add('src/Core/Primitives/Ray');
 loader.add('src/Core/Primitives/Triangle');
 
 loader.add('src/Collision/BV');
+loader.add('src/Collision/BVH');
 loader.add('src/Collision/AABB');
 loader.add('src/Collision/Sphere');
 loader.add('src/Collision/Intersection');
@@ -85,7 +86,11 @@ loader.add('src/GeometryWorld');
 loader.add('src/RenderingWorld');
 loader.add('src/World');
 
+
 // Examples
+
+// Auxiliary scripts for demos.
+loader.add('demo/Objects/Ball');
 
 // Physics Demos
 loader.add('demo/Physics/GravityField');
@@ -120,6 +125,9 @@ loader.add('demo/Intersections/SegmentPolyhedron');
 loader.add('demo/Intersections/RaySphere');
 loader.add('demo/Intersections/RayAABB');
 loader.add('demo/Intersections/LineTriangle');
+
+// BVH
+loader.add('demo/BVH/MeanPartition');
 
 // Demo Driver
 loader.add('demo/DemoCollection');

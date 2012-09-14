@@ -9,7 +9,6 @@ CHRYSICS.BV.Intersection = {
 
   // Returns the intersection point if the segment intersects the plane.
   segmentPlane: function(segment, p) {
-
     var dir = segment.end.sub(segment.begin);
     var numerator = p.n.dotProduct(p.point.sub(segment.begin))
     var denominator  = p.n.dotProduct(dir);
@@ -18,13 +17,11 @@ CHRYSICS.BV.Intersection = {
 
     if (t >= 0 && t <= 1)
       return segment.begin.add(dir.mul(t));
-  
   },
 
   // Intersects ray r = p + td, |d| = 1, with sphere s and, if intersecting,
   // returns t value of intersection and intersection point q.
   raySphere: function(ray, s) {
-
     var m = ray.point.sub(s.c);
     var c = m.dotProduct(m) - s.r*s.r;
     var b = m.dotProduct(ray.dir);
@@ -42,14 +39,12 @@ CHRYSICS.BV.Intersection = {
     if (t < 0) t = 0;
 
     return ray.point.add(ray.dir.mul(t));
-
   },
 
   // TODO beautify this ugly implementation.
   // Intersect ray R(t) = p + t*d against AABB a. When intersecting, 
   // return point q of intersection.
   rayAABB: function(ray, aabb) {
-
     var tmin = 0;
     var tmax = -Infinity;
 
@@ -87,14 +82,12 @@ CHRYSICS.BV.Intersection = {
     }
 
     return ray.point.add(ray.dir.mul(tmin));
-  
   },
 
   // Given line pq and ccw triangle abc, return whether line pierces triangle.
   // If so, also return the barycentric coordinates (u, v, w) of the intersection
   // point.
   lineTriangle: function(p, q, a, b, c) {
-
     var pq = q.sub(p);
     var pa = a.sub(p);
     var pb = b.sub(p);
@@ -137,14 +130,12 @@ CHRYSICS.BV.Intersection = {
     w *= denom;
 
     return a.mul(u).add(b.mul(v)).add(c.mul(w));
-  
   },
 
   // Given segment pq and triangle abc, returns whether segment intersects triangle
   // and if so, also returns the intersection point on the triangle and on the 
   // segment.
   segmentTriangle: function(segment, a, b, c) {
-
     var ab = b.sub(a);
     var ac = c.sub(a);
     var qp = segment.begin.sub(segment.end);
@@ -182,7 +173,6 @@ CHRYSICS.BV.Intersection = {
     u = 1 - v - w;
 
     return a.mul(u).add(b.mul(v)).add(c.mul(w));
-
   },
 
   /**
@@ -203,7 +193,6 @@ CHRYSICS.BV.Intersection = {
    * denom = n . dir, when denom > 0, the segment is entering the halfspace.
    */
   segmentPolyhedron: function(segment, polyhedron) {
-
     var dir = segment.getDirection();
 
     var t_first = 0;
@@ -243,7 +232,6 @@ CHRYSICS.BV.Intersection = {
       first : segment.begin.add(dir.mul(t_first)),
       last  : segment.begin.add(dir.mul(t_last))
     }
-  
   }
 
 }

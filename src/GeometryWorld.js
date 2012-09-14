@@ -5,7 +5,6 @@
  */
 
 var GeometryWorld = function(container) {
-
   this.container = container;
   this.width  = 800;
   this.height = 600;
@@ -17,29 +16,23 @@ var GeometryWorld = function(container) {
   this.initControls();
 
   this.objects = [];
-
 }
 
 GeometryWorld.prototype = {
 
   initThree: function() {
-
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(this.width, this.height);
 
     document.getElementById(this.container).appendChild(this.renderer.domElement);
     this.renderer.setClearColorHex(0xbbbbbb, 0.7);
-  
   },
 
   initScene: function() {
-
     this.scene = new THREE.Scene();
-  
   },
 
   initCamera: function() {
-
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.01, 1e10);
     
     this.camera.position.set(450, 300, 650);
@@ -47,11 +40,9 @@ GeometryWorld.prototype = {
     this.camera.lookAt({ x:0, y:350, z:0 });
 
     this.scene.add(this.camera);
-
   },
 
   initLight: function() {
-  
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     this.directionalLight.position.set(100, 100, 200);
 
@@ -59,11 +50,9 @@ GeometryWorld.prototype = {
 
     this.scene.add(this.directionalLight);
     this.scene.add(this.ambientLight);
-  
   },
 
   initControls: function() {
-
     this.controls = new THREE.TrackballControls(this.camera);
 
     this.controls.rotateSpeed = 1.0;
@@ -71,25 +60,20 @@ GeometryWorld.prototype = {
     this.controls.panSpeed    = 0.8;
 
     this.controls.keys = [ 65, 83, 68 ];
-  
   },
 
   add: function(object) {
-
     if (object['getGeometry']) {
       this.objects.push(object);
       this.scene.add(object.getGeometry());
     } else
       this.scene.add(object);
-  
   },
 
   render: function() {
-
     this.controls.update();
     this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
-  
   }
 
 }

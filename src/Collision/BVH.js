@@ -42,7 +42,6 @@ CHRYSICS.BVH._Node = function(type) {
 CHRYSICS.BVH.Partition = {
 
   mean: function(objs) {
-
     // Get centroid of each object.
     var centroids = [];
     for (var i = 0; i < objs.length; ++i)
@@ -73,17 +72,14 @@ CHRYSICS.BVH.Partition = {
       left  : left,
       right : right
     }
-
   }                                  
                                      
 }                                    
 
 CHRYSICS.BVH.TopdownBVT = function(objs) {
-
   var root;
 
   var build = function(node, objs) {
-
     node = new CHRYSICS.BVH._Node();
     node.BV = CHRYSICS.BV.computeBoundingVolume(objs);
 
@@ -99,9 +95,7 @@ CHRYSICS.BVH.TopdownBVT = function(objs) {
       build(node.left, partition.left);
       build(node.right, partition.right);
     }
-  
   }
 
   return build(root, objs);
-
 }

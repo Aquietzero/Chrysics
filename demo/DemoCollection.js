@@ -55,3 +55,6 @@ DEMOS.add('SegmentPolyhedron' , SegmentPolyhedron);
 DEMOS.add('RaySphere'         , RaySphere);
 DEMOS.add('RayAABB'           , RayAABB);
 DEMOS.add('LineTriangle'      , LineTriangle);
+
+// BVH
+DEMOS.add('MeanPartition' , MeanPartition);
