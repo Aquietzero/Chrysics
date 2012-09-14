@@ -30,7 +30,6 @@ CHRYSICS.BV.PrimitiveTest = {
   // Determine whether plane p intersects an AABB.
   AABBPlane: function(aabb, p) {
 
-
     var c = aabb.c;
     var e = new CHRYSICS.Vector3(
       aabb.rx,

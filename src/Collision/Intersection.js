@@ -194,7 +194,7 @@ CHRYSICS.BV.Intersection = {
    *              |  /
    *              | /
    *              |/
-   *     ----------------------
+   *     ---------*------------
    *             /     
    *            /      
    *           / A     
@@ -238,8 +238,6 @@ CHRYSICS.BV.Intersection = {
       }
 
     }
-
-    // console.log(segment.begin.add(d.mul(t_first)));
 
     return {
       first : segment.begin.add(dir.mul(t_first)),

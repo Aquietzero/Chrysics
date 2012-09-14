@@ -6,23 +6,17 @@
  */
 
 var DemoCollection = function() {
-
   this.demos = {}
-
 }
 
 DemoCollection.prototype = {
 
   add: function(demoName, demo) {
-
     this.demos[demoName] = demo;
-  
   },
 
   getDemos: function() {
-  
     return this.demos;
-  
   },
 
 }

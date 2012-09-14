@@ -7,7 +7,6 @@
 CHRYSICS.World = function(iterations) {
 
   this.bodies = [];
-
   this.forceRegistry = new CHRYSICS.ForceRegistry();
   // this.particleContactResolver = new CHRYSICS.ParticleContactResolver();
 

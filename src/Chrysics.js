@@ -6,7 +6,8 @@
 
 var CHRYSICS = CHRYSICS || {
   
-  VERSION : '1.0',
-  AUTHOR  : 'zero',
+  Version     : '1.0',
+  Author      : 'zero',
+  Description : 'A simple JavaScript physics engine.'
 
 };

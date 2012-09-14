@@ -73,4 +73,20 @@ CHRYSICS.BV = {
 
   },
 
+  // TODO: Remember, the method below assumes that each object
+  // provides a method call `getData` to open access to the vertices'
+  // information of the object.
+  computeBoundingVolume: function(objs) {
+
+    var vs = [];
+    for (var i = 0; i < objs.length; ++i) {
+      data = objs[i].getData();    
+      for (var n = 0; n < data.length; ++n)
+        vs.push(data[n]);
+    }
+
+    return new CHRYSICS.BV.AABB(vs);
+  
+  }
+
 }
