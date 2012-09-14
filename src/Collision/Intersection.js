@@ -185,9 +185,23 @@ CHRYSICS.BV.Intersection = {
 
   },
 
-  // Intersect segment S(t) = A + t(B - A), 0 <= t <= 1 against convex polyhedron
-  // specified by the n halfspaces defined by the polyhedron[]. On exit, return 
-  // the t_first and t_last define the intersection, if there are any.
+  /**
+   * Intersect segment S(t) = A + t(B - A), 0 <= t <= 1 against convex polyhedron
+   * specified by the n halfspaces defined by the polyhedron[]. On exit, return 
+   * the t_first and t_last define the intersection, if there are any.
+   *
+   *           n  ^    B
+   *              |  /
+   *              | /
+   *              |/
+   *     ----------------------
+   *             /     
+   *            /      
+   *           / A     
+   *                   
+   * dir = B - A
+   * denom = n . dir, when denom > 0, the segment is entering the halfspace.
+   */
   segmentPolyhedron: function(segment, polyhedron) {
 
     var dir = segment.getDirection();
