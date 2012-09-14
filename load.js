@@ -111,12 +111,14 @@ loader.add('demo/PrimitiveTests/AABBPlane');
 loader.add('demo/PrimitiveTests/SphereAABB');
 loader.add('demo/PrimitiveTests/SphereTriangle');
 loader.add('demo/PrimitiveTests/AABBTriangle');
-loader.add('demo/PrimitiveTests/SegmentPlane');
 loader.add('demo/PrimitiveTests/SegmentAABB');
-loader.add('demo/PrimitiveTests/RaySphere');
-loader.add('demo/PrimitiveTests/RayAABB');
-loader.add('demo/PrimitiveTests/LineTriangle');
-loader.add('demo/PrimitiveTests/SegmentTriangle');
+
+// Intersections
+loader.add('demo/Intersections/SegmentPlane');
+loader.add('demo/Intersections/SegmentTriangle');
+loader.add('demo/Intersections/RaySphere');
+loader.add('demo/Intersections/RayAABB');
+loader.add('demo/Intersections/LineTriangle');
 
 // Demo Driver
 loader.add('demo/DemoCollection');
