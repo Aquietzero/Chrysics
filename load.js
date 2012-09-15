@@ -129,6 +129,7 @@ loader.add('demo/Intersections/LineTriangle');
 // BVH
 loader.add('demo/BVH/MeanPartition');
 loader.add('demo/BVH/TopdownAABB');
+loader.add('demo/BVH/TopdownSphere');
 
 // Demo Driver
 loader.add('demo/DemoCollection');

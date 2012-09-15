@@ -5,23 +5,23 @@
  * @author zero / zhaoyunhaosss@gmail.com
  */
 
-var TopdownAABB = function(container) {
+var TopdownSphere = function(container) {
   this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.status = 'RUNNING';
 }
 
-TopdownAABB.prototype = {
+TopdownSphere.prototype = {
 
   initWorld: function() {
     this.generateBalls(50);
 
-    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.AABB);
+    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.SPHERE);
 
     var self = this;
-    CHRYSICS.BVH.Utils.preorder(bvh, function(aabb) {
-      self.world.add(new CHRYSICS.GEOMETRY.AABB(aabb, 0x000000, 0));
+    CHRYSICS.BVH.Utils.preorder(bvh, function(sphere) {
+      self.world.add(new CHRYSICS.GEOMETRY.Sphere(sphere, 0x000000, 0));
     });
 
     // Rendering geometries.

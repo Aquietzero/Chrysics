@@ -8,6 +8,11 @@
 
 CHRYSICS.BV = {
 
+  TYPE: {
+    AABB   : 'AABB',
+    SPHERE : 'Sphere',
+  },
+
   /**
    * Returns min and max of the given points array of the least
    * and most, respectively, distant points along the direction dir.
@@ -72,7 +77,7 @@ CHRYSICS.BV = {
   // TODO: Remember, the method below assumes that each object
   // provides a method call `getData` to open access to the vertices'
   // information of the object.
-  computeBoundingVolume: function(objs) {
+  computeBoundingVolume: function(objs, type) {
     var vs = [];
     for (var i = 0; i < objs.length; ++i) {
       var data = objs[i].getData();    
@@ -80,8 +85,10 @@ CHRYSICS.BV = {
         vs.push(data[n]);
     }
     
-    var aabb = new CHRYSICS.BV.AABB(vs);
-    return aabb;
+    if (type == CHRYSICS.BV.TYPE.AABB)
+      return new CHRYSICS.BV.AABB(vs);
+    if (type == CHRYSICS.BV.TYPE.SPHERE)
+      return new CHRYSICS.BV.Sphere(vs);
   }
 
 }

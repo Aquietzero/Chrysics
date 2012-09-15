@@ -6,7 +6,6 @@
  */
 
 CHRYSICS.BV.Sphere = function(ps) {
-
   // The center of the bounding sphere.
   this.c = new CHRYSICS.Vector3();
 
@@ -17,29 +16,23 @@ CHRYSICS.BV.Sphere = function(ps) {
   // values rather than calculated from a set of points.
   if (typeof ps !== 'undefined')
     this.init(ps);
-
 }
 
 CHRYSICS.BV.Sphere.prototype = {
 
   init: function(ps) {
-
     // this.initWithEigenSphere(ps);
     this.initWithRitterSphere(ps, 10);
-  
   },
 
   ritterSphere: function(ps) {
-
     this.sphereFromDistantPoints(ps);
 
     for (var i = 0; i < ps.length; ++i)
       this.expandSphere(ps[i]);
-  
   },
 
   initWithRitterSphere: function(ps, iter) {
-
     this.ritterSphere(ps);
     var s = new CHRYSICS.BV.Sphere();
 
@@ -61,20 +54,16 @@ CHRYSICS.BV.Sphere.prototype = {
         break;
     
     }
-  
   },
 
   initWithEigenSphere: function(ps) {
-  
     this.eigenSphere(ps);
 
     for (var i = 0; i < ps.length; ++i)
       this.expandSphere(ps[i]);
-
   },
 
   eigenSphere: function(ps) {
-
     var covMatrix = CHRYSICS.Statistics.covarianceMatrix(ps);
     var eigens    = CHRYSICS.Matrix3.Jacobi(covMatrix);
 
@@ -95,7 +84,6 @@ CHRYSICS.BV.Sphere.prototype = {
 
     this.c = maxPoint.add(minPoint).mul(0.5);
     this.r = maxPoint.sub(minPoint).magnitude() * 0.5;
-  
   },
 
   /**
@@ -103,7 +91,6 @@ CHRYSICS.BV.Sphere.prototype = {
    * the bounding sphere.
    */
   sphereFromDistantPoints: function(ps) {
-
     var distantPoints = CHRYSICS.BV.mostSeparatedPointsOnAABB(ps);
 
     var min = distantPoints.min;
@@ -111,7 +98,6 @@ CHRYSICS.BV.Sphere.prototype = {
 
     this.c = min.add(max).mul(0.5);
     this.r = max.sub(min).magnitude() / 2;
-  
   },
 
   /**
@@ -126,7 +112,6 @@ CHRYSICS.BV.Sphere.prototype = {
    *                       |----new_r-------->|
    */
   expandSphere: function(p) {
-  
     var d  = p.sub(this.c);
     var d2 = d.magnitudeSquare();
 
@@ -137,20 +122,17 @@ CHRYSICS.BV.Sphere.prototype = {
 
       this.c.addVector(d.mul((new_r - this.r) / dist));
       this.r = new_r;
-    
+
     }
-  
   },
 
   copy: function() {
-  
     var s = new CHRYSICS.BV.Sphere();
   
     s.r = this.r;
     s.c = this.c;
 
     return s;
-
   },
 
 }
@@ -159,11 +141,9 @@ CHRYSICS.BV.Sphere.prototype = {
  * Test to see if two bounding sphere collide or not.
  */
 CHRYSICS.BV.Sphere.IsCollide = function(a, b) {
-
   var c_dist = a.c.sub(b.c).magnitude();
   var r_sum  = a.r + b.r;
 
   return c_dist.dotProduct(c_dist) <= r_sum * r_sum;
-
 }
 

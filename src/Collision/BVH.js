@@ -10,7 +10,7 @@
 CHRYSICS.BVH = {
 
   NODE : 'NODE',
-  LEAF : 'LEAF'
+  LEAF : 'LEAF',
 
 }
 
@@ -39,7 +39,9 @@ CHRYSICS.BVH._Node = function(type) {
  */
 CHRYSICS.BVH.Partition = {
 
+  // Partition the objects through the mean of the centroid coordinates.
   mean: function(objs) {
+    if (!objs || objs.length == 0) return; 
     // Get centroid of each object.
     var centroids = [];
     for (var i = 0; i < objs.length; ++i)
@@ -56,7 +58,7 @@ CHRYSICS.BVH.Partition = {
 
     var centroid
       , left  = []
-      , right = []
+      , right = [];
 
     for (var i = 0; i < centroids.length; ++i) {
       c = centroids[i];
@@ -70,11 +72,47 @@ CHRYSICS.BVH.Partition = {
       left  : left,
       right : right
     }
-  }                                  
+  },
+
+  // Partition the objects at the object median evenly distributes the
+  // primitives between the subsets, resulting in a balanced tree.
+  median: function(objs) {
+    if (!objs || objs.length == 0) return; 
+    // Get centroid of each object.
+    var centroids = [];
+    for (var i = 0; i < objs.length; ++i)
+      centroids.push(objs[i].getCentroid());
+
+    // Calculate the most distant point pair according to the centroids 
+    // of the objects.
+    var distantPoints = CHRYSICS.BV.mostSeparatedPointsOnAABB(centroids);
+
+    var min = distantPoints.min
+      , max = distantPoints.max
+      , dir = max.sub(min)
+      , mid = min.add(dir.mul(0.5));
+
+    var compare = (function(dir) {
+      return function(obj1, obj2) {
+        var c1 = obj1.getCentroid();
+        var c2 = obj2.getCentroid();
+        var diff = c1.sub(c2);
+        return diff.dotProduct(dir);
+      }
+    })(dir);
+
+    objs.sort(compare);
+    var half = Math.floor(objs.length / 2);
+
+    return {
+      left  : objs.slice(0, half),
+      right : objs.slice(half, objs.length)
+    }
+  }
                                      
 }                                    
 
-CHRYSICS.BVH.TopdownBVT = function(objs) {
+CHRYSICS.BVH.TopdownBVT = function(objs, type) {
   var root = new CHRYSICS.BVH._Node();
   var build = function(node, objs) {
     // The partition is empty.
@@ -85,7 +123,7 @@ CHRYSICS.BVH.TopdownBVT = function(objs) {
       node.object = objs[0];
     } else {
       node.type = CHRYSICS.BVH.NODE;
-      node.BV = CHRYSICS.BV.computeBoundingVolume(objs);
+      node.BV = CHRYSICS.BV.computeBoundingVolume(objs, type);
 
       // Based on some partitioning strategies, arrange objects
       // into two partitions: object[0...k] and object[k...len].
