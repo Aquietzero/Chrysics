@@ -13,7 +13,6 @@ CHRYSICS.BV = {
    * and most, respectively, distant points along the direction dir.
    */
   extremePointsAlongDirection: function(dir, ps) {
-
     var maxProj = -Infinity,
         minProj =  Infinity,
         max, min, proj;
@@ -33,14 +32,12 @@ CHRYSICS.BV = {
       max: ps[max],
       min: ps[min],
     };
-
   },
 
   /**
    * Compute two of the most separated points on the AABB.
    */
   mostSeparatedPointsOnAABB: function(ps) {
-
     var x_min = 0, x_max = 0,
         y_min = 0, y_max = 0,
         z_min = 0, z_max = 0;
@@ -70,23 +67,21 @@ CHRYSICS.BV = {
       min: ps[x_min], 
       max: ps[x_max] 
     };
-
   },
 
   // TODO: Remember, the method below assumes that each object
   // provides a method call `getData` to open access to the vertices'
   // information of the object.
   computeBoundingVolume: function(objs) {
-
     var vs = [];
     for (var i = 0; i < objs.length; ++i) {
-      data = objs[i].getData();    
+      var data = objs[i].getData();    
       for (var n = 0; n < data.length; ++n)
         vs.push(data[n]);
     }
-
-    return new CHRYSICS.BV.AABB(vs);
-  
+    
+    var aabb = new CHRYSICS.BV.AABB(vs);
+    return aabb;
   }
 
 }

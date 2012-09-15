@@ -20,18 +20,15 @@ CHRYSICS.BV.ClosestPoint = {
    *    R = Q - tn
    */
   onPlaneToPoint: function(plane, p) {
-  
     var n = plane.n;
     var P = plane.point;
     var Q = p;
 
     var t = n.dotProduct(Q.sub(P)) / n.dotProduct(n);
     return Q.sub(n.mul(t));
-  
   },
 
   onSegmentToPoint: function(segment, p) {
-    
     var dir = segment.end.sub(segment.begin);
     var p = p.sub(segment.begin);
     var proj = p.dotProduct(dir.normalize());
@@ -42,7 +39,6 @@ CHRYSICS.BV.ClosestPoint = {
     if (t > 1) t = 1;
 
     return segment.begin.add(dir.mul(t));
-  
   },
 
   /**
@@ -50,7 +46,6 @@ CHRYSICS.BV.ClosestPoint = {
    * which is closest to the given p.
    */
   onAABBToPoint: function(aabb, p) {
-
     var x_min = aabb.c.x - aabb.rx,
         x_max = aabb.c.x + aabb.rx,
         y_min = aabb.c.y - aabb.ry,
@@ -70,7 +65,6 @@ CHRYSICS.BV.ClosestPoint = {
     z = z > z_max ? z_max : z;
 
     return new CHRYSICS.Vector3(x, y, z);
-
   },
 
   /**
@@ -79,7 +73,6 @@ CHRYSICS.BV.ClosestPoint = {
    * vertex of the triangle.
    */
   onTriangleToPoint: function(a, b, c, p) {
-
     // Check if P in vertex region outside A.
     var ab = b.sub(a),
         ac = c.sub(a),
@@ -133,7 +126,6 @@ CHRYSICS.BV.ClosestPoint = {
     var w = vc * denom;
 
     return a.add(ab.mul(v)).add(ac.mul(w));
-
   },
 
   /**
@@ -145,7 +137,6 @@ CHRYSICS.BV.ClosestPoint = {
    * returning s and t. 
    */
   betweenTwoSegments: function(s1, s2) {
-
     var s, t, c1, c2;
 
     var d1 = s1.end.sub(s1.begin),
@@ -211,7 +202,6 @@ CHRYSICS.BV.ClosestPoint = {
       c1 : s1.begin.add(d1.mul(s)),
       c2 : s2.begin.add(d2.mul(t)),
     }
-  
   },
 
 }

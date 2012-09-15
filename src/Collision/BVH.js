@@ -24,13 +24,11 @@ CHRYSICS.BVH = {
  * @right  {BVH}    Right subtree of the BVH.
  */
 CHRYSICS.BVH._Node = function(type) {
-
   this.type   = type || CHRYSICS.BVH.NODE;
   this.BV     = null;
   this.object = null;
   this.left   = null;
   this.right  = null;
- 
 }
 
 /**
@@ -77,25 +75,68 @@ CHRYSICS.BVH.Partition = {
 }                                    
 
 CHRYSICS.BVH.TopdownBVT = function(objs) {
-  var root;
-
+  var root = new CHRYSICS.BVH._Node();
   var build = function(node, objs) {
-    node = new CHRYSICS.BVH._Node();
-    node.BV = CHRYSICS.BV.computeBoundingVolume(objs);
+    // The partition is empty.
+    if (!objs) return;
 
     if (objs.length == 1) {
       node.type = CHRYSICS.BVH.LEAF;
       node.object = objs[0];
     } else {
       node.type = CHRYSICS.BVH.NODE;
+      node.BV = CHRYSICS.BV.computeBoundingVolume(objs);
+
       // Based on some partitioning strategies, arrange objects
       // into two partitions: object[0...k] and object[k...len].
       var partition = CHRYSICS.BVH.Partition.mean(objs);
+
       // Recursively construct left and right subtrees.
+      node.left  = new CHRYSICS.BVH._Node();
+      node.right = new CHRYSICS.BVH._Node();
+
       build(node.left, partition.left);
       build(node.right, partition.right);
     }
   }
 
-  return build(root, objs);
+  build(root, objs);
+  return root;
+}
+
+/**
+ * BVH.Utils defines some useful statistic methods to help gaining
+ * information about the BVH structure.
+ */
+CHRYSICS.BVH.Utils = {
+
+  // Traverse the BVH structure in preorder.
+  preorder: function(bvh, fn) {
+    if (bvh.type == CHRYSICS.BVH.LEAF)
+      return;
+
+    fn(bvh.BV);
+    CHRYSICS.BVH.Utils.preorder(bvh.left, fn);
+    CHRYSICS.BVH.Utils.preorder(bvh.right, fn);
+  },
+
+  // Count the number of nodes in the BVH structure, including the
+  // interior nodes and leaves.
+  count: function(bvh) {
+    return (function cnt(bvh) {
+      if (bvh) 
+        return cnt(bvh.left) + cnt(bvh.right) + 1;
+      return 0;
+    })(bvh);
+  },
+
+  // Calculate the depth of the BVH structure.
+  depth: function(bvh) {
+    return (function dep(bvh) {
+      if (bvh)
+        return Math.max(dep(bvh.left), dep(bvh.right)) + 1;
+      return 0;
+    })(bvh) - 1;
+  }
+
 }

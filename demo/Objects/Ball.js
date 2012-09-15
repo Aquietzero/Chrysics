@@ -5,7 +5,6 @@
  */
 
 var Ball = function(radius) {
-
   this.body   = new CHRYSICS.RigidBody();
   this.sphere = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 10, 10),
@@ -13,7 +12,6 @@ var Ball = function(radius) {
   );
   
   this.init();
-
 }
 
 Ball.prototype = {
@@ -30,6 +28,19 @@ Ball.prototype = {
       0, 0, -0.1
     ));
     this.body.setMass(2.0);
+  },
+
+  getData: function() {
+    var data = [];
+    var vs = this.sphere.geometry.vertices;
+    for (var i = 0; i < vs.length; ++i) {
+      data.push(new CHRYSICS.Vector3(
+        this.sphere.position.x + vs[i].x,
+        this.sphere.position.y + vs[i].y,
+        this.sphere.position.z + vs[i].z
+      ));
+    }
+    return data;
   },
 
   setPosition: function(pos) {

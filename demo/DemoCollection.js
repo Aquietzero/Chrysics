@@ -58,3 +58,4 @@ DEMOS.add('LineTriangle'      , LineTriangle);
 
 // BVH
 DEMOS.add('MeanPartition' , MeanPartition);
+DEMOS.add('TopdownAABB'   , TopdownAABB);

@@ -13,6 +13,7 @@ var MeanPartition = function(container) {
 
 MeanPartition.prototype = {
 
+  // OPTIMIZE this demo, since it has so many repeat calculations.
   initWorld: function() {
     this.generateBalls(50);
 

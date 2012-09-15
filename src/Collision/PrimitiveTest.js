@@ -15,7 +15,6 @@ CHRYSICS.BV.PrimitiveTest = {
 
   // Determine whether plane p intersects sphere s.
   spherePlane: function(s, p) {
-
     var c = s.c.sub(p.point);
     var dist = c.dotProduct(p.n);
 
@@ -24,12 +23,10 @@ CHRYSICS.BV.PrimitiveTest = {
     if (Math.abs(dist) <= s.r)
       return this.INTERSECT;
     return this.OUTSIDE;
-  
   },
 
   // Determine whether plane p intersects an AABB.
   AABBPlane: function(aabb, p) {
-
     var c = aabb.c;
     var e = new CHRYSICS.Vector3(
       aabb.rx,
@@ -41,32 +38,26 @@ CHRYSICS.BV.PrimitiveTest = {
     var s = c.sub(p.point).dotProduct(p.n);
 
     return Math.abs(s) <= r;
-  
   },
   
   // Returns true if sphere s intersects AABB aabb.
   sphereAABB: function(s, aabb) {
-
     var p = CHRYSICS.BV.ClosestPoint.onAABBToPoint(aabb, s.c);
     var dist = p.sub(s.c);
 
     return dist.dotProduct(dist) <= s.r * s.r;
-  
   },
 
   // Returns true if shpere s intersects triangle ABC.
   sphereTriangle: function(s, a, b, c) {
-
     var p = CHRYSICS.BV.ClosestPoint.onTriangleToPoint(a, b, c, s.c);
     var dist = p.sub(s.c);
 
     return dist.dotProduct(dist) <= s.r * s.r;
-  
   },
 
   // Returns true if the segment intersects the plane.
   segmentPlane: function(segment, p) {
-
     var dir = segment.end.sub(segment.begin);
     var dorminator = p.n.dotProduct(p.point.sub(segment.begin))
     var numerator  = p.n.dotProduct(dir);
@@ -74,12 +65,10 @@ CHRYSICS.BV.PrimitiveTest = {
     var t = dorminator / numerator;
 
     if (t >= 0 && t <= 1) return true;
-  
   },
 
   // Returns true if triangle t intersects AABB aabb.
   AABBTriangle: function(aabb, a, b, c) {
-
     var Abs = Math.abs;
     var Max = Math.max;
     var Min = Math.min;
@@ -161,7 +150,6 @@ CHRYSICS.BV.PrimitiveTest = {
     r  = e0*Abs(f2.y) + e1*Abs(f2.x);
     if (Max(-Max(p1, p2), Min(p1, p2)) > r) return false;
 
-
     /**
      * Category 1:
      * Test the three axes corresponding to the face normals of AABB.
@@ -170,7 +158,6 @@ CHRYSICS.BV.PrimitiveTest = {
     if (Max(v0.y, v1.y, v2.y) < -e1 || Min(v0.y, v1.y, v2.y) > e1) return false;
     if (Max(v0.z, v1.z, v2.z) < -e2 || Min(v0.z, v1.z, v2.z) > e2) return false;
 
-
     /**
      * Category 2:
      * Since v0 has already been traslated to the origin, so it can
@@ -178,12 +165,10 @@ CHRYSICS.BV.PrimitiveTest = {
      */
     var plane = new CHRYSICS.Plane(f0.crossProduct(f2), a);
     return this.AABBPlane(aabb, plane);
-
   },
 
   // Test if ray r = p + td intersects sphere s
   raySphere: function(ray, s) {
-
     var m = ray.point.sub(s.c);
     var c = m.dotProduct(m) - s.r*s.r;
 
@@ -201,11 +186,9 @@ CHRYSICS.BV.PrimitiveTest = {
     if (delta < 0) return false;
 
     return true;
-  
   },
 
   segmentAABB: function(segment, aabb) {
-
     var Abs = Math.abs;
 
     var c = aabb.c;
@@ -234,7 +217,6 @@ CHRYSICS.BV.PrimitiveTest = {
     if (Abs(m.x*d.y - m.y*d.x) > aabb.rx*ady + aabb.ry*adx) return false;
 
     return true;
-  
   },
 
 }
