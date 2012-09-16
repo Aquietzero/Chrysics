@@ -32,6 +32,7 @@ DEMOS.add('Spinning'               , Spinning);
 DEMOS.add('AABBForGroup'           , AABBForGroup);
 DEMOS.add('BoundingSphere'         , BoundingSphere);
 DEMOS.add('BoundingSphereForGroup' , BoundingSphereForGroup);
+DEMOS.add('BoundingBunny'          , BoundingBunny);
 
 // Closest Point
 DEMOS.add('OnPlaneToPoint'     , OnPlaneToPoint);

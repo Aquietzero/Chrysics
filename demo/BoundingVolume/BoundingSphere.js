@@ -5,18 +5,15 @@
  */
 
 var BoundingSphere = function(container) {
-
   this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.status = 'RUNNING';
-
 }
 
 BoundingSphere.prototype = {
 
   initWorld: function() {
-
     this.objects = new ObjectsGroup();
     var wireMaterial = new THREE.MeshLambertMaterial({
       color: 0x000000,
@@ -37,11 +34,9 @@ BoundingSphere.prototype = {
 
     this.world.add(this.objects);
     this.world.add(this.sphere);
-
   },
 
   animate: function() {
-
     var self = this;
     var loop = function() {
 
@@ -52,14 +47,10 @@ BoundingSphere.prototype = {
 
     }
     window.requestAnimationFrame(loop);
-
   },
 
   stop: function() {
-
     this.status = 'STOP';
-  
   },
-
 
 }

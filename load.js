@@ -90,7 +90,9 @@ loader.add('src/World');
 // Examples
 
 // Auxiliary scripts for demos.
+loader.add('lib/VTKLoader');
 loader.add('demo/Objects/Ball');
+loader.add('demo/Objects/Bunny');
 
 // Physics Demos
 loader.add('demo/Physics/GravityField');
@@ -102,6 +104,7 @@ loader.add('demo/BoundingVolume/ObjectsGroup');
 loader.add('demo/BoundingVolume/AABBForGroup');
 loader.add('demo/BoundingVolume/BoundingSphere');
 loader.add('demo/BoundingVolume/BoundingSphereForGroup');
+loader.add('demo/BoundingVolume/BoundingBunny');
 
 // Closest Point
 loader.add('demo/ClosestPoint/OnPlaneToPoint');
