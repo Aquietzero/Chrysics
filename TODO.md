@@ -10,7 +10,7 @@
 + [✘ ] Remember to implement those additional tests in chapter 5.
 + [✘ ] Remember to implement those dynamic intersection tests in chapter 5.
 + [✘ ] Make the octocat more lovely.
-+ [✘ ] Build BVH for a group of objects.
-+ [✘ ] Build BVH for a single object.
++ [✔ ] Build BVH for a group of objects.
++ [✔ ] Build BVH for a single object.
 + [✘ ] Allow easy changes of BVH's building strategies.
 + [✘ ] Consider whether to use primitives or not. [ex: uses a, b, rather than segment(a, b)]

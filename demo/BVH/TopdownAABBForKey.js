@@ -19,8 +19,8 @@ TopdownAABBForKey.prototype = {
 
     var loader = new THREE.OBJLoader();
     loader.load('../demo/Models/Old_Key.obj', function(obj) {
-      var key = new UserObject(obj, 2);
-      key.setPosition({ x: 500, y: 0, z: 0 });
+      var key = new UserObject(obj, 3);
+      key.setPosition({ x: 700, y: -200, z: 0 });
       var bvh = CHRYSICS.BVH.TopdownBVTObject(key);
 
       CHRYSICS.BVH.Utils.preorder(bvh, function(aabb) {
