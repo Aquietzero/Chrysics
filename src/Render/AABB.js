@@ -1,7 +1,7 @@
 /**
  * AABB.
  */
-CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity) {
+CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity, wireframe) {
 
   this.aabb = aabb;
 
@@ -21,7 +21,8 @@ CHRYSICS.GEOMETRY.AABB = function(aabb, color, opacity) {
   var frame = new THREE.Mesh(geom, frameMesh);
 
   this.geometry = new THREE.Object3D();
-  this.geometry.add(solid);
+  if (!wireframe)
+    this.geometry.add(solid);
   this.geometry.add(frame);
 
   this.setPosition(this.aabb.c);

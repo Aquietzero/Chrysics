@@ -7,6 +7,8 @@
 var BoundingBunny = function(container) {
   this.world = new GeometryWorld(container);
   this.initWorld();
+
+  this.status = 'RUNNING';
 }
 
 BoundingBunny.prototype = {
@@ -17,14 +19,17 @@ BoundingBunny.prototype = {
 
     var loader = new THREE.VTKLoader();
     loader.load('../demo/Models/Bunny.vtk', function(geom) {
-
       var bunny = new Bunny(geom, new THREE.MeshLambertMaterial({
-        color: 0xffffff,
+        color: 0xffcccc,
         wireframe: false
       }), 2500);
       bunny.setPosition({ x: 100, y: -250, z: 0 });
-      self.world.add(bunny);
 
+      var bvSphere = new CHRYSICS.BV.Sphere(bunny.getData());
+      var sphere = new CHRYSICS.GEOMETRY.Sphere(bvSphere, 0x000000, 0.1);
+
+      self.world.add(bunny);
+      self.world.add(sphere);
     });
   },
 
@@ -32,10 +37,14 @@ BoundingBunny.prototype = {
     var self = this;
     var loop = function() {
       self.world.render();
-      window.requestAnimationFrame(loop);
+      if (self.status == 'RUNNING')
+        window.requestAnimationFrame(loop);
     }
+    window.requestAnimationFrame(loop);
+  },
 
-    loop();
+  stop: function() {
+    this.status = 'STOP';
   },
 
 }

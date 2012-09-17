@@ -79,6 +79,7 @@ CHRYSICS.BV = {
   // information of the object.
   computeBoundingVolume: function(objs, type) {
     var vs = [];
+    console.log(objs[0].getData().length);
     for (var i = 0; i < objs.length; ++i) {
       var data = objs[i].getData();    
       for (var n = 0; n < data.length; ++n)

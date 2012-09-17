@@ -18,13 +18,13 @@ Bunny.prototype = {
     // loaded as the vertices, which causes embarasse problems.
     for (var i = 0; i < data.length - 70000; ++i) {
       vs.push(new CHRYSICS.Vector3(
-        this.bunny.position.x + data[i].x,
-        this.bunny.position.y + data[i].y,
-        this.bunny.position.z + data[i].z
+        this.bunny.position.x + data[i].x * this.bunny.scale.x,
+        this.bunny.position.y + data[i].y * this.bunny.scale.y,
+        this.bunny.position.z + data[i].z * this.bunny.scale.z
       ));
     }
 
-    return vertices;
+    return vs;
   },
 
   setPosition: function(pos) {

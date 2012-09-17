@@ -1,12 +1,8 @@
 /**
- * A sphere
+ * Icosahedron.
  */
-CHRYSICS.GEOMETRY.Sphere = function(sphere, color, opacity, wireframe) {
-
-  this.sphere = sphere;
-
-  var geom = new THREE.SphereGeometry(sphere.r, 15, 15);
-  
+CHRYSICS.GEOMETRY.Icosahedron = function(radius, color, opacity) {
+  var geom = new THREE.IcosahedronGeometry(radius, 1);
   var solidMesh = new THREE.MeshLambertMaterial({ 
     transparent: true,
     opacity: opacity,
@@ -22,25 +18,15 @@ CHRYSICS.GEOMETRY.Sphere = function(sphere, color, opacity, wireframe) {
   var frame = new THREE.Mesh(geom, frameMesh);
 
   this.geometry = new THREE.Object3D();
-  if (!wireframe)
-    this.geometry.add(solid);
+  this.geometry.add(solid);
   this.geometry.add(frame);
-
-  this.setPosition(this.sphere.c);
-
 }
 
-CHRYSICS.GEOMETRY.Sphere.prototype = _.extend({
+CHRYSICS.GEOMETRY.Icosahedron.prototype = _.extend({
 
   setPosition: function() {
-
     if (arguments.length == 1) {
       this.geometry.position.set(
-        arguments[0].x,
-        arguments[0].y,
-        arguments[0].z
-      );
-      this.sphere.c = new CHRYSICS.Vector3(
         arguments[0].x,
         arguments[0].y,
         arguments[0].z
@@ -51,20 +37,11 @@ CHRYSICS.GEOMETRY.Sphere.prototype = _.extend({
         arguments[1],
         arguments[2]
       );
-      this.sphere.c = new CHRYSICS.Vector3(
-        arguments[0],
-        arguments[1],
-        arguments[2]
-      );
     }
-
   },
 
   setColor: function(color) {
-
     this.geometry.children[0].material.color.setHex(color);
-  
   },
  
 }, CHRYSICS.GEOMETRY.Primitive.prototype);
-

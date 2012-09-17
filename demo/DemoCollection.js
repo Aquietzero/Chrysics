@@ -58,6 +58,8 @@ DEMOS.add('RayAABB'           , RayAABB);
 DEMOS.add('LineTriangle'      , LineTriangle);
 
 // BVH
-DEMOS.add('MeanPartition' , MeanPartition);
-DEMOS.add('TopdownAABB'   , TopdownAABB);
-DEMOS.add('TopdownSphere' , TopdownSphere);
+DEMOS.add('MeanPartition'             , MeanPartition);
+DEMOS.add('TopdownAABB'               , TopdownAABB);
+DEMOS.add('TopdownAABBForIcosahedron' , TopdownAABBForIcosahedron);
+DEMOS.add('TopdownAABBForKey'         , TopdownAABBForKey);
+DEMOS.add('TopdownSphere'             , TopdownSphere);

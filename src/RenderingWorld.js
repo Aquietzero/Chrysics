@@ -29,7 +29,7 @@ RenderingWorld.prototype = {
     this.renderer.setSize(this.width, this.height);
 
     document.getElementById(this.container).appendChild(this.renderer.domElement);
-    this.renderer.setClearColorHex(0x000000, 1.0);
+    this.renderer.setClearColorHex(0xbbbbbb, 0.7);
 
   },
 

@@ -5,16 +5,15 @@
  */
 
 var AABBPlane = function(container) {
-
   this.world = new GeometryWorld(container);
   this.initWorld();
 
+  this.state = 'RUNNING';
 }
 
 AABBPlane.prototype = {
 
   initWorld: function() {
-
     var plane = new CHRYSICS.Plane(
       new CHRYSICS.Vector3(0.3, 1, 0.7),
       new CHRYSICS.Vector3(0, 0, 0)
@@ -36,13 +35,9 @@ AABBPlane.prototype = {
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.plane);
     this.world.add(this.aabb);
-
-    this.state = 'RUNNING';
-    
   },
 
   iterate: function() {
-
     var offset = 1;
     var y = -300;
     var self = this;
@@ -63,11 +58,9 @@ AABBPlane.prototype = {
         self.aabb.setColor(0x333333);
     
     };
-  
   },
 
   animate: function() {
-
     var self = this;
     var iter = this.iterate();
     var i = 0;
@@ -79,15 +72,11 @@ AABBPlane.prototype = {
         window.requestAnimationFrame(loop);
 
     }
-
     window.requestAnimationFrame(loop);
-
   },
 
   stop: function() {
-
     this.state = 'STOP';
-  
   },
 
 }

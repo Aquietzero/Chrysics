@@ -21,7 +21,7 @@ TopdownSphere.prototype = {
 
     var self = this;
     CHRYSICS.BVH.Utils.preorder(bvh, function(sphere) {
-      self.world.add(new CHRYSICS.GEOMETRY.Sphere(sphere, 0x000000, 0));
+      self.world.add(new CHRYSICS.GEOMETRY.Sphere(sphere, 0x000000, 0, true));
     });
 
     // Rendering geometries.

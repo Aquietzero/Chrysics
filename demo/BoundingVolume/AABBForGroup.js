@@ -5,18 +5,15 @@
  */
 
 var AABBForGroup = function(container) {
-
   this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.status = 'RUNNING';
-
 }
 
 AABBForGroup.prototype = {
 
   initWorld: function() {
-
     this.objects = new ObjectsGroup();
     var wireMaterial = new THREE.MeshLambertMaterial({
       color: 0x000000,
@@ -61,28 +58,21 @@ AABBForGroup.prototype = {
 
     this.world.add(this.objects);
     this.world.add(this.aabb);
-
   },
 
   animate: function() {
-
     var self = this;
     var loop = function() {
-
       self.world.render();
       
       if (self.status == 'RUNNING')
         window.requestAnimationFrame(loop);
-
     }
     window.requestAnimationFrame(loop);
-
   },
 
   stop: function() {
-
     this.status = 'STOP';
-  
   },
 
 }

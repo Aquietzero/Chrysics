@@ -5,18 +5,15 @@
  */
 
 var AABBTriangle = function(container) {
-
   this.world = new GeometryWorld(container);
   this.initWorld();
 
   this.state = 'RUNNING';
-
 }
 
 AABBTriangle.prototype = {
 
   initWorld: function() {
-
     var aabb = new CHRYSICS.BV.AABB([
       new CHRYSICS.Vector3(-100, -25, -100),
       new CHRYSICS.Vector3( 100, -25, -100),
@@ -39,11 +36,9 @@ AABBTriangle.prototype = {
     this.world.add(new CHRYSICS.GEOMETRY.Coordinate(400, 300, 400));
     this.world.add(this.aabb);
     this.world.add(this.triangle);
-    
   },
 
   iterate: function() {
-
     var offset = new CHRYSICS.Vector3(1, 1, 1);
     var pos = new CHRYSICS.Vector3(-150, -150, -150);
     var self = this;
@@ -70,11 +65,9 @@ AABBTriangle.prototype = {
       }
     
     };
-  
   },
 
   animate: function() {
-
     var self = this;
     var iter = this.iterate();
     var loop = function() {
@@ -87,13 +80,10 @@ AABBTriangle.prototype = {
 
     }
     window.requestAnimationFrame(loop);
-
   },
 
   stop: function() {
-
     this.state = 'STOP';
-  
   }
 
 }

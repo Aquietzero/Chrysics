@@ -71,6 +71,7 @@ loader.add('src/Render/Plane');
 loader.add('src/Render/Cone');
 loader.add('src/Render/AABB');
 loader.add('src/Render/Triangle');
+loader.add('src/Render/Icosahedron');
 loader.add('src/Render/Coordinate');
 
 loader.add('src/Particle/Particle');
@@ -89,10 +90,15 @@ loader.add('src/World');
 
 // Examples
 
-// Auxiliary scripts for demos.
+// Object Loaders
+loader.add('lib/OBJLoader');
 loader.add('lib/VTKLoader');
+
+// Demo Objects
+loader.add('demo/Objects/UserObject');
 loader.add('demo/Objects/Ball');
 loader.add('demo/Objects/Bunny');
+loader.add('demo/Objects/Icosahedron');
 
 // Physics Demos
 loader.add('demo/Physics/GravityField');
@@ -132,6 +138,8 @@ loader.add('demo/Intersections/LineTriangle');
 // BVH
 loader.add('demo/BVH/MeanPartition');
 loader.add('demo/BVH/TopdownAABB');
+loader.add('demo/BVH/TopdownAABBForIcosahedron');
+loader.add('demo/BVH/TopdownAABBForKey');
 loader.add('demo/BVH/TopdownSphere');
 
 // Demo Driver

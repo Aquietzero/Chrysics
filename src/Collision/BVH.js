@@ -108,10 +108,50 @@ CHRYSICS.BVH.Partition = {
       left  : objs.slice(0, half),
       right : objs.slice(half, objs.length)
     }
+  },
+
+  // Partition the points of the points' median evenly distributes the
+  // primitives between the subsets, resulting in a balanced tree.
+  median_points: function(ps) {
+    if (!ps || ps.length == 0) return; 
+    // Calculate the most distant point pair according to the centroids 
+    // of the objects.
+    var distantPoints = CHRYSICS.BV.mostSeparatedPointsOnAABB(ps);
+
+    var min = distantPoints.min
+      , max = distantPoints.max
+      , dir = max.sub(min)
+      , mid = min.add(dir.mul(0.5));
+
+    var compare = (function(dir) {
+      return function(p1, p2) {
+        var diff = p1.sub(p2);
+        return diff.dotProduct(dir);
+      }
+    })(dir);
+
+    ps.sort(compare);
+    var half = Math.floor(ps.length / 2);
+
+    return {
+      left  : ps.slice(0, half),
+      right : ps.slice(half, ps.length)
+    }
   }
                                      
 }                                    
 
+/**
+ * A top-down method can be described in terms of a recursive 
+ * procedure. It starts out by bounding the input set of 
+ * primitives (or objects) in a bounding volume. These primitives
+ * are then partitioned into two subsets. The procedure is now
+ * called recursively to form subhierarchies for the two subsets,
+ * which are then connected as children to the parent volume. The
+ * recursion stops when the input set consists of a single primitive
+ * (or, if elected, earlier than that), at which point the procedure
+ * just returns after creating the bounding volume for the primitive.
+ */
 CHRYSICS.BVH.TopdownBVT = function(objs, type) {
   var root = new CHRYSICS.BVH._Node();
   var build = function(node, objs) {
@@ -139,6 +179,36 @@ CHRYSICS.BVH.TopdownBVT = function(objs, type) {
   }
 
   build(root, objs);
+  return root;
+}
+
+CHRYSICS.BVH.TopdownBVTObject = function(obj) {
+  var root = new CHRYSICS.BVH._Node();
+  var build = function(node, ps) {
+    // The partition is empty.
+    if (!ps) return;
+
+    if (ps.length == 1) {
+      node.type = CHRYSICS.BVH.LEAF;
+      node.object = ps[0];
+    } else {
+      node.type = CHRYSICS.BVH.NODE;
+      node.BV = new CHRYSICS.BV.AABB(ps);
+
+      // Based on some partitioning strategies, arrange objects
+      // into two partitions: object[0...k] and object[k...len].
+      var partition = CHRYSICS.BVH.Partition.median_points(ps);
+
+      // Recursively construct left and right subtrees.
+      node.left  = new CHRYSICS.BVH._Node();
+      node.right = new CHRYSICS.BVH._Node();
+
+      build(node.left, partition.left);
+      build(node.right, partition.right);
+    }
+  }
+
+  build(root, obj.getData());
   return root;
 }
 
