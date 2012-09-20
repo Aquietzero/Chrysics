@@ -21,7 +21,7 @@ TopdownAABBForIcosahedron.prototype = {
     this.icosahedron = new Icosahedron(250, 0xff0000, 0.9);
     this.world.add(this.icosahedron);
 
-    var bvh = CHRYSICS.BVH.TopdownBVTObject(this.icosahedron);
+    var bvh = CHRYSICS.BVH.TopdownBVTObject(this.icosahedron, 1);
 
     CHRYSICS.BVH.Utils.preorder(bvh, function(aabb) {
       self.world.add(new CHRYSICS.GEOMETRY.AABB(aabb, 0x000000, 0, true));

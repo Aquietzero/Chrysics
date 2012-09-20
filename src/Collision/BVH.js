@@ -152,15 +152,17 @@ CHRYSICS.BVH.Partition = {
  * (or, if elected, earlier than that), at which point the procedure
  * just returns after creating the bounding volume for the primitive.
  */
-CHRYSICS.BVH.TopdownBVT = function(objs, type) {
+CHRYSICS.BVH.TopdownBVT = function(objs, type, leafSize) {
   var root = new CHRYSICS.BVH._Node();
+  leafSize = leafSize || 1;
+
   var build = function(node, objs) {
     // The partition is empty.
     if (!objs) return;
 
-    if (objs.length == 1) {
+    if (objs.length < leafSize + 1) {
       node.type = CHRYSICS.BVH.LEAF;
-      node.object = objs[0];
+      node.object = objs;
     } else {
       node.type = CHRYSICS.BVH.NODE;
       node.BV = CHRYSICS.BV.computeBoundingVolume(objs, type);
@@ -182,15 +184,17 @@ CHRYSICS.BVH.TopdownBVT = function(objs, type) {
   return root;
 }
 
-CHRYSICS.BVH.TopdownBVTObject = function(obj) {
+CHRYSICS.BVH.TopdownBVTObject = function(obj, leafSize) {
   var root = new CHRYSICS.BVH._Node();
+  leafSize = leafSize || 1;
+
   var build = function(node, ps) {
     // The partition is empty.
     if (!ps) return;
 
-    if (ps.length == 1) {
+    if (ps.length < leafSize + 1) {
       node.type = CHRYSICS.BVH.LEAF;
-      node.object = ps[0];
+      node.object = ps;
     } else {
       node.type = CHRYSICS.BVH.NODE;
       node.BV = new CHRYSICS.BV.AABB(ps);

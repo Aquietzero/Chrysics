@@ -17,7 +17,7 @@ TopdownAABB.prototype = {
   initWorld: function() {
     this.generateBalls(50);
 
-    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.AABB);
+    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.AABB, 1);
 
     var self = this;
     CHRYSICS.BVH.Utils.preorder(bvh, function(aabb) {

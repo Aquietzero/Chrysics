@@ -21,7 +21,7 @@ TopdownAABBForKey.prototype = {
     loader.load('../demo/Models/Old_Key.obj', function(obj) {
       var key = new UserObject(obj, 3);
       key.setPosition({ x: 700, y: -200, z: 0 });
-      var bvh = CHRYSICS.BVH.TopdownBVTObject(key);
+      var bvh = CHRYSICS.BVH.TopdownBVTObject(key, 30);
 
       CHRYSICS.BVH.Utils.preorder(bvh, function(aabb) {
         self.world.add(new CHRYSICS.GEOMETRY.AABB(aabb, 0x000000, 0, true));

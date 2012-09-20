@@ -17,7 +17,7 @@ TopdownSphere.prototype = {
   initWorld: function() {
     this.generateBalls(50);
 
-    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.SPHERE);
+    var bvh = CHRYSICS.BVH.TopdownBVT(this.balls, CHRYSICS.BV.TYPE.SPHERE, 3);
 
     var self = this;
     CHRYSICS.BVH.Utils.preorder(bvh, function(sphere) {
