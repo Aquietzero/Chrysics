@@ -217,19 +217,69 @@ CHRYSICS.BVH.TopdownBVTObject = function(obj, leafSize) {
 }
 
 /**
+ * To construct a tree hierarchy bottom up, the first step is to
+ * enclose each primitive within a bounding volume. These volumes
+ * form the leaf nodes of the tree. From the resulting set of volumes,
+ * two (or more) leaf nodes are selected based on some merging
+ * criterions (also called a clustering rule). These nodes are then
+ * bound within a bounding volume, which replaces the original nodes
+ * in the set. This pairing procedure repeats until the set consist
+ * of a single bounding volume representing the root node of the
+ * constructed tree.
+ */
+CHRYSICS.BVH.BottomupBVT = function(objs, type) {
+  if (!objs) return;
+
+  // Form the leaf nodes for the given input objects.
+  var nodes = [];
+  for (var i = 0; i < objs.length; ++i) {
+    var node = new CHRYSICS.BVH._Node();
+    node.type = CHRYSICS.BVH.LEAF;
+    node.object = objs[i];
+    nodes.push(node);
+  }
+
+  // Merge pairs together until just the root object left.
+  while (nodes.length > 1) {
+    // Find indices of the two `nearest` nodes, based on some criterions.
+    // Returns their indices.
+    var rst = FindNodesToMerge(nodes);
+
+    var pair   = new CHRYSICS.BVH._Node();
+    pair.type  = CHRYSICS.BVH.NODE;
+    pair.left  = nodes[rst.left];
+    pair.right = nodes[rst.right];
+
+    pair.BV = CHRYSICS.BV.computeBoundingVolume([pair.left, pair.right], type);
+
+    var min = rst.left, max = rst.right;
+    if (min > max) min = rst.right, max = rst.left;
+
+    nodes[min] = pair;
+    nodes[max] = nodes[nodes.length - 1]
+    nodes.pop();
+  }
+
+  return nodes[0];
+}
+
+/**
  * BVH.Utils defines some useful statistic methods to help gaining
  * information about the BVH structure.
  */
 CHRYSICS.BVH.Utils = {
 
-  // Traverse the BVH structure in preorder.
+  // Traverse the BVH structure in preorder. There is a little time
+  // delay to show the process of traverse.
   preorder: function(bvh, fn) {
     if (bvh.type == CHRYSICS.BVH.LEAF)
       return;
 
     fn(bvh.BV);
-    CHRYSICS.BVH.Utils.preorder(bvh.left, fn);
-    CHRYSICS.BVH.Utils.preorder(bvh.right, fn);
+    setTimeout(function() {
+      CHRYSICS.BVH.Utils.preorder(bvh.left, fn);
+      CHRYSICS.BVH.Utils.preorder(bvh.right, fn);
+    }, 1000);
   },
 
   // Count the number of nodes in the BVH structure, including the
