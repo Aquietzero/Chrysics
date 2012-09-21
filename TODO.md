@@ -13,4 +13,5 @@
 + [✔ ] Build BVH for a group of objects.
 + [✔ ] Build BVH for a single object.
 + [✘ ] Allow easy changes of BVH's building strategies.
++ [✘ ] Button up BVH construction.
 + [✘ ] Consider whether to use primitives or not. [ex: uses a, b, rather than segment(a, b)]
