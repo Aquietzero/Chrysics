@@ -33,6 +33,7 @@ loader.add('lib/jquery-1.8.1.min');
 loader.add('lib/underscore.min');
 loader.add('lib/RequestAnimationFrame');
 loader.add('lib/Three');
+loader.add('lib/stats');
 
 // Basic Chrysics Library
 loader.add('src/Chrysics');

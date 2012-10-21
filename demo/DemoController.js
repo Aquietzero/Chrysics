@@ -5,18 +5,15 @@
  */
 
 var DemoController = function(demos) {
-
   this.container = $('#demo-area');
   this.closeButton = $('#demo-area-close');
   this.demos = demos;
   this.init();
-
 }
 
 DemoController.prototype = {
 
   init: function() {
-
     this.container = $('#demo-area');
     this.closeButton = $('#demo-area-close');
 
@@ -25,11 +22,9 @@ DemoController.prototype = {
     this.initDemos();
 
     this.currentDemo = null;
-
   },
 
   initContainer: function() {
-
     var left = (window.innerWidth - 800) / 2;
     var top  = (window.innerHeight - 600) / 2;
 
@@ -40,11 +35,9 @@ DemoController.prototype = {
       left     : left + 'px',
       top      : top + 'px',
     });
-  
   },
 
   initCloseButton: function() {
- 
     var self = this;
 
     this.closeButton.css({
@@ -69,14 +62,11 @@ DemoController.prototype = {
     this.closeButton.click(function() {
       self.hide();
     });
- 
   },
 
   initDemos: function() {
-
     var self = this;
     for (var demo in this.demos) {
-
       (function(demo) {
         $('#' + demo).click(function() {
           self.show();
@@ -84,23 +74,17 @@ DemoController.prototype = {
           self.currentDemo.animate();
         });
       })(demo);
-
     }
-
   },
 
   show: function() {
-
     this.container.show();
-
   },
 
   hide: function() {
-
     this.container.hide();
     this.container.find('canvas').remove();
     this.currentDemo.stop();
-  
   },
 
 }

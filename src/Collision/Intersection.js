@@ -200,7 +200,6 @@ CHRYSICS.BV.Intersection = {
 
     var denom, p, dist;
     for (var i = 0; i < polyhedron.length; ++i) {
-
       p     = polyhedron[i];
       denom = p.n.dotProduct(dir);
       dist  = p.n.dotProduct(p.point.sub(segment.begin));
@@ -219,13 +218,10 @@ CHRYSICS.BV.Intersection = {
           if (t > t_first) t_first = t;
         }
         // Intersection becomes empty.
-        if (t_first > t_last) {
-          console.log(t_first, t_last);
+        if (t_first > t_last)
           return;
-        } 
 
       }
-
     }
 
     return {

@@ -151,30 +151,22 @@ CHRYSICS.BV.ClosestPoint = {
     // Both segments degenerate into points.
     if (a <= CHRYSICS.Const.SEGMENT_EPSILON &&
         e <= CHRYSICS.Const.SEGMENT_EPSILON) {
-
       s = t = 0;
       c1 = p1;
       c2 = p2;
-    
     }
 
     if (a <= CHRYSICS.Const.SEGMENT_EPSILON) {
-
       // First segment degenerates into a point.
       s = 0;
       t = CHRYSICS.Utils.clamp(f / e, 0.0, 1.0);
-    
     } else {
-
       var c = d1.dotProduct(r);
       if (e <= CHRYSICS.Const.SEGMENT_EPSILON) {
-
         // Second segment degenerates into a point.
         t = 0;
         s = CHRYSICS.Utils.clamp(-c / a, 0.0, 1.0);
-      
       } else {
-
         // The general nondegenerate case.
         var b = d1.dotProduct(d2);
         var denom = a*e - b*b;
@@ -193,9 +185,7 @@ CHRYSICS.BV.ClosestPoint = {
           t = 1;
           s = CHRYSICS.Utils.clamp((b - c) / a, 0.0, 1.0);
         }
-      
       }
-    
     }
 
     return {

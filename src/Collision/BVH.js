@@ -8,10 +8,8 @@
  */
 
 CHRYSICS.BVH = {
-
   NODE : 'NODE',
   LEAF : 'LEAF',
-
 }
 
 /**

@@ -5,20 +5,17 @@
  */
 
 var GravityField = function(container) {
-
   this.worldPhysics   = new CHRYSICS.World();
   this.worldRendering = new RenderingWorld(container);
 
   this.status = 'RUNNING';
 
   this.initWorld();
-
 }
 
 GravityField.prototype = {
 
   initWorld: function() {
-
     var gravity = new CHRYSICS.Gravity(
       new CHRYSICS.Vector3(0, -10, 0)
     );
@@ -33,11 +30,9 @@ GravityField.prototype = {
       this.worldPhysics.addForceRegistry(ball.getPhysique(), gravity);
 
     }
-
   },
 
   animate: function() {
-
     var self = this;
     self.worldPhysics.startFrame();
 
@@ -50,13 +45,10 @@ GravityField.prototype = {
 
     }
     window.requestAnimationFrame(loop);
-
   },
 
   stop: function() {
-
     this.status = 'STOP';
-  
   },
 
 }

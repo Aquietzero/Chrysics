@@ -1,0 +1,83 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+newmtl car_paint-black
+Ka  0.0 0.0 0.0
+Kd  0.0 0.0 0.0
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  12.5
+illum 2
+#
+newmtl car_glass
+Ka  0.0 0.0 0.0
+Kd  0.0 0.0 0.0
+Ks  0.9 0.9 0.9
+d  0.6
+Ns  14.0
+illum 2
+#
+newmtl car_chrome
+Ka  0.7 0.7 0.7
+Kd  0.7 0.7 0.7
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl metal_wheels
+Ka  0.4 0.4 0.4
+Kd  0.4 0.4 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+#
+newmtl car_lights.mat
+Ka  0.7 0.7 0.7
+Kd  0.7 0.7 0.7
+Ks  1.0 1.0 1.0
+d  0.2
+Ns  10.0
+illum 2
+#
+newmtl car_redlight.mat
+Ka  0.3 0.1 0.1
+Kd  0.3 0.1 0.1
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  12.5
+illum 2
+#
+newmtl car_tire&car_interior-parts
+Ka  0.2 0.2 0.2
+Kd  0.2 0.2 0.2
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  2.0
+illum 2
+#
+newmtl interior_red_leather
+Ka  0.2 0.0 0.0
+Kd  0.2 0.0 0.0
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  2.0
+illum 2
+#
+newmtl interior_simple.wood.imitation
+Ka  0.3 0.2 0.1
+Kd  0.3 0.2 0.1
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  5.5
+illum 2
+#
+newmtl Reflection_plane
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+#
+# EOF
